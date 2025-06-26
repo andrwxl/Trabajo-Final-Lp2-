@@ -15,7 +15,7 @@ Este diagrama representa el flujo de trabajo de nuestro sistema, desde la ingest
     F0_5 --> F0_6["1.2.4. Crear<br>requirements.txt inicial"];
     end
 
-    subgraph "FASE 1: Pipeline de Extracción de Datos (ETL - Parte 'E')"
+    subgraph "FASE 1: Extracción de Datos (ETL - Parte 'E')"
         F0_6 --> F1_WS_1["2.1.1. Análisis del sitio<br>Computrabajo"];
         F1_WS_1 --> F1_WS_2["2.1.2. Desarrollo del script<br>scraper_computrabajo.py"];
         F1_WS_2 --> F1_WS_3["2.1.3. Implementar<br>Manejo de Errores"];
@@ -37,7 +37,7 @@ Este diagrama representa el flujo de trabajo de nuestro sistema, desde la ingest
         F1_CSV0 --> F1_CSV["2.3.2. Desarrollar script<br>loader_stackoverflow.py"];
     end
 
-    subgraph "FASE 2: Pipeline de Transformación de Datos (ETL - Parte 'T')"
+    subgraph "FASE 2: Transformación de Datos (ETL - Parte 'T')"
         F1_WS_4 --> F2_U["3.1.1. Unificar todos los<br>datos crudos en un DataFrame"];
         F1_API_A3 --> F2_U;
         F1_API_L3 --> F2_U;
@@ -50,11 +50,11 @@ Este diagrama representa el flujo de trabajo de nuestro sistema, desde la ingest
 
         F2_C3 --> F2_N1["3.3.1. Normalizar Salarios<br>(a USD, anual)"];
         F2_N1 --> F2_N2["3.3.2. Normalizar Ubicaciones<br>(países, ciudades)"];
-        F2_N2 --> F2_N3["3.3.3. Extracción de<br>Habilidades (NLP)"];
+        %% --- F2_N2 --> F2_N3["3.3.3. Extracción de<br>Habilidades (NLP)"]; ---
     end
 
-    subgraph "FASE 3: Pipeline de Carga de Datos (ETL - Parte 'L')"
-        F2_N3 --> F3_G["4.1.1. Orquestar el pipeline<br>con main_etl.py"];
+    subgraph "FASE 3: Carga de Datos (ETL - Parte 'L')"
+        F2_N2 --> F3_G["4.1.1. Generacion del<br>dataset final"];
         F3_G --> F3_S["4.1.2. Guardar DataFrame<br>procesado en .csv final"];
         F3_S --> F3_V["4.2.1. Validar calidad del<br>.csv final en Notebook"];
     end
