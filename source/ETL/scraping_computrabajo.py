@@ -35,17 +35,17 @@ def extraer_datos_pagina(url):
     for oferta in contenedores_ofertas:
         
         titulo_tag = oferta.find('a', class_='js-o-link fc_base')
-        titulo = titulo_tag.get_text(strip=True) if titulo_tag else "No disponible"
+        titulo = titulo_tag.get_text(strip=True) if titulo_tag else "NA"
         
-        empresa_tag = oferta.find('a') # Puede que necesites un selector más específico
-        empresa = empresa_tag.get_text(strip=True) if empresa_tag else "No disponible"
+        empresa_tag = oferta.find('a', class_='fc_base t_ellipsis')
+        empresa = empresa_tag.get_text(strip=True) if empresa_tag else "NA"
 
         ubicacion_tag = oferta.find('span', class_='loc')
-        ubicacion = ubicacion_tag.get_text(strip=True) if ubicacion_tag else "No disponible"
+        ubicacion = ubicacion_tag.get_text(strip=True) if ubicacion_tag else "NA"
 
         div_1 = oferta.find('div', class_='fs13 mt15')
 
-        salario, modalidad = "No disponible", "No disponible" # Valores por defecto
+        salario, modalidad = "NA", "NA" # Valores por defecto
         if div_1:
             spans_info = div_1.find_all('span', class_='dIB mr10')
             for span in spans_info:
