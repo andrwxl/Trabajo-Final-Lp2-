@@ -2,7 +2,10 @@ import pandas as pd
 import os
 from sklearn.feature_extraction.text import CountVectorizer
 from collections import Counter
+import re
+
 from config import STOP_WORDS_ES
+
 
 def cargar_datos_cluster(ruta_archivo):
     # Carga el archivo CSV con los datos y sus clusters asignados
@@ -41,12 +44,40 @@ def encontrar_titulo_representativo(titulos_cluster):
         # En ese caso, simplemente tomamos el título más común.
         return Counter(titulos_candidatos).most_common(1)[0][0]
 
+# FUNCIÓN PARA LIMPIAR SALARIOS
+def limpiar_salario(salario_texto):
+    if not isinstance(salario_texto, str) or salario_texto == "No disponible":
+        return None
+    
+    # Mantenemos solo los dígitos, el punto y la coma.
+    numero_str = re.sub(r'[^\d,\.]', '', salario_texto)
+    
+    # Si después de limpiar no queda nada, retornamos nulo.
+    if not numero_str:
+        return None
+        
+    # Heurística para formatos internacionales: si la coma está en los últimos 3 caracteres,
+    # es probable que sea un separador decimal (formato europeo/latino).
+    if ',' in numero_str[-3:]:
+        # Quitamos los puntos (miles) y reemplazamos la coma por un punto decimal.
+        numero_limpio = numero_str.replace('.', '').replace(',', '.')
+    else:
+        # Si no, asumimos que las comas son separadores de miles (formato anglosajón) y las quitamos.
+        numero_limpio = numero_str.replace(',', '')
+        
+    try:
+        # Convertimos el string limpio a un número flotante.
+        return float(numero_limpio)
+    except ValueError:
+        # Si la conversión falla, significa que el formato era inesperado.
+        return None
+
 if __name__ == "__main__":
     
     #  Definición de Rutas
     ruta_datos_procesados = os.path.join('datos', 'procesados')
-    archivo_clusters = 'analisis_clusters_completo.csv'
-    archivo_salida_final = 'datos_finales_estandarizados.csv'
+    archivo_clusters = 'clusters_computrabajo.csv'
+    archivo_salida_final = 'datos_limpios_computrabajo.csv'
 
     # Carga de Datos
     df_clustered = cargar_datos_cluster(os.path.join(ruta_datos_procesados, archivo_clusters))
@@ -69,6 +100,10 @@ if __name__ == "__main__":
         print("\nAplicando estandarización a todo el dataset...")
         df_clustered['puesto_estandarizado'] = df_clustered['cluster'].map(mapa_nombres)
         
+         # --- APLICAMOS LA LIMPIEZA DE SALARIOS ---
+        print("Aplicando limpieza y normalización de salarios...")
+        df_clustered['salario'] = df_clustered['salario'].apply(limpiar_salario)
+
         # Seleccionamos y reordenamos las columnas para el archivo final.
         columnas_finales = [
             'puesto_estandarizado',

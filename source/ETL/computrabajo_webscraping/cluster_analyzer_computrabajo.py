@@ -41,7 +41,7 @@ def analizar_clusters_de_otros(df):
     X = vectorizer.fit_transform(titulos_unicos)
 
     # Aplicamos el algoritmo de Clustering (K-Means).
-    num_clusters = 200
+    num_clusters = 500
     kmeans = KMeans(n_clusters=num_clusters, random_state=42, n_init='auto')
     kmeans.fit(X)
 
@@ -63,7 +63,7 @@ def analizar_clusters_de_otros(df):
     df_reporte_completo = df_reporte_completo[columnas_deseadas]
 
     # Guardamos el resultado enriquecido en un nuevo CSV.
-    ruta_clusters = os.path.join('datos', 'procesados', 'analisis_clusters_completo.csv')
+    ruta_clusters = os.path.join('datos', 'procesados', 'clusters_computrabajo.csv')
     # Ordenamos por cluster para que sea fácil de analizar.
     df_reporte_completo.sort_values('cluster').to_csv(ruta_clusters, index=False)
 

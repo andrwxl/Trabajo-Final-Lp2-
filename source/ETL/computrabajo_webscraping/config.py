@@ -42,7 +42,7 @@ STOP_WORDS_ES = [
     'queremos', 'talento', 'unete', 'postula', 'ref', 'referencia', 'etc',
     'formacion', 'titulo', 'profesional', 'egresado', 'bachiller', 'tecnico',
     'universitario', 'estudios', 'culminados', 'indispensable', 'residir',
-    'contar', 'con', 'sin', 'al', 'del', 'se', 'del', 'por', 'ti'
+    'contar', 'con', 'sin', 'al', 'del', 'se', 'del', 'por', 'ti', "Urgente"
 
    # --- Distritos de Lima Metropolitana (Ruido Geográfico) ---
     'ancon', 'ate', 'barranco', 'brena', 'carabayllo', 'chaclacayo',
@@ -68,7 +68,11 @@ STOP_WORDS_ES = [
     # --- Ciudades del Perú (Ruido Geográfico) ---
     'lima', 'trujillo', 'arequipa', 'piura', 'chiclayo', 'cusco', 'callao',
     'huancayo', 'chimbote', 'pucallpa', 'ica', 'sullana', 'tarapoto',
-    'cajamarca', 'moquegua', 'tacna'
+    'cajamarca', 'moquegua', 'tacna', "Lurín"
+
+    #-- otras palabras comunes que pueden aparecer en ofertas de empleo
+    'trabajar', 'trabajando', 'trabajadora', 'trabajador', 'trabajadores',
+    'cerca', 'jockey', 'plaza'
 ]
 API_KEYS = {
     'ADZUNA_API_KEY': 'TU_API_KEY_AQUI'
