@@ -36,12 +36,9 @@ def encontrar_titulo_representativo(titulos_cluster):
         words_freq = sorted(words_freq, key = lambda x: x[1], reverse=True)
         
         # El nombre del cluster será la frase más frecuente encontrada.
-        # Lo capitalizamos para que se vea como un título.
         return words_freq[0][0].title() if words_freq else "Rol Genérico"
         
     except ValueError:
-        # Si todos los títulos solo contienen stop words, puede dar error.
-        # En ese caso, simplemente tomamos el título más común.
         return Counter(titulos_candidatos).most_common(1)[0][0]
 
 # FUNCIÓN PARA LIMPIAR SALARIOS
@@ -80,7 +77,7 @@ if __name__ == "__main__":
     archivo_salida_final = 'datos_limpios_computrabajo.csv'
 
     # Carga de Datos
-    df_clustered = cargar_datos_cluster(os.path.join(ruta_datos_procesados, archivo_clusters))
+    df_clustered = cargar_datos_cluster(os.path.join('datos', 'crudos', archivo_clusters))
 
     if df_clustered is not None:
         print("Iniciando la generación de títulos representativos por cluster...")
@@ -90,7 +87,7 @@ if __name__ == "__main__":
         # Iteramos sobre cada número de cluster único.
         for cluster_id in df_clustered['cluster'].unique():
             # Obtenemos todos los títulos de ese cluster.
-            titulos_del_cluster = df_clustered[df_clustered['cluster'] == cluster_id]['titulo_puesto'].tolist()
+            titulos_del_cluster = df_clustered[df_clustered['cluster'] == cluster_id]['puesto_trabajo'].tolist()
             # Encontramos el mejor nombre para ese grupo.
             nombre_representativo = encontrar_titulo_representativo(titulos_del_cluster)
             mapa_nombres[cluster_id] = nombre_representativo
@@ -98,19 +95,21 @@ if __name__ == "__main__":
 
         # Creamos la nueva columna estandarizada usando el mapa que creamos.
         print("\nAplicando estandarización a todo el dataset...")
-        df_clustered['puesto_estandarizado'] = df_clustered['cluster'].map(mapa_nombres)
+        df_clustered['puesto_trabajo'] = df_clustered['cluster'].map(mapa_nombres)
         
          # --- APLICAMOS LA LIMPIEZA DE SALARIOS ---
         print("Aplicando limpieza y normalización de salarios...")
-        df_clustered['salario'] = df_clustered['salario'].apply(limpiar_salario)
+        df_clustered['salario_minimo'] = df_clustered['salario_minimo'].apply(limpiar_salario)
 
         # Seleccionamos y reordenamos las columnas para el archivo final.
         columnas_finales = [
-            'puesto_estandarizado',
-            'nombre_empresa',
-            'ubicacion',
-            'modalidad',
-            'salario'
+            'puesto_trabajo', 
+            'nombre_empresa', 
+            'pais', 
+            'region_estado',
+            'tipo_contrato', 
+            'salario_minimo',
+            'enlace_oferta',
         ]
         df_final = df_clustered[columnas_finales]
 
@@ -123,6 +122,6 @@ if __name__ == "__main__":
         print(df_final.head())
         
         print("\n--- Conteo de los Nuevos Puestos Estandarizados ---")
-        print(df_final['puesto_estandarizado'].value_counts().head(20))
+        print(df_final['puesto_trabajo'].value_counts().head(20))
     else:
         print("\nNo se pudo ejecutar el script")

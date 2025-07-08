@@ -20,6 +20,7 @@ def clasificar_con_reglas(titulo):
     titulo_lower = titulo.lower()
     if 'analista de datos' in titulo_lower: return 'Analista de Datos'
     if 'desarrollador' in titulo_lower: return 'Desarrollador de Software'
+    if 'python' in titulo_lower: return 'Desarrollador Python'
     return "Otro"
 
 # ANÁLISIS DE CLUSTERS 
@@ -34,36 +35,38 @@ def analizar_clusters_de_otros(df):
     print(f"Analizando {len(df_otros)} títulos no clasificados con Machine Learning...")
 
     # Usamos solo los títulos únicos para que el análisis sea más rápido.
-    titulos_unicos = df_otros['titulo_puesto'].unique()
+    titulos_unicos = df_otros['puesto_trabajo'].unique()
 
     # Convertimos el texto a vectores numéricos usando TF-IDF.
     vectorizer = TfidfVectorizer(stop_words=STOP_WORDS_ES)
     X = vectorizer.fit_transform(titulos_unicos)
 
     # Aplicamos el algoritmo de Clustering (K-Means).
-    num_clusters = 500
+    num_clusters = 50
     kmeans = KMeans(n_clusters=num_clusters, random_state=42, n_init='auto')
     kmeans.fit(X)
 
     # Creamos un "mapa" que asocia cada título único a su número de cluster.
-    df_mapa_clusters = pd.DataFrame({'titulo_puesto': titulos_unicos, 'cluster': kmeans.labels_})
+    df_mapa_clusters = pd.DataFrame({'puesto_trabajo': titulos_unicos, 'cluster': kmeans.labels_})
 
     
     # Usamos un 'merge' para añadir la columna 'cluster' a cada fila correspondiente.
-    df_reporte_completo = pd.merge(df_otros, df_mapa_clusters, on='titulo_puesto', how='left')
+    df_reporte_completo = pd.merge(df_otros, df_mapa_clusters, on='puesto_trabajo', how='left')
 
     columnas_deseadas = [
         'cluster', 
-        'titulo_puesto', 
-        'nombre_empresa', 
-        'ubicacion', 
-        'modalidad', 
-        'salario'
+        'puesto_trabajo', 
+        'nombre_empresa',
+        'pais', 
+        'region_estado', 
+        'tipo_contrato', 
+        'salario_minimo',
+        'enlace_oferta',
     ]
     df_reporte_completo = df_reporte_completo[columnas_deseadas]
 
     # Guardamos el resultado enriquecido en un nuevo CSV.
-    ruta_clusters = os.path.join('datos', 'procesados', 'clusters_computrabajo.csv')
+    ruta_clusters = os.path.join('datos', 'crudos', 'clusters_computrabajo.csv')
     # Ordenamos por cluster para que sea fácil de analizar.
     df_reporte_completo.sort_values('cluster').to_csv(ruta_clusters, index=False)
 
@@ -74,13 +77,13 @@ if __name__ == "__main__":
     ruta_entrada = os.path.join('datos', 'crudos', 'datos_crudos_computrabajo.csv')
     
     # Creamos la carpeta de salida si no existe
-    os.makedirs(os.path.join('datos', 'procesados'), exist_ok=True)
+    os.makedirs(os.path.join('datos', 'crudos'), exist_ok=True)
 
     dataframe_crudo = cargar_datos_crudos(ruta_entrada)
     
     if dataframe_crudo is not None:
         # Aplicamos la clasificación por reglas primero
-        dataframe_crudo['puesto_estandarizado'] = dataframe_crudo['titulo_puesto'].apply(clasificar_con_reglas)
+        dataframe_crudo['puesto_estandarizado'] = dataframe_crudo['puesto_trabajo'].apply(clasificar_con_reglas)
         
         # Ejecutamos el análisis de clusters sobre los que quedaron como "Otro"
         analizar_clusters_de_otros(dataframe_crudo)

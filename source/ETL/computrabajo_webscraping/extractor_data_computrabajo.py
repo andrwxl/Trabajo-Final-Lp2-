@@ -4,13 +4,13 @@ import pandas as pd
 
 # Lista para almacenar las URLs de las ofertas de empleo.
 urls_base = [
-    "https://pe.computrabajo.com/trabajo-de-informatica",
-    "https://pe.computrabajo.com/trabajo-de-datos",
-    "https://pe.computrabajo.com/trabajo-de-programacion",
-    "https://pe.computrabajo.com/trabajo-de-sistemas",
+    #"https://pe.computrabajo.com/trabajo-de-informatica",
+    #"https://pe.computrabajo.com/trabajo-de-datos",
+    #"https://pe.computrabajo.com/trabajo-de-programacion",
+    #"https://pe.computrabajo.com/trabajo-de-sistemas",
     "https://pe.computrabajo.com/trabajo-de-python",
-    "https://pe.computrabajo.com/trabajo-de-power-bi",
-    "https://pe.computrabajo.com/trabajo-de-sql",
+    #"https://pe.computrabajo.com/trabajo-de-power-bi",
+    #"https://pe.computrabajo.com/trabajo-de-sql",
 ]
 
 def peticion_pagina(url):
@@ -39,6 +39,7 @@ def extraer_datos_pagina(url):
         
         titulo_tag = oferta.find('a', class_='js-o-link fc_base')
         titulo = titulo_tag.get_text(strip=True) if titulo_tag else "NA"
+        url = f"https://pe.computrabajo.com{titulo_tag['href']}" if titulo_tag else "NA"
         
         empresa_tag = oferta.find('a', class_='fc_base t_ellipsis')
         empresa = empresa_tag.get_text(strip=True) if empresa_tag else "NA"
@@ -61,11 +62,13 @@ def extraer_datos_pagina(url):
                     modalidad = span.get_text(strip=True)
 
         oferta_dict = {
-            'titulo_puesto': titulo,
+            'puesto_trabajo': titulo,
             'nombre_empresa': empresa,
-            'ubicacion': ubicacion,
-            "modalidad": modalidad,
-            'salario': salario,
+            'pais': 'Perú',  # Computrabajo es específico de Perú en este caso.
+            'region_estado': ubicacion,
+            "tipo_contrato": modalidad,
+            'salario_minimo': salario,
+            'enlace_oferta': url,
         }
         
         lista_ofertas.append(oferta_dict)
@@ -77,7 +80,7 @@ datos_finales = []
 for url_empleo in urls_base:
     numero_pagina = 1
     while True:
-        #print(f"Extrayendo datos de la página {numero_pagina} para la categoría: {url_empleo}")
+        print(f"Extrayendo datos de la página {numero_pagina} para la url: {url_empleo}")
         
         if numero_pagina == 1:
             url_actual = url_empleo
