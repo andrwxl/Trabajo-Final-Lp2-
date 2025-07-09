@@ -2,7 +2,16 @@ import requests
 import json
 import os
 import time
-from config import APP_ID, APP_KEY
+import sys
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.append(parent_dir)
+
+
+import config
+APP_ID = config.APP_ID
+APP_KEY = config.APP_KEY
 
 def obtener_ofertas_adzuna(que_buscar, donde_buscar, pais='us', pagina=1):
     # Construimos la URL base usando el código del país.

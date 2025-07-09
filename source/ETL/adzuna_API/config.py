@@ -1,3 +1,0 @@
-APP_KEY = "b506ab8c120a1d4be3a6bb0392bd7714"
-
-APP_ID = "523818bf"

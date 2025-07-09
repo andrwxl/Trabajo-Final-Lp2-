@@ -14,10 +14,6 @@ def cargar_datos_json(ruta_archivo):
     return datos
 
 def transformar_json_a_dataframe(datos_json):
-    """
-    Transforma la lista de ofertas de Adzuna (en formato JSON) a un DataFrame de Pandas,
-    extrayendo y limpiando los campos más importantes.
-    """
     if not datos_json:
         print("El archivo JSON está vacío o no es válido.")
         return pd.DataFrame()
@@ -29,41 +25,6 @@ def transformar_json_a_dataframe(datos_json):
     # Iteramos sobre cada oferta de trabajo en la lista de resultados.
     for oferta in datos_json:
         #Estructura de la oferta:
-        """
-        {
-        "redirect_url": "https://www.adzuna.com/details/5247643274?utm_medium=api&utm_source=523818bf",
-        "description": "At Ouster, we build sensors and tools for engineers, roboticists, and researchers, so they can make the world safer and more efficient. Weve transformed LIDAR from an analog device with thousands of components to an elegant digital device powered by one chip-scale laser array and one CMOS sensor. The result is a full range of high-resolution LIDAR sensors that deliver superior imaging at a dramatically lower price. Our advanced sensor hardware and vision algorithms are used in autonomous cars, …",
-        "salary_max": 102995.29,
-        "__CLASS__": "Adzuna::API::Response::Job",
-        "location": {
-            "area": [
-                "US",
-                "California",
-                "Alameda County",
-                "Hayward"
-            ],
-            "__CLASS__": "Adzuna::API::Response::Location",
-            "display_name": "Hayward, Alameda County"
-        },
-        "latitude": 37.673724,
-        "company": {
-            "display_name": "Ouster",
-            "__CLASS__": "Adzuna::API::Response::Company"
-        },
-        "longitude": -122.100787,
-        "salary_min": 102995.29,
-        "category": {
-            "label": "Engineering Jobs",
-            "tag": "engineering-jobs",
-            "__CLASS__": "Adzuna::API::Response::Category"
-        },
-        "salary_is_predicted": "1",
-        "title": "Manufacturing Test Engineering Manager",
-        "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTI0NzY0MzI3NCIsInMiOiJ2c0d0cVBSYjhCR1ZfcjVpUVM3LWlBIn0.gvN-63yJEpE-iKbrVxmlbBeu4WTH_wIQWoYrgqY3gqk",
-        "id": "5247643274",
-        "created": "2025-06-13T00:07:00Z"
-        }
-        """
 
         # Extraemos los datos, usando .get() para evitar errores si una clave no existe.
         titulo = oferta.get('title', 'NA')
