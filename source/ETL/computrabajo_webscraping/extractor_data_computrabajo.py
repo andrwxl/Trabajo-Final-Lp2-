@@ -44,7 +44,7 @@ def extraer_datos_pagina(url):
         empresa_tag = oferta.find('a', class_='fc_base t_ellipsis')
         empresa = empresa_tag.get_text(strip=True) if empresa_tag else "NA"
 
-        ubicacion_tag = oferta.find('span', class_='loc')
+        ubicacion_tag = oferta.find('p', class_='fs16 fc_base mt5').find('span', class_='mr10')
         ubicacion = ubicacion_tag.get_text(strip=True) if ubicacion_tag else "NA"
 
         div_1 = oferta.find('div', class_='fs13 mt15')
@@ -66,8 +66,14 @@ def extraer_datos_pagina(url):
             'nombre_empresa': empresa,
             'pais': 'Perú',  # Computrabajo es específico de Perú en este caso.
             'region_estado': ubicacion,
-            "tipo_contrato": modalidad,
+            'tipo_contrato': modalidad,
             'salario_minimo': salario,
+            'salario_maximo': salario, 
+            'moneda_salario': 'PEN',
+            'periodo_salario': 'Mensual',
+            #'categoria': titulo, # Luego se puede ajustar según la categoría real.
+            'plataforma_origen': 'Computrabajo',
+            'tipo_fuente_datos': 'Web Scraping',
             'enlace_oferta': url,
         }
         

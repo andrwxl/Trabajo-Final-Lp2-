@@ -45,18 +45,7 @@ STOP_WORDS_ES = [
     'contar', 'con', 'sin', 'al', 'del', 'se', 'del', 'por', 'ti', "Urgente"
 
    # --- Distritos de Lima Metropolitana (Ruido Geográfico) ---
-    'ancon', 'ate', 'barranco', 'brena', 'carabayllo', 'chaclacayo',
-    'chorrillos', 'cieneguilla', 'comas', 'el agustino', 'independencia',
-    'jesus maria', 'la molina', 'la victoria', 'lince', 'los olivos',
-    'lurigancho', 'chosica', 'lurin', 'magdalena del mar', 'magdalena',
-    'miraflores', 'pachacamac', 'pucusana', 'pueblo libre', 'puente piedra',
-    'punta hermosa', 'punta negra', 'rimac', 'san bartolo', 'san borja',
-    'san isidro', 'san juan de lurigancho', 'sjl', 'san juan de miraflores', 'sjm',
-    'san luis', 'san martin de porres', 'smp', 'san miguel', 'santa anita',
-    'santa maria del mar', 'santa rosa', 'santiago de surco', 'surco',
-
-    'surquillo', 'villa el salvador', 'ves', 'villa maria del triunfo', 'vmt',
-    'cercado de lima',
+    'ancon', 'ate', 'barranco', 'brena', 'carabayllo', 'chaclacayo', 'chorrillos', 'cieneguilla', 'comas', 'agustino', 'independencia', 'maria', 'molina', 'victoria', 'lince', 'olivos', 'lurigancho', 'chosica', 'lurin', 'mar', 'magdalena', 'miraflores', 'pachacamac', 'pucusana', 'libre', 'piedra', 'hermosa', 'negra', 'rimac', 'bartolo', 'borja', 'isidro', 'lurigancho', 'sjl', 'miraflores', 'sjm', 'luis', 'porres', 'smp', 'miguel', 'anita', 'mar', 'rosa', 'surco', 'surco', 'surquillo', 'salvador', 'ves', 'triunfo', 'vmt', 'lima',
 
     # --- Departamentos del Perú (Ruido Geográfico) ---
     'amazonas', 'ancash', 'apurimac', 'arequipa', 'ayacucho', 'cajamarca',
@@ -68,7 +57,7 @@ STOP_WORDS_ES = [
     # --- Ciudades del Perú (Ruido Geográfico) ---
     'lima', 'trujillo', 'arequipa', 'piura', 'chiclayo', 'cusco', 'callao',
     'huancayo', 'chimbote', 'pucallpa', 'ica', 'sullana', 'tarapoto',
-    'cajamarca', 'moquegua', 'tacna', "Lurín"
+    'cajamarca', 'moquegua', 'tacna', "Lurin"
 
     #-- otras palabras comunes que pueden aparecer en ofertas de empleo
     'trabajar', 'trabajando', 'trabajadora', 'trabajador', 'trabajadores',

@@ -38,7 +38,7 @@ def analizar_clusters_de_otros(df):
     titulos_unicos = df_otros['puesto_trabajo'].unique()
 
     # Convertimos el texto a vectores numéricos usando TF-IDF.
-    vectorizer = TfidfVectorizer(stop_words=STOP_WORDS_ES)
+    vectorizer = TfidfVectorizer(stop_words=STOP_WORDS_ES,)
     X = vectorizer.fit_transform(titulos_unicos)
 
     # Aplicamos el algoritmo de Clustering (K-Means).
@@ -53,16 +53,22 @@ def analizar_clusters_de_otros(df):
     # Usamos un 'merge' para añadir la columna 'cluster' a cada fila correspondiente.
     df_reporte_completo = pd.merge(df_otros, df_mapa_clusters, on='puesto_trabajo', how='left')
 
+    
     columnas_deseadas = [
         'cluster', 
-        'puesto_trabajo', 
+        'puesto_trabajo',
         'nombre_empresa',
-        'pais', 
-        'region_estado', 
-        'tipo_contrato', 
+        'pais',
+        'region_estado',
+        "tipo_contrato",
         'salario_minimo',
+        'salario_maximo', 
+        'moneda_salario',
+        'periodo_salario',
+        'plataforma_origen',
+        'tipo_fuente_datos',
         'enlace_oferta',
-    ]
+        ]
     df_reporte_completo = df_reporte_completo[columnas_deseadas]
 
     # Guardamos el resultado enriquecido en un nuevo CSV.
@@ -87,3 +93,4 @@ if __name__ == "__main__":
         
         # Ejecutamos el análisis de clusters sobre los que quedaron como "Otro"
         analizar_clusters_de_otros(dataframe_crudo)
+

@@ -29,6 +29,38 @@ CARPETA_DE_ENTRADA = os.path.join('datos', 'procesados')
 # 3. Define el nombre y la ubicación de tu archivo de salida final.
 RUTA_SALIDA_FINAL = os.path.join('datos','finales', 'dataset_maestro_final.csv')
 
+def eliminar_filas_nulas_en_columna(df: pd.DataFrame, nombre_columna: str) -> pd.DataFrame:
+    if nombre_columna not in df.columns:
+        return df # Devuelve el DataFrame original si la columna no se encuentra
+
+    df_limpio = df.dropna(subset=[nombre_columna])
+    
+    filas_eliminadas = len(df) - len(df_limpio)
+    print(f"--- Limpieza en la columna '{nombre_columna}' ---")
+    print(f"🗑️ Se eliminaron {filas_eliminadas} fila(s) con valores nulos.")
+    print(f"✨ El DataFrame resultante tiene {len(df_limpio)} fila(s).")
+
+    return df_limpio
+
+def estandarizar_salarios(df):
+    #Estandariza los salarios de un DataFrame a la moneda PEN y al periodo Mensual.
+    
+    # Se crea una copia para no modificar el DataFrame original.
+    df_estandarizado = df.copy()
+    
+    # 1. ESTANDARIZACIÓN DE PERIODO (ANUAL -> MENSUAL)
+    filas_anual = df_estandarizado['periodo_salario'] == 'Anual'
+    df_estandarizado.loc[filas_anual, ['salario_minimo', 'salario_maximo']] /= 12
+    df_estandarizado.loc[filas_anual, 'periodo_salario'] = 'Mensual'
+    
+    # 2. ESTANDARIZACIÓN DE MONEDA (USD -> PEN)
+    factor_cambio_usd_pen = 3.74
+    filas_usd = df_estandarizado['moneda_salario'] == 'USD'
+    df_estandarizado.loc[filas_usd, ['salario_minimo', 'salario_maximo']] *= factor_cambio_usd_pen
+    df_estandarizado.loc[filas_usd, 'moneda_salario'] = 'PEN'
+
+    return df_estandarizado
+
 
 def unificar_datasets(carpeta_entrada, schema_maestro):
     """
@@ -74,6 +106,12 @@ def unificar_datasets(carpeta_entrada, schema_maestro):
     print("Estandarizando todos los valores nulos...")
     df_final.replace("NA", np.nan, inplace=True)
     
+    # Elimina filas que tengan valores nulos en la columna 'salario_minimo'.
+    df_final = eliminar_filas_nulas_en_columna(df_final, 'salario_minimo')
+
+    # Estandariza los salarios a la moneda PEN y al periodo Mensual.
+    df_final = estandarizar_salarios(df_final)
+
     return df_final
 
 # --- PUNTO DE ENTRADA DEL SCRIPT ---

@@ -93,22 +93,29 @@ if __name__ == "__main__":
             mapa_nombres[cluster_id] = nombre_representativo
             print(f"Cluster #{cluster_id} ha sido estandarizado como: '{nombre_representativo}'")
 
-        # Creamos la nueva columna estandarizada usando el mapa que creamos.
+        # Creamos la nueva columna estandarizada usando el mapa que creamos.    
         print("\nAplicando estandarización a todo el dataset...")
-        df_clustered['puesto_trabajo'] = df_clustered['cluster'].map(mapa_nombres)
+        df_clustered['categoria'] = df_clustered['cluster'].map(mapa_nombres)
         
          # --- APLICAMOS LA LIMPIEZA DE SALARIOS ---
         print("Aplicando limpieza y normalización de salarios...")
         df_clustered['salario_minimo'] = df_clustered['salario_minimo'].apply(limpiar_salario)
+        df_clustered['salario_maximo'] = df_clustered["salario_minimo"] #
 
         # Seleccionamos y reordenamos las columnas para el archivo final.
         columnas_finales = [
-            'puesto_trabajo', 
-            'nombre_empresa', 
-            'pais', 
+            'puesto_trabajo',
+            'nombre_empresa',
+            'pais',
             'region_estado',
-            'tipo_contrato', 
+            'tipo_contrato',
             'salario_minimo',
+            'salario_maximo', 
+            'moneda_salario',
+            'periodo_salario',
+            'categoria',  # Usamos la columna 'categoria' que contiene los títulos estandarizados.
+            'plataforma_origen',
+            'tipo_fuente_datos',
             'enlace_oferta',
         ]
         df_final = df_clustered[columnas_finales]
