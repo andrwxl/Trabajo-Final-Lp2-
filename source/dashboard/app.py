@@ -4,6 +4,7 @@ import os
 import numpy as np
 import plotly.express as px
 import comparador_de_perfiles as comparador
+from gemini_funciones.asesor_perfil import mostrar_asesor_perfil
 
 # --- Configuración de la Página ---
 st.set_page_config(
@@ -336,7 +337,7 @@ if df_original is not None:
         with col_salario:
             mostrar_salario_por_categoria(df_filtrado, moneda, periodo, TIPO_DE_CAMBIO_USD_PEN)
         st.markdown("---")
-        comparador.mostrar_comparador_perfiles(df_filtrado, moneda, periodo, TIPO_DE_CAMBIO_USD_PEN)
+        mostrar_asesor_perfil(df_filtrado, moneda, periodo, TIPO_DE_CAMBIO_USD_PEN)
 
 
         # AL FINAL, mostramos la tabla de datos filtrados.
