@@ -26,16 +26,16 @@ def clasificar_con_reglas(titulo):
 # ANÁLISIS DE CLUSTERS 
 def analizar_clusters_de_otros(df):
     # 1. Filtramos para quedarnos solo con los títulos no clasificados.
-    df_otros = df[df['puesto_estandarizado'] == 'Otro'].copy()
+    #df_otros = df[df['puesto_estandarizado'] == 'Otro'].copy()
     
-    if df_otros.empty:
-        print("¡No hay títulos en la categoría 'Otro' para analizar.")
-        return
-
-    print(f"Analizando {len(df_otros)} títulos no clasificados con Machine Learning...")
+    #if df_otros.empty:
+    #    print("¡No hay títulos en la categoría 'Otro' para analizar.")
+    #    return
+    #
+    #print(f"Analizando {len(df_otros)} títulos no clasificados con Machine Learning...")
 
     # Usamos solo los títulos únicos para que el análisis sea más rápido.
-    titulos_unicos = df_otros['puesto_trabajo'].unique()
+    titulos_unicos = df['puesto_trabajo'].unique()
 
     # Convertimos el texto a vectores numéricos usando TF-IDF.
     vectorizer = TfidfVectorizer(stop_words=STOP_WORDS_ES,)
@@ -51,7 +51,7 @@ def analizar_clusters_de_otros(df):
 
     
     # Usamos un 'merge' para añadir la columna 'cluster' a cada fila correspondiente.
-    df_reporte_completo = pd.merge(df_otros, df_mapa_clusters, on='puesto_trabajo', how='left')
+    df_reporte_completo = pd.merge(df, df_mapa_clusters, on='puesto_trabajo', how='left')
 
     
     columnas_deseadas = [
@@ -89,7 +89,7 @@ if __name__ == "__main__":
     
     if dataframe_crudo is not None:
         # Aplicamos la clasificación por reglas primero
-        dataframe_crudo['puesto_estandarizado'] = dataframe_crudo['puesto_trabajo'].apply(clasificar_con_reglas)
+        #dataframe_crudo['puesto_estandarizado'] = dataframe_crudo['puesto_trabajo'].apply(clasificar_con_reglas)
         
         # Ejecutamos el análisis de clusters sobre los que quedaron como "Otro"
         analizar_clusters_de_otros(dataframe_crudo)

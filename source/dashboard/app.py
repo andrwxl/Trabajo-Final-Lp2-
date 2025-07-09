@@ -63,21 +63,16 @@ def mostrar_sidebar(df):
         default=paises_disponibles
     )
 
-    # --- INICIO DE LA CORRECCIÓN ---
     
-    # 1. Obtenemos las opciones de la columna 'categoria', no de 'puesto_trabajo'.
+    # Filtro por Categoría
     categorias_disponibles = sorted(df['categoria'].dropna().unique())
-    
-    # 2. Usamos multiselect para permitir que el usuario elija una o varias categorías.
-    #    El 'default=[]' es clave: si el usuario no selecciona nada, la lista estará vacía
-    #    y nuestro código lo interpretará como "mostrar todas las categorías".
     categorias_seleccionadas = st.sidebar.multiselect(
         'Selecciona la Categoría del Puesto', 
         options=categorias_disponibles, 
         default=[] # Por defecto, no hay ninguna categoría seleccionada.
     )
+
     
-    # --- FIN DE LA CORRECCIÓN ---
 
     # --- Filtro de Salario (sin cambios) ---
     salario_min = int(df['salario_anual_usd'].fillna(0).min())
@@ -94,8 +89,22 @@ def mostrar_sidebar(df):
     moneda_seleccionada = st.sidebar.radio("Ver Salario en:", ('PEN', 'USD'), index=0, horizontal=True)
     periodo_seleccionado = st.sidebar.radio("Ver Periodo Salarial:", ('Anual', 'Mensual'), index=0, horizontal=True)
     
+    # Filtro por tipo de fuente
+    tipo_fuente_disponible = sorted(df['tipo_fuente_datos'].dropna().unique())
+
+    st.sidebar.subheader("Tipo de Fuente de Datos")
+    seleccion_checkbox = {}
+    for tipo in tipo_fuente_disponible:
+        seleccion_checkbox[tipo] =  st.sidebar.checkbox(
+            tipo,
+            value=True,
+            key=f'tipo_fuente_{tipo}',
+        )
+    # Filtramos las fuentes seleccionadas
+    tipo_fuente_seleccionada = [tipo for tipo, seleccionado in seleccion_checkbox.items() if seleccionado]
+
     # Devolvemos la nueva lista de categorías seleccionadas.
-    return paises_seleccionados, categorias_seleccionadas, rango_salario, moneda_seleccionada, periodo_seleccionado
+    return paises_seleccionados, categorias_seleccionadas, rango_salario, moneda_seleccionada, periodo_seleccionado, tipo_fuente_seleccionada
 
 def mostrar_kpis(df, moneda, periodo):
     """Calcula y muestra las métricas clave (KPIs) en la parte superior."""
@@ -127,54 +136,68 @@ def mostrar_kpis(df, moneda, periodo):
 def mostrar_analisis_geografico(df, paises_seleccionados):
     """Muestra el mapa mundial o el gráfico de barras de regiones según la selección."""
     st.header("Análisis Geográfico: ¿Dónde están las Oportunidades?")
-    
-    if len(paises_seleccionados) > 1:
-        ofertas_por_pais = df['pais'].value_counts().reset_index()
-        ofertas_por_pais.columns = ['pais', 'numero_de_ofertas']
-        
-        # --- INICIO DE LA CORRECCIÓN ---
-        # Creamos un diccionario para "traducir" los nombres de los países
-        # al formato estándar que entiende Plotly.
-        mapa_nombres_paises = {
-            'Perú': 'Peru',
-            'US': 'United States',
-            # Puedes añadir más mapeos aquí si descubres otros países con problemas
-            # 'España': 'Spain',
-            # 'México': 'Mexico',
-        }
-        
-        # Reemplazamos los nombres en la columna 'pais' usando el diccionario.
-        # Esto no modifica el DataFrame original, solo la copia para el gráfico.
-        ofertas_por_pais['pais_mapeado'] = ofertas_por_pais['pais'].replace(mapa_nombres_paises)
-        # --- FIN DE LA CORRECCIÓN ---
-        
-        fig_mapa = px.choropleth(ofertas_por_pais, 
-                                # Usamos la nueva columna con los nombres corregidos
-                                locations="pais_mapeado", 
-                                locationmode="country names",
-                                color="numero_de_ofertas", 
-                                # Mostramos el nombre original en el hover para claridad
-                                hover_name="pais", 
-                                color_continuous_scale=px.colors.sequential.Plasma,
-                                title="Distribución de Ofertas por País")
-        st.plotly_chart(fig_mapa, use_container_width=True)
+    col1, col2 = st.columns(spec=[0.7,0.3])
 
-    elif len(paises_seleccionados) == 1:
-        pais = paises_seleccionados[0]
-        st.subheader(f"Top Regiones en {pais}")
-        
-        ofertas_por_region = df[df['pais'] == pais]['region_estado'].value_counts().nlargest(10).sort_values()
-        
-        if not ofertas_por_region.empty:
-            fig_region = px.bar(ofertas_por_region, x=ofertas_por_region.values, y=ofertas_por_region.index, 
-                                orientation='h', labels={'x': 'Número de Ofertas', 'y': 'Región/Estado'},
-                                text=ofertas_por_region.values)
-            fig_region.update_traces(texttemplate='%{text}', textposition='outside')
-            st.plotly_chart(fig_region, use_container_width=True)
-        else:
-            st.info("No hay suficientes datos de regiones para mostrar un gráfico.")
-    else:
+
+    if len(paises_seleccionados) == 0:
         st.info("Selecciona al menos un país en el filtro para ver el análisis geográfico.")
+        return
+    def mapa_paises():
+            ofertas_por_pais = df['pais'].value_counts().reset_index()
+            ofertas_por_pais.columns = ['pais', 'numero_de_ofertas']
+
+            # Creamos un diccionario para "traducir" los nombres de los países
+            mapa_nombres_paises = {
+                'Perú': 'Peru',
+                'US': 'United States',
+                # 'España': 'Spain',
+                # 'México': 'Mexico',
+            }
+        
+            # Reemplazamos los nombres en la columna 'pais' usando el diccionario.
+            ofertas_por_pais['pais_mapeado'] = ofertas_por_pais['pais'].replace(mapa_nombres_paises)
+
+            fig_mapa = px.choropleth(ofertas_por_pais, 
+                                    # Usamos la nueva columna con los nombres corregidos
+                                    locations="pais_mapeado", 
+                                    locationmode="country names",
+                                    color="numero_de_ofertas", 
+                                    # Mostramos el nombre original en el hover para claridad
+                                    hover_name="pais", 
+                                    color_continuous_scale=px.colors.sequential.Plasma,
+                                    title="Distribución de Ofertas por País")
+            st.plotly_chart(fig_mapa, use_container_width=True)
+    def mapa_regiones(pais):
+        # Gráfico 2: Top 10 regiones combinadas de los países seleccionados
+            df_paises = df[df['pais'].isin(paises_seleccionados)].copy()
+            # Creamos una columna combinada para el gráfico (ej: "Lima, Perú")
+            df_paises['region_pais'] = df_paises['region_estado'].astype(str) + ", " + df_paises['pais'].astype(str)
+            
+            ofertas_combinadas = df_paises['region_pais'].value_counts().nlargest(10).sort_values()
+
+            if not ofertas_combinadas.empty:
+                fig_combinada = px.bar(
+                    ofertas_combinadas,
+                    x=ofertas_combinadas.values,
+                    y=ofertas_combinadas.index,
+                    orientation='h',
+                    labels={'x': 'Número de Ofertas', 'y': 'Región'},
+                    title="Top 10 Regiones (Combinadas)",
+                    text=ofertas_combinadas.values
+                )
+                fig_combinada.update_traces(texttemplate='%{text}', textposition='outside')
+                fig_combinada.update_layout(showlegend=False, yaxis={'categoryorder':'total ascending'})
+                st.plotly_chart(fig_combinada, use_container_width=True)
+            else:
+                st.info("No hay datos de regiones para los países seleccionados.")
+    
+    with col1:
+        st.subheader("Mapa Mundial de Oportunidades")
+        mapa_paises()
+    with col2:
+        st.subheader("Distribución de Ofertas por País")
+        mapa_regiones(paises_seleccionados)
+
 
 def mostrar_demanda_por_categoria(df):
     """
@@ -309,7 +332,7 @@ df_original = cargar_y_preprocesar_datos(ruta_dataset)
 
 if df_original is not None:
     # 1. Mostrar la barra lateral y obtener los filtros del usuario.
-    paises, categorias, salario, moneda, periodo = mostrar_sidebar(df_original)
+    paises, categorias, salario, moneda, periodo, fuente = mostrar_sidebar(df_original)
 
     # 2. Filtrar el DataFrame principal según la selección.
     df_filtrado = df_original.copy()
@@ -318,6 +341,9 @@ if df_original is not None:
         df_filtrado = df_filtrado[df_filtrado['categoria'].isin(categorias)]
     if paises:
         df_filtrado = df_filtrado[df_filtrado['pais'].isin(paises)]
+    if fuente:
+        df_filtrado = df_filtrado[df_filtrado['tipo_fuente_datos'].isin(fuente)]
+
     df_filtrado = df_filtrado[
         (df_filtrado['salario_anual_usd'].fillna(salario[0]) >= salario[0]) & 
         (df_filtrado['salario_anual_usd'].fillna(salario[1]) <= salario[1])
@@ -337,13 +363,14 @@ if df_original is not None:
         with col_salario:
             mostrar_salario_por_categoria(df_filtrado, moneda, periodo, TIPO_DE_CAMBIO_USD_PEN)
         st.markdown("---")
-        mostrar_asesor_perfil(df_filtrado, moneda, periodo, TIPO_DE_CAMBIO_USD_PEN)
+        mostrar_asesor_perfil(df_filtrado, moneda, periodo, TIPO_DE_CAMBIO_USD_PEN, paises)
 
 
         # AL FINAL, mostramos la tabla de datos filtrados.
         mostrar_tabla_de_datos(df_filtrado, moneda, periodo)
         st.markdown("---")
-        mostrar_seccion_descarga(df_filtrado)
+        df_empleos_sugeridos = mostrar_seccion_descarga(df_filtrado)
+        st.dataframe(df_empleos_sugeridos)
     else:
         st.warning("No se encontraron resultados para los filtros seleccionados. Por favor, ajusta tu búsqueda.")
 else:
