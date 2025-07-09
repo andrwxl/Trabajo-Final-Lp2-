@@ -5,6 +5,7 @@ import numpy as np
 import plotly.express as px
 import comparador_de_perfiles as comparador
 from gemini_funciones.asesor_perfil import mostrar_asesor_perfil
+from gemini_funciones.generador_rutas import mostrar_generador_rutas
 
 # --- Configuración de la Página ---
 st.set_page_config(
@@ -133,6 +134,7 @@ def mostrar_kpis(df, moneda, periodo):
     col3.metric(label="Puesto Más Común", value=tecnologia_demandada)
     col4.metric(label="País Principal", value=pais_con_mas_ofertas)
 
+
 def mostrar_analisis_geografico(df, paises_seleccionados):
     """Muestra el mapa mundial o el gráfico de barras de regiones según la selección."""
     st.header("Análisis Geográfico: ¿Dónde están las Oportunidades?")
@@ -200,6 +202,7 @@ def mostrar_analisis_geografico(df, paises_seleccionados):
 
 
 def mostrar_demanda_por_categoria(df):
+
     """
     Calcula y muestra un gráfico de barras con las categorías de puestos más demandadas.
     
@@ -233,6 +236,72 @@ def mostrar_demanda_por_categoria(df):
         st.plotly_chart(fig, use_container_width=True)
     else:
         st.info("No hay suficientes datos para mostrar el gráfico de demanda por categoría.")
+
+def mostrar_demanda_vs_salario(df, moneda_seleccionada, periodo_seleccionado, tipo_cambio):
+    st.header("🎯 Análisis: Demanda vs. Salario")
+
+    # 1. Agregamos los datos por categoría
+    #    Contamos el número de ofertas y calculamos el salario promedio para cada una.
+    analisis_categorias = df.groupby('categoria').agg(
+        numero_de_ofertas=('puesto_trabajo', 'count'),
+        salario_promedio_usd=('salario_anual_usd', 'mean')
+    ).reset_index()
+
+    # Filtramos para quedarnos con categorías que tengan un número mínimo de ofertas (ej: más de 5)
+    # para que el promedio de salario sea significativo.
+    analisis_categorias = analisis_categorias[analisis_categorias['numero_de_ofertas'] > 5]
+
+    if not analisis_categorias.empty:
+        # --- Lógica de conversión para la visualización ---
+        df_display = analisis_categorias.copy()
+        salario_col_display = 'salario_promedio_usd'
+        
+        if periodo_seleccionado == 'Mensual':
+            df_display[salario_col_display] = df_display[salario_col_display] / 12
+        
+        if moneda_seleccionada == 'PEN':
+            df_display[salario_col_display] = df_display[salario_col_display] * tipo_cambio
+        
+        simbolo_moneda = "S/" if moneda_seleccionada == 'PEN' else "$"
+        label_eje_y = f"Salario Promedio {periodo_seleccionado} ({moneda_seleccionada})"
+
+        # 2. Creamos el gráfico de dispersión
+        fig = px.scatter(
+            df_display,
+            x="numero_de_ofertas",
+            y=salario_col_display,
+            size="numero_de_ofertas",  # El tamaño de la burbuja también representa la demanda
+            color="categoria",         # Cada categoría tiene un color diferente
+            opacity=0.23,             # Opacidad para que las burbujas se vean mejor
+            hover_name="categoria",    # Muestra el nombre de la categoría al pasar el mouse
+            text="categoria",          # Muestra el nombre directamente en el punto
+            log_x=True,                # Usamos escala logarítmica en X para manejar grandes diferencias en demanda
+            size_max=60,               # Tamaño máximo de las burbujas
+            labels={
+                "numero_de_ofertas": "Demanda (Nº de Ofertas)",
+                "salario_promedio_usd": label_eje_y
+            },
+            #title="Análisis de Oportunidad: Demanda vs. Compensación por Categoría"
+        )
+
+        # 3. Configuramos el gráfico para que sea más legible
+        fig.update_traces(textposition='top center')
+        fig.update_layout(
+            showlegend=False,
+            yaxis_title=label_eje_y,
+            xaxis_title="Demanda (Nº de Ofertas) - Escala Logarítmica"
+        )
+        
+        # Formateamos el eje Y para que muestre el símbolo de la moneda
+        fig.update_yaxes(tickprefix=simbolo_moneda, tickformat=",.0f")
+
+        # 4. Mostramos el gráfico en el dashboard
+        st.plotly_chart(fig, use_container_width=True)
+    else:
+        st.info("No hay suficientes datos para generar el gráfico de dispersión. Intenta con otros filtros.")
+
+
+
 # --- Función para la Sección de Descarga ---
 def mostrar_seccion_descarga(df_filtrado):
     st.header("📥 Descargar Datos")
@@ -315,12 +384,25 @@ def mostrar_tabla_de_datos(df, moneda, periodo):
 
     df_display['salario_display'] = df_display['salario_display'].map(lambda x: f"{simbolo}{x:,.0f}" if pd.notna(x) else "N/A")
     
-    columnas_a_mostrar = [
+    columnas_a_mostrar = (
         'puesto_trabajo', 'nombre_empresa', 'pais', 'region_estado', 
         'salario_display', 'tipo_contrato', 'categoria', 
         'plataforma_origen', 'tipo_fuente_datos', 'enlace_oferta'
-    ]
-    st.dataframe(df_display[columnas_a_mostrar])
+    )
+    st.data_editor(
+                    df_display,
+                    column_config={
+                        "enlace_oferta": st.column_config.LinkColumn(
+                            "Link a la Oferta", # El título que se mostrará en la cabecera de la columna.
+                            display_text="Ver Oferta" # El texto que se mostrará en cada celda.
+                        )
+                    },
+                    # Definimos las columnas que queremos mostrar y su orden.
+                    column_order=columnas_a_mostrar,
+                    hide_index=True, # Ocultamos el índice de pandas.
+                    use_container_width=True # Hacemos que la tabla use todo el ancho del contenedor.
+                )
+
 
 # --- Flujo Principal de la Aplicación ---
 
@@ -363,7 +445,15 @@ if df_original is not None:
         with col_salario:
             mostrar_salario_por_categoria(df_filtrado, moneda, periodo, TIPO_DE_CAMBIO_USD_PEN)
         st.markdown("---")
+        # Simplemente llamas a la función en la nueva sección de tu dashboard.
+        mostrar_demanda_vs_salario(df_filtrado, moneda, periodo, TIPO_DE_CAMBIO_USD_PEN)
+        st.markdown("---")
         mostrar_asesor_perfil(df_filtrado, moneda, periodo, TIPO_DE_CAMBIO_USD_PEN, paises)
+        # ... (tu código del dashboard) ...
+        st.markdown("---")
+        mostrar_generador_rutas()
+        # ... (resto de tu código) ...
+
 
 
         # AL FINAL, mostramos la tabla de datos filtrados.
