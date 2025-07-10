@@ -6,7 +6,7 @@ GEMINI_API_KEY = "AIzaSyCyxpK5dsK8YwVwsr9lCpS-8UKPul5lcbc"
 # --- Configuración del Modelo de IA ---
 try:
     genai.configure(api_key=GEMINI_API_KEY)
-    model = genai.GenerativeModel('gemini-2.0-flash')
+    model = genai.GenerativeModel('gemini-2.0-flash-lite')
 except Exception as e:
     st.error(f"Error al configurar la API de Gemini: {e}")
     model = None
@@ -109,7 +109,7 @@ def mostrar_asesor_perfil(df, moneda, periodo, tipo_cambio, paises):
             st.success(f"Análisis completado. Se encontraron {num_ofertas} ofertas relevantes para tu perfil.")
             
             # --- 3. Presentación de Resultados ---
-            col1, col2 = st.columns(2)
+            col1, col2 = st.columns(spec=[0.7,0.3])
             
             with col1:
                 varPais = " a nivel global"
