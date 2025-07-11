@@ -7,6 +7,13 @@ import comparador_de_perfiles as comparador
 from gemini_funciones.asesor_perfil import mostrar_asesor_perfil
 from gemini_funciones.generador_rutas import mostrar_generador_rutas
 
+import sys
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.append(parent_dir)
+
+from ETL.Cliente._2_extractor_tasa import obtener_tasa_especifica
+
 # --- Configuración de la Página ---
 st.set_page_config(
     page_title="Dashboard de Mercado Laboral",
@@ -16,7 +23,27 @@ st.set_page_config(
 )
 
 # --- Constantes ---
-TIPO_DE_CAMBIO_USD_PEN = 3.75
+def cargar_y_cachear_tasa():
+    """
+    Obtiene la tasa de cambio y la guarda en caché para no llamar a la API
+    en cada recarga de la página. Si la API falla, usa un valor por defecto.
+    """
+    print("Obteniendo tasa de cambio actualizada...")
+    tasa = obtener_tasa_especifica("USD", "PEN")
+    if tasa is not None:
+        return tasa
+    else:
+        # Plan de respaldo: Si la API falla, usamos un valor por defecto seguro.
+        print("ADVERTENCIA: Falló la obtención de la tasa de cambio. Usando valor por defecto.")
+        return 3.6 
+
+# Usamos la caché de Streamlit para eficiencia. La API solo se llamará una vez cada cierto tiempo.
+@st.cache_data(ttl=3600) # ttl=3600 segundos (1 hora)
+def obtener_tasa_cacheada():
+    return cargar_y_cachear_tasa()
+
+# Llamamos a la función para obtener la tasa (ya sea de la caché o de la API)
+TIPO_DE_CAMBIO_USD_PEN = obtener_tasa_cacheada()
 
 # --- Funciones de Carga y Procesamiento ---
 
