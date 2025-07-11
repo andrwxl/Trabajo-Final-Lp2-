@@ -4,8 +4,7 @@
 # 1. REUTILIZACIÓN DEL CLIENTE
 # -----------------------------------------------------------------------------
 # Importamos la función que ya creamos y validamos.
-from _1_cliente_api_equipo import obtener_tasas_de_cambio
-
+from ._1_cliente_api_equipo import obtener_tasas_de_cambio
 # -----------------------------------------------------------------------------
 # 2. LÓGICA DE EXTRACCIÓN GENÉRICA
 # -----------------------------------------------------------------------------
