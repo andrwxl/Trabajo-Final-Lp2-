@@ -62,7 +62,7 @@ def mostrar_generador_rutas():
     """
     Muestra la sección completa del Generador de Rutas de Carrera en el dashboard.
     """
-    st.header("🗺️ Generador de Rutas de Carrera con IA")
+    st.header("Generador de Rutas de Carrera con IA")
     st.write("Define tu punto de partida y tu meta profesional. La IA trazará un plan de 3 pasos lógicos para ayudarte a llegar allí, basado en habilidades clave del mercado.")
 
     # --- DATOS DE EJEMPLO ---

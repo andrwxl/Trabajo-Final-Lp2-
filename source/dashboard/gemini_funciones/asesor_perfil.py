@@ -53,12 +53,12 @@ def generar_respuesta_ia(prompt):
         return respuesta.text
     except Exception as e:
         return f"Error al contactar la API de IA"
-
+    
 # --- Función Principal del Componente ---
 
 def mostrar_asesor_perfil(df, moneda, periodo, tipo_cambio, paises):
-    st.header("🧠 Asesor de Perfil Inteligente")
-    st.write("Ingresa tus habilidades para obtener un análisis 360° que combina datos reales del mercado con inteligencia artificial estratégica.")
+    st.header("Análisis de Perfil Profesional")
+    st.write("Ingresa tus habilidades para obtener un análisis 360° que combina datos reales de multiples fuentes del mercado laboral")
 
     skills_input = st.text_area(
         "Ingresa tus habilidades (separadas por comas):",

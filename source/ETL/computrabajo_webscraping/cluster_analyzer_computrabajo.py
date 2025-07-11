@@ -42,7 +42,7 @@ def analizar_clusters_de_otros(df):
     X = vectorizer.fit_transform(titulos_unicos)
 
     # Aplicamos el algoritmo de Clustering (K-Means).
-    num_clusters = 50
+    num_clusters = 100
     kmeans = KMeans(n_clusters=num_clusters, random_state=42, n_init='auto')
     kmeans.fit(X)
 

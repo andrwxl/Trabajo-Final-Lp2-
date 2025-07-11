@@ -3,7 +3,6 @@ import pandas as pd
 import os
 import numpy as np
 import plotly.express as px
-import comparador_de_perfiles as comparador
 from gemini_funciones.asesor_perfil import mostrar_asesor_perfil
 from gemini_funciones.generador_rutas import mostrar_generador_rutas
 
@@ -106,33 +105,43 @@ def mostrar_sidebar(df):
     salario_min = int(df['salario_anual_usd'].fillna(0).min())
     salario_max = int(df['salario_anual_usd'].fillna(0).max())
     
-    rango_salario = st.sidebar.slider(
-        'Rango Salarial (Anual en USD)', 
-        min_value=salario_min, 
-        max_value=salario_max, 
-        value=(salario_min, salario_max)
-    )
 
     # --- Filtros de Moneda y Periodo (sin cambios) ---
     moneda_seleccionada = st.sidebar.radio("Ver Salario en:", ('PEN', 'USD'), index=0, horizontal=True)
+    #Mostrar un indicador de tasa de cambio actual y fuente
+    st.sidebar.markdown(f"**Tasa de Cambio Actual:** 1 USD = {TIPO_DE_CAMBIO_USD_PEN:.2f} PEN")
+    st.sidebar.markdown("Fuente: [API ExchangeRate](https://api.exchangerate-api.com/v4/latest/USD)")
+    #
     periodo_seleccionado = st.sidebar.radio("Ver Periodo Salarial:", ('Anual', 'Mensual'), index=0, horizontal=True)
-    
-    # Filtro por tipo de fuente
-    tipo_fuente_disponible = sorted(df['tipo_fuente_datos'].dropna().unique())
+    # Filtro por tipo de fuente de datos
+    st.sidebar.subheader("Plataforma de Fuente de Datos")
+    tipo_fuente_disponible = sorted(df['plataforma_origen'].dropna().unique())
+    seleccion_checkbox_fuente = {}
+    for fuente in tipo_fuente_disponible:
+        seleccion_checkbox_fuente[fuente] = st.sidebar.checkbox(
+            fuente,
+            value=True,
+            key=f'fuente_{fuente}',
+        )
+    # Filtramos las fuentes seleccionadas
+    tipo_fuente_seleccionadaente = [fuente for fuente, seleccionado in seleccion_checkbox_fuente.items() if seleccionado]
 
-    st.sidebar.subheader("Tipo de Fuente de Datos")
+    # Filtro por tipo de extraccion
+    tipo_extraccion_disponible = sorted(df['tipo_fuente_datos'].dropna().unique())
+
+    st.sidebar.subheader("Tipo de Extracción de Datos")
     seleccion_checkbox = {}
-    for tipo in tipo_fuente_disponible:
+    for tipo in tipo_extraccion_disponible:
         seleccion_checkbox[tipo] =  st.sidebar.checkbox(
             tipo,
             value=True,
             key=f'tipo_fuente_{tipo}',
         )
-    # Filtramos las fuentes seleccionadas
-    tipo_fuente_seleccionada = [tipo for tipo, seleccionado in seleccion_checkbox.items() if seleccionado]
+    # Filtramos las extraccion seleccionadas
+    tipo_extraccion_seleccionada = [tipo for tipo, seleccionado in seleccion_checkbox.items() if seleccionado]
 
     # Devolvemos la nueva lista de categorías seleccionadas.
-    return paises_seleccionados, categorias_seleccionadas, rango_salario, moneda_seleccionada, periodo_seleccionado, tipo_fuente_seleccionada
+    return paises_seleccionados, categorias_seleccionadas, moneda_seleccionada, periodo_seleccionado, tipo_extraccion_seleccionada, tipo_fuente_seleccionadaente
 
 def mostrar_kpis(df, moneda, periodo):
     """Calcula y muestra las métricas clave (KPIs) en la parte superior."""
@@ -229,9 +238,9 @@ def mostrar_analisis_geografico(df, paises_seleccionados):
 
 
 def mostrar_demanda_por_categoria(df):
-
     """
-    Calcula y muestra un gráfico de barras con las categorías de puestos más demandadas.
+    Calcula y muestra un gráfico de barras con las categorías de puestos más demandadas,
+    utilizando una escala de color para representar la magnitud.
     
     Args:
         df (pd.DataFrame): El DataFrame filtrado con los datos de las ofertas.
@@ -250,19 +259,31 @@ def mostrar_demanda_por_categoria(df):
             orientation='h',
             labels={'x': 'Número de Ofertas', 'y': 'Categoría'},
             text=demanda_categorias.values,
-            title="Top 15 Categorías con Mayor Demanda"
+            title="Top 15 Categorías con Mayor Demanda",
+            # --- INICIO DE LA MODIFICACIÓN ---
+            # 1. Coloreamos las barras según su valor numérico (la cantidad de ofertas).
+            color=demanda_categorias.values,
+            # 2. Definimos la escala de color a usar (ej: de un verde claro a uno oscuro).
+            color_continuous_scale='Tealgrn'
+            # --- FIN DE LA MODIFICACIÓN ---
         )
+        
         # Configuramos el gráfico para que sea más legible.
         fig.update_layout(
-            showlegend=False,
+            # Ocultamos la barra de escala de color para un look más limpio.
+            coloraxis_showscale=False,
             yaxis={'categoryorder':'total ascending'}
         )
+        
+        # Actualizamos el texto para que sea visible y se posicione correctamente.
         fig.update_traces(texttemplate='%{text}', textposition='outside')
         
         # Mostramos el gráfico en el dashboard.
         st.plotly_chart(fig, use_container_width=True)
     else:
         st.info("No hay suficientes datos para mostrar el gráfico de demanda por categoría.")
+
+
 
 def mostrar_demanda_vs_salario(df, moneda_seleccionada, periodo_seleccionado, tipo_cambio):
     st.header("🎯 Análisis: Demanda vs. Salario")
@@ -433,7 +454,7 @@ def mostrar_tabla_de_datos(df, moneda, periodo):
 
 # --- Flujo Principal de la Aplicación ---
 
-st.title("📊 Análisis del Mercado Laboral Global")
+st.title("Análisis del Mercado Laboral Global")
 st.write("Una vista interactiva de las tendencias y oportunidades en el sector tecnológico.")
 
 ruta_dataset = os.path.join('datos', 'finales', 'dataset_maestro_final.csv')
@@ -441,7 +462,7 @@ df_original = cargar_y_preprocesar_datos(ruta_dataset)
 
 if df_original is not None:
     # 1. Mostrar la barra lateral y obtener los filtros del usuario.
-    paises, categorias, salario, moneda, periodo, fuente = mostrar_sidebar(df_original)
+    paises, categorias, moneda, periodo, extraccion, fuente  = mostrar_sidebar(df_original)
 
     # 2. Filtrar el DataFrame principal según la selección.
     df_filtrado = df_original.copy()
@@ -450,13 +471,11 @@ if df_original is not None:
         df_filtrado = df_filtrado[df_filtrado['categoria'].isin(categorias)]
     if paises:
         df_filtrado = df_filtrado[df_filtrado['pais'].isin(paises)]
+    if extraccion:
+        df_filtrado = df_filtrado[df_filtrado['tipo_fuente_datos'].isin(extraccion)]
     if fuente:
-        df_filtrado = df_filtrado[df_filtrado['tipo_fuente_datos'].isin(fuente)]
+        df_filtrado = df_filtrado[df_filtrado['plataforma_origen'].isin(fuente)]
 
-    df_filtrado = df_filtrado[
-        (df_filtrado['salario_anual_usd'].fillna(salario[0]) >= salario[0]) & 
-        (df_filtrado['salario_anual_usd'].fillna(salario[1]) <= salario[1])
-    ]
 
     # 3. Mostrar los componentes del dashboard con los datos ya filtrados.
     if not df_filtrado.empty:
