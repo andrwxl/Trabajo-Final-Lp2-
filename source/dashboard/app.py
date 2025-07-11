@@ -5,6 +5,14 @@ import numpy as np
 import plotly.express as px
 import comparador_de_perfiles as comparador
 from gemini_funciones.asesor_perfil import mostrar_asesor_perfil
+from gemini_funciones.generador_rutas import mostrar_generador_rutas
+
+import sys
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.append(parent_dir)
+
+from ETL.Cliente._2_extractor_tasa import obtener_tasa_especifica
 
 # --- Configuración de la Página ---
 st.set_page_config(
@@ -15,7 +23,27 @@ st.set_page_config(
 )
 
 # --- Constantes ---
-TIPO_DE_CAMBIO_USD_PEN = 3.75
+def cargar_y_cachear_tasa():
+    """
+    Obtiene la tasa de cambio y la guarda en caché para no llamar a la API
+    en cada recarga de la página. Si la API falla, usa un valor por defecto.
+    """
+    print("Obteniendo tasa de cambio actualizada...")
+    tasa = obtener_tasa_especifica("USD", "PEN")
+    if tasa is not None:
+        return tasa
+    else:
+        # Plan de respaldo: Si la API falla, usamos un valor por defecto seguro.
+        print("ADVERTENCIA: Falló la obtención de la tasa de cambio. Usando valor por defecto.")
+        return 3.6 
+
+# Usamos la caché de Streamlit para eficiencia. La API solo se llamará una vez cada cierto tiempo.
+@st.cache_data(ttl=3600) # ttl=3600 segundos (1 hora)
+def obtener_tasa_cacheada():
+    return cargar_y_cachear_tasa()
+
+# Llamamos a la función para obtener la tasa (ya sea de la caché o de la API)
+TIPO_DE_CAMBIO_USD_PEN = obtener_tasa_cacheada()
 
 # --- Funciones de Carga y Procesamiento ---
 
@@ -63,21 +91,16 @@ def mostrar_sidebar(df):
         default=paises_disponibles
     )
 
-    # --- INICIO DE LA CORRECCIÓN ---
     
-    # 1. Obtenemos las opciones de la columna 'categoria', no de 'puesto_trabajo'.
+    # Filtro por Categoría
     categorias_disponibles = sorted(df['categoria'].dropna().unique())
-    
-    # 2. Usamos multiselect para permitir que el usuario elija una o varias categorías.
-    #    El 'default=[]' es clave: si el usuario no selecciona nada, la lista estará vacía
-    #    y nuestro código lo interpretará como "mostrar todas las categorías".
     categorias_seleccionadas = st.sidebar.multiselect(
         'Selecciona la Categoría del Puesto', 
         options=categorias_disponibles, 
         default=[] # Por defecto, no hay ninguna categoría seleccionada.
     )
+
     
-    # --- FIN DE LA CORRECCIÓN ---
 
     # --- Filtro de Salario (sin cambios) ---
     salario_min = int(df['salario_anual_usd'].fillna(0).min())
@@ -94,8 +117,22 @@ def mostrar_sidebar(df):
     moneda_seleccionada = st.sidebar.radio("Ver Salario en:", ('PEN', 'USD'), index=0, horizontal=True)
     periodo_seleccionado = st.sidebar.radio("Ver Periodo Salarial:", ('Anual', 'Mensual'), index=0, horizontal=True)
     
+    # Filtro por tipo de fuente
+    tipo_fuente_disponible = sorted(df['tipo_fuente_datos'].dropna().unique())
+
+    st.sidebar.subheader("Tipo de Fuente de Datos")
+    seleccion_checkbox = {}
+    for tipo in tipo_fuente_disponible:
+        seleccion_checkbox[tipo] =  st.sidebar.checkbox(
+            tipo,
+            value=True,
+            key=f'tipo_fuente_{tipo}',
+        )
+    # Filtramos las fuentes seleccionadas
+    tipo_fuente_seleccionada = [tipo for tipo, seleccionado in seleccion_checkbox.items() if seleccionado]
+
     # Devolvemos la nueva lista de categorías seleccionadas.
-    return paises_seleccionados, categorias_seleccionadas, rango_salario, moneda_seleccionada, periodo_seleccionado
+    return paises_seleccionados, categorias_seleccionadas, rango_salario, moneda_seleccionada, periodo_seleccionado, tipo_fuente_seleccionada
 
 def mostrar_kpis(df, moneda, periodo):
     """Calcula y muestra las métricas clave (KPIs) en la parte superior."""
@@ -124,59 +161,75 @@ def mostrar_kpis(df, moneda, periodo):
     col3.metric(label="Puesto Más Común", value=tecnologia_demandada)
     col4.metric(label="País Principal", value=pais_con_mas_ofertas)
 
+
 def mostrar_analisis_geografico(df, paises_seleccionados):
     """Muestra el mapa mundial o el gráfico de barras de regiones según la selección."""
     st.header("Análisis Geográfico: ¿Dónde están las Oportunidades?")
-    
-    if len(paises_seleccionados) > 1:
-        ofertas_por_pais = df['pais'].value_counts().reset_index()
-        ofertas_por_pais.columns = ['pais', 'numero_de_ofertas']
-        
-        # --- INICIO DE LA CORRECCIÓN ---
-        # Creamos un diccionario para "traducir" los nombres de los países
-        # al formato estándar que entiende Plotly.
-        mapa_nombres_paises = {
-            'Perú': 'Peru',
-            'US': 'United States',
-            # Puedes añadir más mapeos aquí si descubres otros países con problemas
-            # 'España': 'Spain',
-            # 'México': 'Mexico',
-        }
-        
-        # Reemplazamos los nombres en la columna 'pais' usando el diccionario.
-        # Esto no modifica el DataFrame original, solo la copia para el gráfico.
-        ofertas_por_pais['pais_mapeado'] = ofertas_por_pais['pais'].replace(mapa_nombres_paises)
-        # --- FIN DE LA CORRECCIÓN ---
-        
-        fig_mapa = px.choropleth(ofertas_por_pais, 
-                                # Usamos la nueva columna con los nombres corregidos
-                                locations="pais_mapeado", 
-                                locationmode="country names",
-                                color="numero_de_ofertas", 
-                                # Mostramos el nombre original en el hover para claridad
-                                hover_name="pais", 
-                                color_continuous_scale=px.colors.sequential.Plasma,
-                                title="Distribución de Ofertas por País")
-        st.plotly_chart(fig_mapa, use_container_width=True)
+    col1, col2 = st.columns(spec=[0.7,0.3])
 
-    elif len(paises_seleccionados) == 1:
-        pais = paises_seleccionados[0]
-        st.subheader(f"Top Regiones en {pais}")
-        
-        ofertas_por_region = df[df['pais'] == pais]['region_estado'].value_counts().nlargest(10).sort_values()
-        
-        if not ofertas_por_region.empty:
-            fig_region = px.bar(ofertas_por_region, x=ofertas_por_region.values, y=ofertas_por_region.index, 
-                                orientation='h', labels={'x': 'Número de Ofertas', 'y': 'Región/Estado'},
-                                text=ofertas_por_region.values)
-            fig_region.update_traces(texttemplate='%{text}', textposition='outside')
-            st.plotly_chart(fig_region, use_container_width=True)
-        else:
-            st.info("No hay suficientes datos de regiones para mostrar un gráfico.")
-    else:
+
+    if len(paises_seleccionados) == 0:
         st.info("Selecciona al menos un país en el filtro para ver el análisis geográfico.")
+        return
+    def mapa_paises():
+            ofertas_por_pais = df['pais'].value_counts().reset_index()
+            ofertas_por_pais.columns = ['pais', 'numero_de_ofertas']
+
+            # Creamos un diccionario para "traducir" los nombres de los países
+            mapa_nombres_paises = {
+                'Perú': 'Peru',
+                'US': 'United States',
+                # 'España': 'Spain',
+                # 'México': 'Mexico',
+            }
+        
+            # Reemplazamos los nombres en la columna 'pais' usando el diccionario.
+            ofertas_por_pais['pais_mapeado'] = ofertas_por_pais['pais'].replace(mapa_nombres_paises)
+
+            fig_mapa = px.choropleth(ofertas_por_pais, 
+                                    # Usamos la nueva columna con los nombres corregidos
+                                    locations="pais_mapeado", 
+                                    locationmode="country names",
+                                    color="numero_de_ofertas", 
+                                    # Mostramos el nombre original en el hover para claridad
+                                    hover_name="pais", 
+                                    color_continuous_scale=px.colors.sequential.Plasma,
+                                    title="Distribución de Ofertas por País")
+            st.plotly_chart(fig_mapa, use_container_width=True)
+    def mapa_regiones(pais):
+        # Gráfico 2: Top 10 regiones combinadas de los países seleccionados
+            df_paises = df[df['pais'].isin(paises_seleccionados)].copy()
+            # Creamos una columna combinada para el gráfico (ej: "Lima, Perú")
+            df_paises['region_pais'] = df_paises['region_estado'].astype(str) + ", " + df_paises['pais'].astype(str)
+            
+            ofertas_combinadas = df_paises['region_pais'].value_counts().nlargest(10).sort_values()
+
+            if not ofertas_combinadas.empty:
+                fig_combinada = px.bar(
+                    ofertas_combinadas,
+                    x=ofertas_combinadas.values,
+                    y=ofertas_combinadas.index,
+                    orientation='h',
+                    labels={'x': 'Número de Ofertas', 'y': 'Región'},
+                    title="Top 10 Regiones (Combinadas)",
+                    text=ofertas_combinadas.values
+                )
+                fig_combinada.update_traces(texttemplate='%{text}', textposition='outside')
+                fig_combinada.update_layout(showlegend=False, yaxis={'categoryorder':'total ascending'})
+                st.plotly_chart(fig_combinada, use_container_width=True)
+            else:
+                st.info("No hay datos de regiones para los países seleccionados.")
+    
+    with col1:
+        st.subheader("Mapa Mundial de Oportunidades")
+        mapa_paises()
+    with col2:
+        st.subheader("Distribución de Ofertas por País")
+        mapa_regiones(paises_seleccionados)
+
 
 def mostrar_demanda_por_categoria(df):
+
     """
     Calcula y muestra un gráfico de barras con las categorías de puestos más demandadas.
     
@@ -210,6 +263,72 @@ def mostrar_demanda_por_categoria(df):
         st.plotly_chart(fig, use_container_width=True)
     else:
         st.info("No hay suficientes datos para mostrar el gráfico de demanda por categoría.")
+
+def mostrar_demanda_vs_salario(df, moneda_seleccionada, periodo_seleccionado, tipo_cambio):
+    st.header("🎯 Análisis: Demanda vs. Salario")
+
+    # 1. Agregamos los datos por categoría
+    #    Contamos el número de ofertas y calculamos el salario promedio para cada una.
+    analisis_categorias = df.groupby('categoria').agg(
+        numero_de_ofertas=('puesto_trabajo', 'count'),
+        salario_promedio_usd=('salario_anual_usd', 'mean')
+    ).reset_index()
+
+    # Filtramos para quedarnos con categorías que tengan un número mínimo de ofertas (ej: más de 5)
+    # para que el promedio de salario sea significativo.
+    analisis_categorias = analisis_categorias[analisis_categorias['numero_de_ofertas'] > 5]
+
+    if not analisis_categorias.empty:
+        # --- Lógica de conversión para la visualización ---
+        df_display = analisis_categorias.copy()
+        salario_col_display = 'salario_promedio_usd'
+        
+        if periodo_seleccionado == 'Mensual':
+            df_display[salario_col_display] = df_display[salario_col_display] / 12
+        
+        if moneda_seleccionada == 'PEN':
+            df_display[salario_col_display] = df_display[salario_col_display] * tipo_cambio
+        
+        simbolo_moneda = "S/" if moneda_seleccionada == 'PEN' else "$"
+        label_eje_y = f"Salario Promedio {periodo_seleccionado} ({moneda_seleccionada})"
+
+        # 2. Creamos el gráfico de dispersión
+        fig = px.scatter(
+            df_display,
+            x="numero_de_ofertas",
+            y=salario_col_display,
+            size="numero_de_ofertas",  # El tamaño de la burbuja también representa la demanda
+            color="categoria",         # Cada categoría tiene un color diferente
+            opacity=0.23,             # Opacidad para que las burbujas se vean mejor
+            hover_name="categoria",    # Muestra el nombre de la categoría al pasar el mouse
+            text="categoria",          # Muestra el nombre directamente en el punto
+            log_x=True,                # Usamos escala logarítmica en X para manejar grandes diferencias en demanda
+            size_max=60,               # Tamaño máximo de las burbujas
+            labels={
+                "numero_de_ofertas": "Demanda (Nº de Ofertas)",
+                "salario_promedio_usd": label_eje_y
+            },
+            #title="Análisis de Oportunidad: Demanda vs. Compensación por Categoría"
+        )
+
+        # 3. Configuramos el gráfico para que sea más legible
+        fig.update_traces(textposition='top center')
+        fig.update_layout(
+            showlegend=False,
+            yaxis_title=label_eje_y,
+            xaxis_title="Demanda (Nº de Ofertas) - Escala Logarítmica"
+        )
+        
+        # Formateamos el eje Y para que muestre el símbolo de la moneda
+        fig.update_yaxes(tickprefix=simbolo_moneda, tickformat=",.0f")
+
+        # 4. Mostramos el gráfico en el dashboard
+        st.plotly_chart(fig, use_container_width=True)
+    else:
+        st.info("No hay suficientes datos para generar el gráfico de dispersión. Intenta con otros filtros.")
+
+
+
 # --- Función para la Sección de Descarga ---
 def mostrar_seccion_descarga(df_filtrado):
     st.header("📥 Descargar Datos")
@@ -292,12 +411,25 @@ def mostrar_tabla_de_datos(df, moneda, periodo):
 
     df_display['salario_display'] = df_display['salario_display'].map(lambda x: f"{simbolo}{x:,.0f}" if pd.notna(x) else "N/A")
     
-    columnas_a_mostrar = [
+    columnas_a_mostrar = (
         'puesto_trabajo', 'nombre_empresa', 'pais', 'region_estado', 
         'salario_display', 'tipo_contrato', 'categoria', 
         'plataforma_origen', 'tipo_fuente_datos', 'enlace_oferta'
-    ]
-    st.dataframe(df_display[columnas_a_mostrar])
+    )
+    st.data_editor(
+                    df_display,
+                    column_config={
+                        "enlace_oferta": st.column_config.LinkColumn(
+                            "Link a la Oferta", # El título que se mostrará en la cabecera de la columna.
+                            display_text="Ver Oferta" # El texto que se mostrará en cada celda.
+                        )
+                    },
+                    # Definimos las columnas que queremos mostrar y su orden.
+                    column_order=columnas_a_mostrar,
+                    hide_index=True, # Ocultamos el índice de pandas.
+                    use_container_width=True # Hacemos que la tabla use todo el ancho del contenedor.
+                )
+
 
 # --- Flujo Principal de la Aplicación ---
 
@@ -309,7 +441,7 @@ df_original = cargar_y_preprocesar_datos(ruta_dataset)
 
 if df_original is not None:
     # 1. Mostrar la barra lateral y obtener los filtros del usuario.
-    paises, categorias, salario, moneda, periodo = mostrar_sidebar(df_original)
+    paises, categorias, salario, moneda, periodo, fuente = mostrar_sidebar(df_original)
 
     # 2. Filtrar el DataFrame principal según la selección.
     df_filtrado = df_original.copy()
@@ -318,6 +450,9 @@ if df_original is not None:
         df_filtrado = df_filtrado[df_filtrado['categoria'].isin(categorias)]
     if paises:
         df_filtrado = df_filtrado[df_filtrado['pais'].isin(paises)]
+    if fuente:
+        df_filtrado = df_filtrado[df_filtrado['tipo_fuente_datos'].isin(fuente)]
+
     df_filtrado = df_filtrado[
         (df_filtrado['salario_anual_usd'].fillna(salario[0]) >= salario[0]) & 
         (df_filtrado['salario_anual_usd'].fillna(salario[1]) <= salario[1])
@@ -337,13 +472,22 @@ if df_original is not None:
         with col_salario:
             mostrar_salario_por_categoria(df_filtrado, moneda, periodo, TIPO_DE_CAMBIO_USD_PEN)
         st.markdown("---")
-        mostrar_asesor_perfil(df_filtrado, moneda, periodo, TIPO_DE_CAMBIO_USD_PEN)
+        # Simplemente llamas a la función en la nueva sección de tu dashboard.
+        mostrar_demanda_vs_salario(df_filtrado, moneda, periodo, TIPO_DE_CAMBIO_USD_PEN)
+        st.markdown("---")
+        mostrar_asesor_perfil(df_filtrado, moneda, periodo, TIPO_DE_CAMBIO_USD_PEN, paises)
+        # ... (tu código del dashboard) ...
+        st.markdown("---")
+        mostrar_generador_rutas()
+        # ... (resto de tu código) ...
+
 
 
         # AL FINAL, mostramos la tabla de datos filtrados.
         mostrar_tabla_de_datos(df_filtrado, moneda, periodo)
         st.markdown("---")
-        mostrar_seccion_descarga(df_filtrado)
+        df_empleos_sugeridos = mostrar_seccion_descarga(df_filtrado)
+        st.dataframe(df_empleos_sugeridos)
     else:
         st.warning("No se encontraron resultados para los filtros seleccionados. Por favor, ajusta tu búsqueda.")
 else:
