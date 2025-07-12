@@ -1,0 +1,105 @@
+fuente,tipo_recurso,titulo,url,autor_instructor,costo,nivel,duracion_esfuerzo
+Books to Scrape,Libro (Práctica),A Light in the ...,http://books.toscrape.com/catalogue/a-light-in-the-attic_1000/index.html,N/A,Â£51.77,,N/A
+Books to Scrape,Libro (Práctica),Tipping the Velvet,http://books.toscrape.com/catalogue/tipping-the-velvet_999/index.html,N/A,Â£53.74,,N/A
+Books to Scrape,Libro (Práctica),Soumission,http://books.toscrape.com/catalogue/soumission_998/index.html,N/A,Â£50.10,,N/A
+Books to Scrape,Libro (Práctica),Sharp Objects,http://books.toscrape.com/catalogue/sharp-objects_997/index.html,N/A,Â£47.82,,N/A
+Books to Scrape,Libro (Práctica),Sapiens: A Brief History ...,http://books.toscrape.com/catalogue/sapiens-a-brief-history-of-humankind_996/index.html,N/A,Â£54.23,,N/A
+Books to Scrape,Libro (Práctica),The Requiem Red,http://books.toscrape.com/catalogue/the-requiem-red_995/index.html,N/A,Â£22.65,,N/A
+Books to Scrape,Libro (Práctica),The Dirty Little Secrets ...,http://books.toscrape.com/catalogue/the-dirty-little-secrets-of-getting-your-dream-job_994/index.html,N/A,Â£33.34,,N/A
+Books to Scrape,Libro (Práctica),The Coming Woman: A ...,http://books.toscrape.com/catalogue/the-coming-woman-a-novel-based-on-the-life-of-the-infamous-feminist-victoria-woodhull_993/index.html,N/A,Â£17.93,,N/A
+Books to Scrape,Libro (Práctica),The Boys in the ...,http://books.toscrape.com/catalogue/the-boys-in-the-boat-nine-americans-and-their-epic-quest-for-gold-at-the-1936-berlin-olympics_992/index.html,N/A,Â£22.60,,N/A
+Books to Scrape,Libro (Práctica),The Black Maria,http://books.toscrape.com/catalogue/the-black-maria_991/index.html,N/A,Â£52.15,,N/A
+Books to Scrape,Libro (Práctica),Starving Hearts (Triangular Trade ...,http://books.toscrape.com/catalogue/starving-hearts-triangular-trade-trilogy-1_990/index.html,N/A,Â£13.99,,N/A
+Books to Scrape,Libro (Práctica),Shakespeare's Sonnets,http://books.toscrape.com/catalogue/shakespeares-sonnets_989/index.html,N/A,Â£20.66,,N/A
+Books to Scrape,Libro (Práctica),Set Me Free,http://books.toscrape.com/catalogue/set-me-free_988/index.html,N/A,Â£17.46,,N/A
+Books to Scrape,Libro (Práctica),Scott Pilgrim's Precious Little ...,http://books.toscrape.com/catalogue/scott-pilgrims-precious-little-life-scott-pilgrim-1_987/index.html,N/A,Â£52.29,,N/A
+Books to Scrape,Libro (Práctica),Rip it Up and ...,http://books.toscrape.com/catalogue/rip-it-up-and-start-again_986/index.html,N/A,Â£35.02,,N/A
+Books to Scrape,Libro (Práctica),Our Band Could Be ...,http://books.toscrape.com/catalogue/our-band-could-be-your-life-scenes-from-the-american-indie-underground-1981-1991_985/index.html,N/A,Â£57.25,,N/A
+Books to Scrape,Libro (Práctica),Olio,http://books.toscrape.com/catalogue/olio_984/index.html,N/A,Â£23.88,,N/A
+Books to Scrape,Libro (Práctica),Mesaerion: The Best Science ...,http://books.toscrape.com/catalogue/mesaerion-the-best-science-fiction-stories-1800-1849_983/index.html,N/A,Â£37.59,,N/A
+Books to Scrape,Libro (Práctica),Libertarianism for Beginners,http://books.toscrape.com/catalogue/libertarianism-for-beginners_982/index.html,N/A,Â£51.33,,N/A
+Books to Scrape,Libro (Práctica),It's Only the Himalayas,http://books.toscrape.com/catalogue/its-only-the-himalayas_981/index.html,N/A,Â£45.17,,N/A
+Hacker News,Artículo de Tecnología,Tree Borrows,https://plf.inf.ethz.ch/research/pldi25-tree-borrows.html,N/A,N/A,N/A,N/A
+Hacker News,Artículo de Tecnología,Show HN: FlopperZiro – A DIY open-source Flipper Zero clone,https://github.com/lraton/FlopperZiro,N/A,N/A,N/A,N/A
+Hacker News,Artículo de Tecnología,Evolution Mail Users Easily Trackable,https://www.grepular.com/Evolution_Mail_Users_Easily_Trackable,N/A,N/A,N/A,N/A
+Hacker News,Artículo de Tecnología,Jank Programming Language,https://jank-lang.org/,N/A,N/A,N/A,N/A
+Hacker News,Artículo de Tecnología,A fast 3D collision detection algorithm,https://cairno.substack.com/p/improvements-to-the-separating-axis,N/A,N/A,N/A,N/A
+Hacker News,Artículo de Tecnología,Configuring Split Horizon DNS with Pi-Hole and Tailscale,https://www.bentasker.co.uk/posts/blog/general/configuring-pihole-to-serve-different-records-to-different-clients.html,N/A,N/A,N/A,N/A
+Hacker News,Artículo de Tecnología,Biomni: A General-Purpose Biomedical AI Agent,https://github.com/snap-stanford/Biomni,N/A,N/A,N/A,N/A
+Hacker News,Artículo de Tecnología,Why LLMs Can't Write Q/Kdb+: Writing Code Right-to-Left,https://medium.com/@gabiteodoru/why-llms-cant-write-q-kdb-writing-code-right-to-left-ea6df68af443,N/A,N/A,N/A,N/A
+Hacker News,Artículo de Tecnología,"Archaeologists unveil 3,500-year-old city in Peru",https://www.bbc.co.uk/news/articles/c07dmx38kyeo,N/A,N/A,N/A,N/A
+Hacker News,Artículo de Tecnología,Desktop Publishing Tools That Didn't Make It,https://tedium.co/2022/10/12/forgotten-desktop-publishing-tools-history/,N/A,N/A,N/A,N/A
+Hacker News,Artículo de Tecnología,Perplexity Comet,https://comet.perplexity.ai/?a=b,N/A,N/A,N/A,N/A
+Hacker News,Artículo de Tecnología,Ruby 3.4 frozen string literals: What Rails developers need to know,https://www.prateekcodes.dev/ruby-34-frozen-string-literals-rails-upgrade-guide/,N/A,N/A,N/A,N/A
+Hacker News,Artículo de Tecnología,US Court nullifies FTC requirement for click-to-cancel,https://arstechnica.com/tech-policy/2025/07/us-court-cancels-ftc-rule-that-would-have-made-canceling-subscriptions-easier/,N/A,N/A,N/A,N/A
+Hacker News,Artículo de Tecnología,Nuclear Waste Reprocessing Gains Momentum in the U.S.,https://spectrum.ieee.org/nuclear-waste-reprocessing-transmutation,N/A,N/A,N/A,N/A
+Hacker News,Artículo de Tecnología,Most RESTful APIs aren't really RESTful,https://florian-kraemer.net//software-architecture/2025/07/07/Most-RESTful-APIs-are-not-really-RESTful.html,N/A,N/A,N/A,N/A
+Hacker News,Artículo de Tecnología,I Ported SAP to a 1976 CPU. It Wasn't That Slow,https://github.com/oisee/zvdb-z80/blob/master/ZVDB-Z80-ABAP.md,N/A,N/A,N/A,N/A
+Hacker News,Artículo de Tecnología,Bootstrapping a side project into a profitable seven-figure business,https://projectionlab.com/blog/we-reached-1m-arr-with-zero-funding,N/A,N/A,N/A,N/A
+Hacker News,Artículo de Tecnología,The Architecture Behind Lovable and Bolt,https://www.beam.cloud/blog/agentic-apps,N/A,N/A,N/A,N/A
+Hacker News,Artículo de Tecnología,Helm local code execution via a malicious chart,https://github.com/helm/helm/security/advisories/GHSA-557j-xg8c-q2mm,N/A,N/A,N/A,N/A
+Hacker News,Artículo de Tecnología,TaIrTe₄ photodetectors show promise for sensitive room-temperature THz sensing,https://phys.org/news/2025-07-tairte-photodetectors-highly-sensitive-room.html,N/A,N/A,N/A,N/A
+Hacker News,Artículo de Tecnología,7-Zip for Windows can now use more than 64 CPU threads for compression,https://www.7-zip.org/history.txt,N/A,N/A,N/A,N/A
+Hacker News,Artículo de Tecnología,"Phrase origin: Why do we ""call"" functions?",https://quuxplusone.github.io/blog/2025/04/04/etymology-of-call/,N/A,N/A,N/A,N/A
+Hacker News,Artículo de Tecnología,RapidRAW: A non-destructive and GPU-accelerated RAW image editor,https://github.com/CyberTimon/RapidRAW,N/A,N/A,N/A,N/A
+Hacker News,Artículo de Tecnología,A Emoji Reverse Polish Notation Calculator Written in COBOL,https://github.com/ghuntley/cobol-emoji-rpn-calculator,N/A,N/A,N/A,N/A
+Hacker News,Artículo de Tecnología,X Chief Says She Is Leaving the Social Media Platform,https://www.nytimes.com/2025/07/09/technology/linda-yaccarino-x-steps-down.html,N/A,N/A,N/A,N/A
+Hacker News,Artículo de Tecnología,"Is the doc bot docs, or not?",https://www.robinsloan.com/lab/what-are-we-even-doing-here/,N/A,N/A,N/A,N/A
+Hacker News,Artículo de Tecnología,Galiliean-invariant cosmological hydrodynamical simulations on a moving mesh,https://wwwmpa.mpa-garching.mpg.de/~volker/arepo/,N/A,N/A,N/A,N/A
+Hacker News,Artículo de Tecnología,Breaking Git with a carriage return and cloning RCE,https://dgl.cx/2025/07/git-clone-submodule-cve-2025-48384,N/A,N/A,N/A,N/A
+Hacker News,Artículo de Tecnología,ESIM Security,https://security-explorations.com/esim-security.html,N/A,N/A,N/A,N/A
+Hacker News,Artículo de Tecnología,Using MPC for Anonymous and Private DNA Analysis,https://vishakh.blog/2025/07/08/using-mpc-for-anonymous-and-private-dna-analysis/,N/A,N/A,N/A,N/A
+Class Central,Índice de Materias,2D Graphics,https://www.classcentral.com/subject/2d-graphics,N/A,N/A,N/A,71courses
+Class Central,Índice de Materias,2D Modeling,https://www.classcentral.com/subject/2d-modeling,N/A,N/A,N/A,29courses
+Class Central,Índice de Materias,3D Effects,https://www.classcentral.com/subject/3d-effects,N/A,N/A,N/A,49courses
+Class Central,Índice de Materias,3D Graphics,https://www.classcentral.com/subject/3d-graphics,N/A,N/A,N/A,341courses
+Class Central,Índice de Materias,3D Lighting,https://www.classcentral.com/subject/3d-lighting,N/A,N/A,N/A,45courses
+Class Central,Índice de Materias,3D Mapping,https://www.classcentral.com/subject/3d-mapping,N/A,N/A,N/A,23courses
+Class Central,Índice de Materias,3D Reconstruction,https://www.classcentral.com/subject/3d-reconstruction,N/A,N/A,N/A,55courses
+Class Central,Índice de Materias,3D Text,https://www.classcentral.com/subject/3d-text,N/A,N/A,N/A,20courses
+Class Central,Índice de Materias,3D Tracking,https://www.classcentral.com/subject/3d-tracking,N/A,N/A,N/A,19courses
+Class Central,Índice de Materias,3D Transforms,https://www.classcentral.com/subject/3d-transforms,N/A,N/A,N/A,26courses
+Class Central,Índice de Materias,3D Visualization,https://www.classcentral.com/subject/3d-visualization,N/A,N/A,N/A,128courses
+Class Central,Índice de Materias,6502 Microprocessor,https://www.classcentral.com/subject/6502-microprocessor,N/A,N/A,N/A,21courses
+Class Central,Índice de Materias,8-bit Computing,https://www.classcentral.com/subject/8-bit-computing,N/A,N/A,N/A,28courses
+Class Central,Índice de Materias,A* Search,https://www.classcentral.com/subject/a-search,N/A,N/A,N/A,11courses
+Class Central,Índice de Materias,A* Search Algorithm,https://www.classcentral.com/subject/a-search-algorithm,N/A,N/A,N/A,5courses
+Class Central,Índice de Materias,ACPI,https://www.classcentral.com/subject/acpi,N/A,N/A,N/A,27courses
+Class Central,Índice de Materias,AES,https://www.classcentral.com/subject/aes,N/A,N/A,N/A,43courses
+Class Central,Índice de Materias,AES Encryption,https://www.classcentral.com/subject/aes-encryption,N/A,N/A,N/A,14courses
+Class Central,Índice de Materias,AI Agents,https://www.classcentral.com/subject/ai-agents,N/A,N/A,N/A,744courses
+Class Central,Índice de Materias,AI Alignment,https://www.classcentral.com/subject/ai-alignment,N/A,N/A,N/A,74courses
+Class Central,Índice de Materias,AI Assistants,https://www.classcentral.com/subject/ai-assistants,N/A,N/A,N/A,145courses
+Class Central,Índice de Materias,AI Bias,https://www.classcentral.com/subject/ai-bias,N/A,N/A,N/A,37courses
+Class Central,Índice de Materias,AI Chatbots,https://www.classcentral.com/subject/ai-chatbots,N/A,N/A,N/A,45courses
+Class Central,Índice de Materias,AI Engineering,https://www.classcentral.com/subject/ai-engineering,N/A,N/A,N/A,101courses
+Class Central,Índice de Materias,AI Ethics,https://www.classcentral.com/subject/ai-ethics,N/A,N/A,N/A,899courses
+Class Central,Índice de Materias,AI Governance,https://www.classcentral.com/subject/ai-governance,N/A,N/A,N/A,329courses
+Class Central,Índice de Materias,AI Hallucinations,https://www.classcentral.com/subject/ai-hallucinations,N/A,N/A,N/A,24courses
+Class Central,Índice de Materias,AI Image Generation,https://www.classcentral.com/subject/ai-image-generation,N/A,N/A,N/A,160courses
+Class Central,Índice de Materias,AI Regulation,https://www.classcentral.com/subject/ai-regulation,N/A,N/A,N/A,129courses
+Class Central,Índice de Materias,AI Transparency,https://www.classcentral.com/subject/ai-transparency,N/A,N/A,N/A,64courses
+Coursera (Data Science),Curso Profesional,"Python para ciencia de datos, IA y desarrollo",https://www.coursera.org/learn/python-for-applied-data-science-ai,N/A,N/A,N/A,N/A
+Coursera (Data Science),Curso Profesional,Ciencia de datos de IBM,https://www.coursera.org/professional-certificates/ibm-data-science,N/A,N/A,N/A,N/A
+Coursera (Data Science),Curso Profesional,¿Qué es la ciencia de datos?,https://www.coursera.org/learn/what-is-datascience,N/A,N/A,N/A,N/A
+Coursera (Data Science),Curso Profesional,Ciencia de Datos,https://www.coursera.org/specializations/jhu-data-science,N/A,N/A,N/A,N/A
+Coursera (Data Science),Curso Profesional,Fundamentos de la ciencia de datos,https://www.coursera.org/learn/foundations-of-data-science,N/A,N/A,N/A,N/A
+Coursera (Data Science),Curso Profesional,Bases de datos y SQL para la ciencia de los datos con Python,https://www.coursera.org/learn/sql-data-science,N/A,N/A,N/A,N/A
+Coursera (Data Science),Curso Profesional,Ciencias de los Datos Aplicada con Python,https://www.coursera.org/specializations/data-science-python,N/A,N/A,N/A,N/A
+Coursera (Data Science),Curso Profesional,Introducción a la ciencia de datos,https://www.coursera.org/specializations/introduction-data-science,N/A,N/A,N/A,N/A
+Coursera (Data Science),Curso Profesional,Proyecto Python para la ciencia de datos,https://www.coursera.org/learn/python-project-for-data-science,N/A,N/A,N/A,N/A
+Coursera (Data Science),Curso Profesional,Habilidades matemáticas para la ciencia de los datos,https://www.coursera.org/learn/datasciencemathskills,N/A,N/A,N/A,N/A
+Coursera (Data Science),Curso Profesional,Data Science Foundations,https://www.coursera.org/specializations/data-science-foundations,N/A,N/A,N/A,N/A
+Coursera (Data Science),Curso Profesional,Matemáticas para el Aprendizaje automático y la Ciencia de datos,https://www.coursera.org/specializations/mathematics-for-machine-learning-and-data-science,N/A,N/A,N/A,N/A
+Coursera (Data Science),Curso Profesional,Análisis de datos de Google,https://www.coursera.org/professional-certificates/google-data-analytics,N/A,N/A,N/A,N/A
+Coursera (Data Science),Curso Profesional,Fundamentos de la ciencia de datos con Python y SQL,https://www.coursera.org/specializations/data-science-fundamentals-python-sql,N/A,N/A,N/A,N/A
+Coursera (Data Science),Curso Profesional,SQL para ciencia de los datos,https://www.coursera.org/learn/sql-for-data-science,N/A,N/A,N/A,N/A
+Coursera (Data Science),Curso Profesional,Ciencia de datos aplicada,https://www.coursera.org/specializations/applied-data-science,N/A,N/A,N/A,N/A
+Coursera (Data Science),Curso Profesional,un curso intensivo en Ciencia de los Datos,https://www.coursera.org/learn/data-science-course,N/A,N/A,N/A,N/A
+Coursera (Data Science),Curso Profesional,Google Advanced Data Analytics,https://www.coursera.org/professional-certificates/google-advanced-data-analytics,N/A,N/A,N/A,N/A
+Coursera (Data Science),Curso Profesional,Análisis de datos con Python,https://www.coursera.org/learn/data-analysis-with-python,N/A,N/A,N/A,N/A
+Coursera (Data Science),Curso Profesional,Analista de datos de Microsoft Power BI,https://www.coursera.org/professional-certificates/microsoft-power-bi-data-analyst,N/A,N/A,N/A,N/A
+Coursera (Data Science),Curso Profesional,Metodología para la ciencia de los datos,https://www.coursera.org/learn/data-science-methodology,N/A,N/A,N/A,N/A
+Coursera (Data Science),Curso Profesional,Ciencia de datos: Fundamentos con R,https://www.coursera.org/specializations/data-science-foundations-r,N/A,N/A,N/A,N/A
+Coursera (Data Science),Curso Profesional,Fundamentos de Ciencia de datos,https://www.coursera.org/specializations/data-science-fundamentals,N/A,N/A,N/A,N/A
+Coursera (Data Science),Curso Profesional,Data Science Challenge,https://www.coursera.org/projects/data-science-challenge,N/A,N/A,N/A,N/A

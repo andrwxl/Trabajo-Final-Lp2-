@@ -1,0 +1,73 @@
+# scraper_indeed_autocontenido.py
+
+import requests
+import csv
+
+# --- 1. CONFIGURACIÓN INTEGRADA ---
+# La API Key se define directamente en el script.
+# Es más simple, pero recuerda la advertencia de seguridad de abajo.
+API_KEY = "7673b61d07mshcfe2f2f6d79b90cp136613jsndf71b8c7a76f" # Reemplaza con tu clave si es diferente
+API_HOST = "indeed12.p.rapidapi.com"
+BASE_URL = f"https://{API_HOST}"
+
+
+# --- 2. FUNCIÓN PARA OBTENER DATOS DE LA API ---
+def obtener_jobs_de_indeed(empresa, localidad="us"):
+    """
+    Obtiene los listados de trabajo de una empresa y localidad específicas.
+    """
+    url_endpoint = f"{BASE_URL}/company/{empresa}/jobs"
+    
+    headers = {
+        "x-rapidapi-key": API_KEY,
+        "x-rapidapi-host": API_HOST
+    }
+    
+    params = {"locality": localidad, "start": "1"}
+
+    print(f"Realizando petición para '{empresa}' en '{localidad}'...")
+
+    try:
+        response = requests.get(url_endpoint, headers=headers, params=params)
+        response.raise_for_status() # Verifica si hubo un error HTTP (ej. 401, 404, 500)
+
+        print("¡Petición exitosa! Procesando datos...")
+        datos = response.json()
+        return datos.get('hits', []) 
+
+    except requests.exceptions.RequestException as err:
+        print(f"Ocurrió un error en la petición: {err}")
+        if 'response' in locals():
+             print(f"Respuesta del servidor: {response.text}")
+        return None
+
+# --- 3. FUNCIÓN PARA GUARDAR LOS DATOS EN UN ARCHIVO CSV ---
+def guardar_en_csv(lista_jobs, nombre_archivo):
+    """
+    Guarda una lista de trabajos (diccionarios) en un archivo CSV.
+    """
+    if not lista_jobs:
+        print("La lista de trabajos está vacía. No se creará el archivo CSV.")
+        return
+
+    print(f"Guardando {len(lista_jobs)} trabajos en el archivo '{nombre_archivo}'...")
+    cabeceras = lista_jobs[0].keys()
+
+    try:
+        with open(nombre_archivo, mode='w', newline='', encoding='utf-8') as archivo_csv:
+            escritor = csv.DictWriter(archivo_csv, fieldnames=cabeceras)
+            escritor.writeheader()
+            escritor.writerows(lista_jobs)
+        print(f"¡Éxito! Archivo '{nombre_archivo}' guardado correctamente.")
+    except IOError as e:
+        print(f"Error al escribir el archivo CSV: {e}")
+
+# --- 4. SCRIPT PRINCIPAL DE EJECUCIÓN ---
+if __name__ == "__main__":
+    empresa_a_buscar = "Ubisoft"
+    
+    jobs_encontrados = obtener_jobs_de_indeed(empresa_a_buscar)
+
+    if jobs_encontrados:
+        nombre_del_archivo = f"jobs_{empresa_a_buscar.lower()}.csv"
+        guardar_en_csv(jobs_encontrados, nombre_del_archivo)
