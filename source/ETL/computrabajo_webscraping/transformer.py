@@ -2,10 +2,18 @@ import pandas as pd
 import os
 from sklearn.feature_extraction.text import CountVectorizer
 from collections import Counter
+from clustering import obtener_datos_ordenados_por_cluster
 import re
 
 from config import STOP_WORDS_ES
 
+# --- Eliminar duplicados por columna específica ---
+
+def eliminar_duplicados_por_columna(df, nombre_columna):
+  df_sin_duplicados = df.drop_duplicates(subset=[nombre_columna], keep='first')
+  return df_sin_duplicados
+
+# --- Cargar datos y eliminar duplicados ---
 
 def cargar_datos_cluster(ruta_archivo):
     # Carga el archivo CSV con los datos y sus clusters asignados
@@ -77,8 +85,11 @@ if __name__ == "__main__":
     archivo_salida_final = 'datos_limpios_computrabajo.csv'
 
     # Carga de Datos
-    df_clustered = cargar_datos_cluster(os.path.join('datos', 'crudos', archivo_clusters))
+    df_clustered = obtener_datos_ordenados_por_cluster()
 
+    # Eliminación de Duplicados por url
+    df_clustered = eliminar_duplicados_por_columna(df_clustered, 'enlace_oferta')
+    
     if df_clustered is not None:
         print("Iniciando la generación de títulos representativos por cluster...")
         
@@ -97,7 +108,7 @@ if __name__ == "__main__":
         print("\nAplicando estandarización a todo el dataset...")
         df_clustered['categoria'] = df_clustered['cluster'].map(mapa_nombres)
         
-         # --- APLICAMOS LA LIMPIEZA DE SALARIOS ---
+        # --- APLICAMOS LA LIMPIEZA DE SALARIOS ---
         print("Aplicando limpieza y normalización de salarios...")
         df_clustered['salario_minimo'] = df_clustered['salario_minimo'].apply(limpiar_salario)
         df_clustered['salario_maximo'] = df_clustered["salario_minimo"] #

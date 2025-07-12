@@ -14,27 +14,8 @@ def cargar_datos_crudos(ruta_archivo):
     print("Cargando datos crudos...")
     return pd.read_csv(ruta_archivo)
 
-# --- Función de clasificación por reglas (la mantenemos como primer filtro) ---
-def clasificar_con_reglas(titulo):
-    if not isinstance(titulo, str): return "Otro"
-    titulo_lower = titulo.lower()
-    if 'analista de datos' in titulo_lower: return 'Analista de Datos'
-    if 'desarrollador' in titulo_lower: return 'Desarrollador de Software'
-    if 'python' in titulo_lower: return 'Desarrollador Python'
-    return "Otro"
-
 # ANÁLISIS DE CLUSTERS 
 def analizar_clusters_de_otros(df):
-    # 1. Filtramos para quedarnos solo con los títulos no clasificados.
-    #df_otros = df[df['puesto_estandarizado'] == 'Otro'].copy()
-    
-    #if df_otros.empty:
-    #    print("¡No hay títulos en la categoría 'Otro' para analizar.")
-    #    return
-    #
-    #print(f"Analizando {len(df_otros)} títulos no clasificados con Machine Learning...")
-
-    # Usamos solo los títulos únicos para que el análisis sea más rápido.
     titulos_unicos = df['puesto_trabajo'].unique()
 
     # Convertimos el texto a vectores numéricos usando TF-IDF.
@@ -52,7 +33,8 @@ def analizar_clusters_de_otros(df):
     
     # Usamos un 'merge' para añadir la columna 'cluster' a cada fila correspondiente.
     df_reporte_completo = pd.merge(df, df_mapa_clusters, on='puesto_trabajo', how='left')
-
+    df_reporte_completo = df_reporte_completo.sort_values(by='cluster')
+    return df_reporte_completo
     
     columnas_deseadas = [
         'cluster', 
@@ -76,21 +58,15 @@ def analizar_clusters_de_otros(df):
     # Ordenamos por cluster para que sea fácil de analizar.
     df_reporte_completo.sort_values('cluster').to_csv(ruta_clusters, index=False)
 
-
-# --- PUNTO DE ENTRADA DEL SCRIPT ---
-if __name__ == "__main__":
-    
+# --- Lllamadas a funciones ---
+def obtener_datos_ordenados_por_cluster():
     ruta_entrada = os.path.join('datos', 'crudos', 'datos_crudos_computrabajo.csv')
-    
     # Creamos la carpeta de salida si no existe
     os.makedirs(os.path.join('datos', 'crudos'), exist_ok=True)
-
     dataframe_crudo = cargar_datos_crudos(ruta_entrada)
-    
     if dataframe_crudo is not None:
-        # Aplicamos la clasificación por reglas primero
-        #dataframe_crudo['puesto_estandarizado'] = dataframe_crudo['puesto_trabajo'].apply(clasificar_con_reglas)
-        
-        # Ejecutamos el análisis de clusters sobre los que quedaron como "Otro"
-        analizar_clusters_de_otros(dataframe_crudo)
+        print("Datos cargados correctamente. Iniciando análisis de clusters...")
+        df_clustered = analizar_clusters_de_otros(dataframe_crudo)
 
+        # Retornamos el DataFrame con los clusters.
+        return df_clustered
