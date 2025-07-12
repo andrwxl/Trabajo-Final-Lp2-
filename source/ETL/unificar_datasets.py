@@ -54,10 +54,13 @@ def estandarizar_salarios(df):
     df_estandarizado.loc[filas_anual, 'periodo_salario'] = 'Mensual'
     
     # 2. ESTANDARIZACIÓN DE MONEDA (USD -> PEN)
-    factor_cambio_usd_pen = 3.74
+    factor_cambio_usd_pen = 3.55
     filas_usd = df_estandarizado['moneda_salario'] == 'USD'
     df_estandarizado.loc[filas_usd, ['salario_minimo', 'salario_maximo']] *= factor_cambio_usd_pen
+    # loc hace referencia a las filas donde la moneda es USD y multiplica los salarios por el factor de cambio.
     df_estandarizado.loc[filas_usd, 'moneda_salario'] = 'PEN'
+    df_estandarizado['salario_minimo'] = df_estandarizado['salario_minimo'].round(0)
+    df_estandarizado['salario_maximo'] = df_estandarizado['salario_maximo'].round(0)
 
     return df_estandarizado
 

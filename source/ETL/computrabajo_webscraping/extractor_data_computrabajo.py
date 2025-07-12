@@ -4,13 +4,13 @@ import pandas as pd
 
 # Lista para almacenar las URLs de las ofertas de empleo.
 urls_base = [
-    #"https://pe.computrabajo.com/trabajo-de-informatica",
-    #"https://pe.computrabajo.com/trabajo-de-datos",
-    #"https://pe.computrabajo.com/trabajo-de-programacion",
-    #"https://pe.computrabajo.com/trabajo-de-sistemas",
+    "https://pe.computrabajo.com/trabajo-de-informatica",
+    "https://pe.computrabajo.com/trabajo-de-datos",
+    "https://pe.computrabajo.com/trabajo-de-programacion",
+    "https://pe.computrabajo.com/trabajo-de-sistemas",
     "https://pe.computrabajo.com/trabajo-de-python",
-    #"https://pe.computrabajo.com/trabajo-de-power-bi",
-    #"https://pe.computrabajo.com/trabajo-de-sql",
+    "https://pe.computrabajo.com/trabajo-de-power-bi",
+    "https://pe.computrabajo.com/trabajo-de-sql",
 ]
 
 def peticion_pagina(url):
