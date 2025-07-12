@@ -20,7 +20,7 @@ BASE_URL = "https://v6.exchangerate-api.com/v6"
 # -----------------------------------------------------------------------------
 # 3. LÓGICA DE PETICIÓN A LA API
 # -----------------------------------------------------------------------------
-def obtener_tasas_de_cambio(moneda_base="USD"):
+def run(moneda_base="USD"):
     """
     Realiza una petición GET a ExchangeRate-API para obtener las últimas tasas de cambio.
     """
@@ -51,7 +51,7 @@ def obtener_tasas_de_cambio(moneda_base="USD"):
 if __name__ == "__main__":
     print("--- Iniciando prueba del cliente API (Versión para equipo) ---")
     
-    datos_tasas = obtener_tasas_de_cambio("USD")
+    datos_tasas = run("USD")
     
     if datos_tasas and datos_tasas.get("result") == "success":
         print("\n--- Procesando Respuesta Válida ---")
