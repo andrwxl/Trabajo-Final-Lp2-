@@ -60,7 +60,7 @@ def analizar_clusters_de_otros(df):
 
 # --- Lllamadas a funciones ---
 def obtener_datos_ordenados_por_cluster():
-    ruta_entrada = os.path.join('datos', 'crudos', 'datos_crudos_computrabajo.csv')
+    ruta_entrada = os.path.join('datos', 'crudos', 'computrabajo_multipais.csv')
     # Creamos la carpeta de salida si no existe
     os.makedirs(os.path.join('datos', 'crudos'), exist_ok=True)
     dataframe_crudo = cargar_datos_crudos(ruta_entrada)
@@ -69,4 +69,5 @@ def obtener_datos_ordenados_por_cluster():
         df_clustered = analizar_clusters_de_otros(dataframe_crudo)
 
         # Retornamos el DataFrame con los clusters.
+        print("Análisis de clusters completado. Retornando el DataFrame con los clusters.")
         return df_clustered

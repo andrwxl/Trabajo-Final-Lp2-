@@ -11,8 +11,7 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.dirname(current_dir)
 sys.path.append(parent_dir)
 
-from ETL.Cliente._2_extractor_tasa import obtener_tasa_especifica
-
+import ETL.Cliente.tasa_cambios as tasa_cambios
 # --- Configuración de la Página ---
 st.set_page_config(
     page_title="Dashboard de Mercado Laboral",
@@ -21,28 +20,9 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- Constantes ---
-def cargar_y_cachear_tasa():
-    """
-    Obtiene la tasa de cambio y la guarda en caché para no llamar a la API
-    en cada recarga de la página. Si la API falla, usa un valor por defecto.
-    """
-    print("Obteniendo tasa de cambio actualizada...")
-    tasa = obtener_tasa_especifica("USD", "PEN")
-    if tasa is not None:
-        return tasa
-    else:
-        # Plan de respaldo: Si la API falla, usamos un valor por defecto seguro.
-        print("ADVERTENCIA: Falló la obtención de la tasa de cambio. Usando valor por defecto.")
-        return 3.6 
-
-# Usamos la caché de Streamlit para eficiencia. La API solo se llamará una vez cada cierto tiempo.
-@st.cache_data(ttl=3600) # ttl=3600 segundos (1 hora)
-def obtener_tasa_cacheada():
-    return cargar_y_cachear_tasa()
 
 # Llamamos a la función para obtener la tasa (ya sea de la caché o de la API)
-TIPO_DE_CAMBIO_USD_PEN = obtener_tasa_cacheada()
+TIPO_DE_CAMBIO_USD_PEN = tasa_cambios.obtener_tasa_especifica("USD", "PEN")
 
 # --- Funciones de Carga y Procesamiento ---
 
@@ -114,8 +94,8 @@ def cargar_y_preprocesar_datos(ruta_archivo):
     Crea una columna base 'salario_anual_usd' para todos los cálculos.
     """
     if not os.path.exists(ruta_archivo):
-        st.error(f"Error: No se encontró el archivo en la ruta: {ruta_archivo}")
-        return None
+            st.error(f"Error: No se encontró el archivo en la ruta: {ruta_archivo}")
+            return None
     
     try:
         df = pd.read_csv(ruta_archivo)
@@ -123,11 +103,11 @@ def cargar_y_preprocesar_datos(ruta_archivo):
             if col in df.columns:
                 df[col] = df[col].str.strip()
         
-        for col in ['salario_minimo', 'salario_maximo']:
+        for col in ['salario']:
              if col in df.columns:
                 df[col] = pd.to_numeric(df[col], errors='coerce')
         
-        df['salario_anual_base'] = np.where(df['periodo_salario'] == 'Mensual', df['salario_maximo'] * 12, df['salario_maximo'])
+        df['salario_anual_base'] = np.where(df['periodo_salario'] == 'Mensual', df['salario'] * 12, df['salario'])
         df['salario_anual_usd'] = np.where(df['moneda_salario'] == 'PEN', df['salario_anual_base'] / TIPO_DE_CAMBIO_USD_PEN, df['salario_anual_base'])
         return df
     except Exception as e:
@@ -159,12 +139,6 @@ def mostrar_sidebar(df):
         options=categorias_disponibles, 
         default=[] # Por defecto, no hay ninguna categoría seleccionada.
     )
-
-    
-
-    # --- Filtro de Salario (sin cambios) ---
-    salario_min = int(df['salario_anual_usd'].fillna(0).min())
-    salario_max = int(df['salario_anual_usd'].fillna(0).max())
     
 
     # --- Filtros de Moneda y Periodo (sin cambios) ---
@@ -209,11 +183,17 @@ def mostrar_kpis(df, moneda, periodo):
     st.header("Vista General del Mercado (Filtrada)")
 
     total_ofertas = len(df)
-    salario_promedio_anual_usd = df['salario_anual_usd'].mean()
+    # filtramos solamente los que tienen salario anual y los que son valores numericos
+    print(df["salario_anual_usd"])
+    salario_promedio = df['salario_anual_usd'].mean()
+    print(salario_promedio)
+    # salario ignorando NaN
+
     tecnologia_demandada = df['puesto_trabajo'].mode()[0] if not df['puesto_trabajo'].empty else "N/A"
+
     pais_con_mas_ofertas = df['pais'].mode()[0] if not df['pais'].empty else "N/A"
 
-    salario_display = salario_promedio_anual_usd
+    salario_display = salario_promedio
     if periodo == 'Mensual':
         salario_display /= 12
     
@@ -264,7 +244,7 @@ def mostrar_feed_recomendaciones(df_filtrado, moneda, periodo, habilidades_usuar
     
     # Filtramos por ofertas que tengan al menos una coincidencia y ordenamos por relevancia.
     df_recomendados = df_recomendados[df_recomendados['relevancia'] > 0].sort_values(
-        by=['relevancia', 'salario_maximo'], ascending=[False, False]
+        by=['relevancia', 'salario'], ascending=[False, False]
     )
 
     if df_recomendados.empty:
@@ -438,7 +418,7 @@ def mostrar_analisis_geografico(df, paises_seleccionados):
                 'Perú': 'Peru',
                 'US': 'United States',
                 # 'España': 'Spain',
-                # 'México': 'Mexico',
+                'México': 'Mexico',
             }
         
             # Reemplazamos los nombres en la columna 'pais' usando el diccionario.
@@ -708,6 +688,7 @@ st.write("Una vista interactiva de las tendencias y oportunidades en el sector t
 ruta_dataset = os.path.join('datos', 'finales', 'dataset_maestro_final.csv')
 df_original = cargar_y_preprocesar_datos(ruta_dataset)
 
+habilidades_del_usuario = None
 if df_original is not None:
     # 1. Mostrar la barra lateral y obtener los filtros del usuario.
     paises, categorias, moneda, periodo, extraccion, fuente  = mostrar_sidebar(df_original)
@@ -732,6 +713,10 @@ if df_original is not None:
         if st.session_state.view == 'main_dashboard':
             mostrar_kpis(df_filtrado, moneda, periodo)
             st.markdown("---")
+            habilidades_del_usuario = mostrar_pantalla_registro()
+            if habilidades_del_usuario:
+                mostrar_feed_recomendaciones(df_filtrado, moneda, periodo, habilidades_del_usuario)
+                st.markdown("---")
             mostrar_analisis_geografico(df_filtrado, paises)
             st.markdown("---")
             st.header("Análisis por Categoría de Puesto")
@@ -752,12 +737,7 @@ if df_original is not None:
             df_empleos_sugeridos = mostrar_seccion_descarga(df_filtrado)
             st.dataframe(df_empleos_sugeridos)
             # Si el usuario no ha registrado sus habilidades, mostramos la pantalla de registro.
-            habilidades_del_usuario = mostrar_pantalla_registro()
-            if habilidades_del_usuario:
-                mostrar_feed_recomendaciones(df_filtrado, moneda, periodo, habilidades_del_usuario)
-            else:
-                st.info("Registra tus habilidades en la pantalla de bienvenida para ver recomendaciones personalizadas.")
-            
+
             st.markdown("---")
             mostrar_tabla_de_datos(df_filtrado, moneda, periodo)
         # --- NUEVO: Manejo de la vista de "Ver todas las ofertas para mí" ---

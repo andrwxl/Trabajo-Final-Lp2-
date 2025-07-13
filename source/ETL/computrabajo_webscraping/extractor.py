@@ -8,16 +8,16 @@ PAISES = ['pe', 'co', 'cl', 'mx', 'ar']
 
 # Palabras clave para las búsquedas de empleo.
 PALABRAS_CLAVE = [
-    #"informatica",
-    #"datos",
-    #"programacion",
-    #"sistemas",
-    #"python",
-    #"power-bi",
+    "informatica",
+    "datos",
+    "programacion",
+    "sistemas",
+    "python",
+    "power-bi",
     "sql",
-    #"developer",
-    #"excel",
-    #"analista",
+    "developer",
+    "excel",
+    "analista",
 ]
 
 # Mapeo de códigos de país a nombres para el CSV

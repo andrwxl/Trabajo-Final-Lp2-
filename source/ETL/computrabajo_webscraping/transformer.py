@@ -1,6 +1,7 @@
 import pandas as pd
 import os
 from sklearn.feature_extraction.text import CountVectorizer
+
 from collections import Counter
 from clustering import obtener_datos_ordenados_por_cluster
 import re
@@ -110,8 +111,7 @@ if __name__ == "__main__":
         
         # --- APLICAMOS LA LIMPIEZA DE SALARIOS ---
         print("Aplicando limpieza y normalización de salarios...")
-        df_clustered['salario_minimo'] = df_clustered['salario_minimo'].apply(limpiar_salario)
-        df_clustered['salario_maximo'] = df_clustered["salario_minimo"] #
+        df_clustered['salario'] = df_clustered['salario'].apply(limpiar_salario)
 
         # Seleccionamos y reordenamos las columnas para el archivo final.
         columnas_finales = [
@@ -120,8 +120,7 @@ if __name__ == "__main__":
             'pais',
             'region_estado',
             'tipo_contrato',
-            'salario_minimo',
-            'salario_maximo', 
+            'salario',
             'moneda_salario',
             'periodo_salario',
             'categoria',  # Usamos la columna 'categoria' que contiene los títulos estandarizados.
