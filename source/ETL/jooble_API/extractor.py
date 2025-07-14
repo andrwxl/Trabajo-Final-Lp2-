@@ -4,7 +4,7 @@ import json
 import os
 import time
 #from config import JOOBLE_API_KEY # Asumo que tu clave está en config.py
-JOOBLE_API_KEY = "clave api"  # Reemplaza con tu clave real
+JOOBLE_API_KEY = "6824ebac-5249-4652-ad61-8318f6f17e22"  # Reemplaza con tu clave real
 def obtener_ofertas_jooble(keywords, location="Peru"):
     """
     Realiza una petición POST a la API de Jooble usando http.client.
@@ -48,7 +48,7 @@ def obtener_ofertas_jooble(keywords, location="Peru"):
         return None
 
 # --- PUNTO DE ENTRADA DEL SCRIPT ---
-if _name_ == "_main_":
+if __name__ == "__main__":
     
     # Lista de países de América para realizar la búsqueda.
     PAISES_DE_AMERICA = [

@@ -78,6 +78,16 @@ def limpiar_salario(salario_texto):
         # Si la conversión falla, significa que el formato era inesperado.
         return None
 
+
+def extraer_id(url: str) -> str:
+    return url.split('#')[0].split('-')[-1]
+
+def eliminar_duplicados_por_id(df: pd.DataFrame) -> pd.DataFrame:
+    df_copia = df.copy()
+    df_copia['id_oferta'] = df_copia['enlace_oferta'].apply(extraer_id)
+    df_sin_duplicados = df_copia.drop_duplicates(subset='id_oferta', keep='first')
+    return df_sin_duplicados.drop(columns='id_oferta').reset_index(drop=True)
+
 if __name__ == "__main__":
     
     #  Definición de Rutas
@@ -112,6 +122,9 @@ if __name__ == "__main__":
         # --- APLICAMOS LA LIMPIEZA DE SALARIOS ---
         print("Aplicando limpieza y normalización de salarios...")
         df_clustered['salario'] = df_clustered['salario'].apply(limpiar_salario)
+
+        # Eliminamos las filas duplicadas por ID de oferta.
+        df_clustered = eliminar_duplicados_por_id(df_clustered)
 
         # Seleccionamos y reordenamos las columnas para el archivo final.
         columnas_finales = [

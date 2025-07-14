@@ -4,8 +4,6 @@ import requests
 import csv
 
 # --- 1. CONFIGURACIÓN INTEGRADA ---
-# La API Key se define directamente en el script.
-# Es más simple, pero recuerda la advertencia de seguridad de abajo.
 API_KEY = "7673b61d07mshcfe2f2f6d79b90cp136613jsndf71b8c7a76f" # Reemplaza con tu clave si es diferente
 API_HOST = "indeed12.p.rapidapi.com"
 BASE_URL = f"https://{API_HOST}"

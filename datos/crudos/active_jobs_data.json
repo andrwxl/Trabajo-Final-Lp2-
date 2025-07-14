@@ -1,0 +1,569 @@
+[
+    {
+        "id": "1820978879",
+        "date_posted": "2025-07-12T03:25:48.11",
+        "date_created": "2025-07-12T03:29:04.230074",
+        "title": "Data Engineer - Mid-Level",
+        "organization": "Jobs for Humanity",
+        "organization_url": null,
+        "date_validthrough": null,
+        "locations_raw": [
+            {
+                "address": {
+                    "addressLocality": "New York",
+                    "addressRegion": "NEW YORK",
+                    "addressCountry": "United States"
+                }
+            }
+        ],
+        "locations_alt_raw": [
+            "New York, NEW YORK"
+        ],
+        "location_type": null,
+        "location_requirements_raw": null,
+        "salary_raw": null,
+        "employment_type": [
+            "Contract"
+        ],
+        "url": "https://jobs.smartrecruiters.com/JobsForHumanity/744000070143135-data-engineer-mid-level",
+        "source_type": "ats",
+        "source": "smartrecruiters",
+        "source_domain": "jobs.smartrecruiters.com",
+        "organization_logo": null,
+        "cities_derived": [
+            "New York"
+        ],
+        "regions_derived": [
+            "New York"
+        ],
+        "countries_derived": [
+            "United States"
+        ],
+        "locations_derived": [
+            "New York, New York, United States"
+        ],
+        "timezones_derived": [
+            "America/New_York"
+        ],
+        "lats_derived": [
+            40.6943
+        ],
+        "lngs_derived": [
+            -73.9249
+        ],
+        "remote_derived": false,
+        "domain_derived": "jobsforhumanity.com",
+        "description_text": "Company DescriptionJobs for Humanity is collaborating with YUPRO Placement to build an inclusive and just employment ecosystem. We support individuals coming from all walks of life.  Company Name:  YUPRO PlacementJob DescriptionData Engineer - Mid-LevelThis is a contract opportunity with potential to extend or convert. This is a fully remote opportunity.About this positionWe're seeking a Mid-Level Data Engineer to support data design and delivery within our Risk Assurance Data and System projects. The ideal candidate is an independent, technically adept professional who can identify and lead data engineering initiatives. You will work closely with data analysts, IT teams, and business partners to ensure optimal data pipeline and model development.Job ResponsibilitiesDesign, develop, test, and maintain data pipelines and models across various technologiesAnalyze raw data sets and combine information from multiple sourcesCollaborate with cross-functional teams to ensure strategic alignmentParticipate in design reviews and provide technical guidanceLead data solution design, modeling, and implementation, ensuring secure and efficient codeSkills/Requirements5-10 years of experience as a Data EngineerProficiency in Excel, Power BI, Snowflake, Jira, Confluence, Databricks & AlteryxStrong SQL skills, including stored procedures and integration techniquesFamiliarity with Azure, Agile methodologies, and DevOps toolsExperience with data modeling, cloud technologies, and end-to-end data architectureAdditional InformationContract role with potential to convertFully remoteInterview process includes 2 rounds (technical and business-facing)Pay RangePay Range: $60-$70/hourYUPRO Placement is the nation’s leading skills-first placement firm placing and promoting historically overlooked talent into permanent hire, apprenticeship, and contract job assignments. We represent clients who support skills first inclusive hiring practices. YUPRO Placement is an equal opportunity employer."
+    },
+    {
+        "id": "1821334071",
+        "date_posted": "2025-07-12T00:00:00",
+        "date_created": "2025-07-12T10:55:22.122958",
+        "title": "Data Engineer - Federal Civilian Health",
+        "organization": "General Dynamics Information Technology",
+        "organization_url": "",
+        "date_validthrough": null,
+        "locations_raw": [
+            {
+                "@type": "Place",
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressCountry": "United States of America",
+                    "addressLocality": "USA VA Home Office (VAHOME)"
+                }
+            }
+        ],
+        "locations_alt_raw": [
+            "Any Location / Remote"
+        ],
+        "location_type": null,
+        "location_requirements_raw": null,
+        "salary_raw": null,
+        "employment_type": [
+            "FULL_TIME"
+        ],
+        "url": "https://gdit.wd5.myworkdayjobs.com/External_Career_Site/job/Any-Location--Remote/Data-Engineer---Federal-Civilian-Health_RQ203113",
+        "source_type": "ats",
+        "source": "workday",
+        "source_domain": "gdit.wd5.myworkdayjobs.com",
+        "organization_logo": null,
+        "cities_derived": null,
+        "regions_derived": null,
+        "countries_derived": [
+            "United States"
+        ],
+        "locations_derived": [
+            "United States"
+        ],
+        "timezones_derived": [
+            "America/New_York"
+        ],
+        "lats_derived": [
+            38.9047
+        ],
+        "lngs_derived": [
+            -77.0163
+        ],
+        "remote_derived": false,
+        "domain_derived": "gdit.com",
+        "description_text": "Type of Requisition: Regular Clearance Level Must Currently Possess: None Clearance Level Must Be Able to Obtain: None Public Trust/Other Required: NACI (T1) Job Family: Data Science Job Qualifications: Skills: Analytical Thinking, AWS Tools, ETL Development, SQL Databases, Teamwork Certifications: None Experience: 3 + years of related experience US Citizenship Required: No Job Description: General Dynamics Information Technology Inc (GDIT) is seeking someone qualified as a Data Engineer to support and continue to grow the HRSA account. As part of this team, we are providing leading data analytics, Business Intelligence (BI), Artificial Intelligence (AI) & Machine Learning (ML) services for our federal clients to enable innovative, effective, and secure business processes. This role needs working collaboratively with a high-performance team, and help establish and implement data governance policies, and framework. Responsibilities: Responsible for designing, planning, implementing, and administering databases, including security, access, and documentation Implement data architecture solutions including a data platform and a data catalog ensuring data quality, performance, and scalability. Optimize and troubleshoot database performance issues. Develop pipelines to move data across source systems Required Skills: Bachelors Degree or equivalent and at least 2 years of experience in Database Engineering (or similar role). Hands-on experience in data migration. Experience with developing, maintaining, and testing data ingestion, data transformation, and data migration across source systems. Experience with implementing cloud-based data systems such as RDS, Databricks, Snowflake, AWS Glue and Athena etc. Experience in database design, data modeling, data warehousing, and SQL. Excellent analytic skills associated with troubleshoot Linux systems Experience performing configuration management (e.g., package installation, starting of services, installing scripts or config files) Experience with ETL process Desired Skills: Excellent problem-solving skills and attention to detail. Strong communication and collaboration skills. Ability to perform root cause analysis on external and internal processes and data to identify opportunities for improvement and answer questions Certification in database technologies (e.g., Oracle Certified Professional). Experience with cloud-based database solutions (e.g., AWS, Azure). Experience using data science tools such as Python The likely salary range for this position is $80,750 - $109,250. This is not, however, a guarantee of compensation or salary. Rather, salary will be set based on experience, geographic location and possibly contractual requirements and could fall outside of this range. Scheduled Weekly Hours: 40 Travel Required: Less than 10% Telecommuting Options: Hybrid Work Location: Any Location / Remote Additional Work Locations: Total Rewards at GDIT: Our benefits package for all US-based employees includes a variety of medical plan options, some with Health Savings Accounts, dental plan options, a vision plan, and a 401(k) plan offering the ability to contribute both pre and post-tax dollars up to the IRS annual limits and receive a company match. To encourage work/life balance, GDIT offers employees full flex work weeks where possible and a variety of paid time off plans, including vacation, sick and personal time, holidays, paid parental, military, bereavement and jury duty leave. GDIT typically provides new employees with 15 days of paid leave per calendar year to be used for vacations, personal business, and illness and an additional 10 paid holidays per year. Paid leave and paid holidays are prorated based on the employee’s date of hire. The GDIT Paid Family Leave program provides a total of up to 160 hours of paid leave in a rolling 12 month period for eligible employees. To ensure our employees are able to protect their income, other offerings such as short and long-term disability benefits, life, accidental death and dismemberment, personal accident, critical illness and business travel and accident insurance are provided or available. We regularly review our Total Rewards package to ensure our offerings are competitive and reflect what our employees have told us they value most. We are GDIT. A global technology and professional services company that delivers consulting, technology and mission services to every major agency across the U.S. government, defense and intelligence community. Our 30,000 experts extract the power of technology to create immediate value and deliver solutions at the edge of innovation. We operate across 50 countries worldwide, offering leading capabilities in digital modernization, AI/ML, Cloud, Cyber and application development. Together with our clients, we strive to create a safer, smarter world by harnessing the power of deep expertise and advanced technology. Join our Talent Community to stay up to date on our career opportunities and events at gdit.com/tc. Equal Opportunity Employer / Individuals with Disabilities / Protected Veterans Join our 30,000 everyday heroes. We are GDIT. A global technology and professional services company that delivers consulting, technology and mission services to every major agency across the U.S. government, defense and intelligence community. Our 30,000 experts extract the power of technology to create immediate value and deliver solutions at the edge of innovation. We operate across 30 countries worldwide, offering leading capabilities in digital modernization, AI/ML, Cloud, Cyber and application development. Together with our clients, we strive to create a safer, smarter world by harnessing the power of deep expertise and advanced technology. For more information about GDIT's Privacy Policy, click here: https://www.gdit.com/privacy-policy/notices/"
+    },
+    {
+        "id": "1820521382",
+        "date_posted": "2025-07-11T23:36:59",
+        "date_created": "2025-07-11T20:36:09.112011",
+        "title": "Data Engineer",
+        "organization": "ROR Partners Inc",
+        "organization_url": null,
+        "date_validthrough": null,
+        "locations_raw": [
+            {
+                "@type": "Place",
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": "Boulder",
+                    "addressRegion": "CO",
+                    "addressCountry": "US"
+                }
+            }
+        ],
+        "locations_alt_raw": null,
+        "location_type": null,
+        "location_requirements_raw": null,
+        "salary_raw": {
+            "@type": "MonetaryAmount",
+            "currency": "USD",
+            "value": {
+                "@type": "QuantitativeValue",
+                "minValue": 70000,
+                "maxValue": 110000,
+                "unitText": "YEAR"
+            }
+        },
+        "employment_type": null,
+        "url": "https://recruiting.paylocity.com/Recruiting/Jobs/Details/3409437",
+        "source_type": "ats",
+        "source": "paylocity",
+        "source_domain": "recruiting.paylocity.com",
+        "organization_logo": "https://recruiting.paylocity.com/recruiting/jobs/GetLogoFile?moduleId=15906",
+        "cities_derived": [
+            "Boulder"
+        ],
+        "regions_derived": [
+            "Colorado"
+        ],
+        "countries_derived": [
+            "United States"
+        ],
+        "locations_derived": [
+            "Boulder, Colorado, United States"
+        ],
+        "timezones_derived": [
+            "America/Denver"
+        ],
+        "lats_derived": [
+            40.0248
+        ],
+        "lngs_derived": [
+            -105.2524
+        ],
+        "remote_derived": false,
+        "domain_derived": null,
+        "description_text": "Description\nJob Summary\nROR is a rapidly growing, client-driven digital marketing and data company. We are seeking an energetic and experienced Data Engineer to take a key role in our Engineering team. In this position, you will collaborate with other team members, product owners, and operations. You should have a deep understanding and a passion for designing and implementing robust ELT data pipelines. This position will be responsible for building and maintaining best-in-class data systems. Must be authorized to work in the United States with no sponsorship and currently live in Superior, Colorado area or already planning to relocate as there is no relocation package.\n\nWhat you will do\n• You will spend 90% of your time writing SQL code and dbt models (Data Build Tool) and working with data with some data analysis in support of dbt models.\n• Develop and maintain data models in dbt (Data Build Tool) within Snowflake, implementing business logic and ensuring alignment with existing architecture and data standards.\n• Design, build, and administer scalable data pipelines and a robust data warehouse to support reporting, analytics, and operational use cases.\n• Collaborate with stakeholders to understand business needs, translate them into data requirements, and ensure data is modeled to support those needs.\n• Perform data analysis to validate assumptions, support decision-making, troubleshoot issues, and identify improvements in data quality and structure.\n• Design and implement dimensional models and develop the semantic layer to support BI tools and self-serve analytics.\n• Manage and contribute to dbt projects, ensuring code quality, proper documentation, and alignment with modular, scalable design patterns.\n• Understand and interpret client data structures, source systems, and business processes to effectively integrate data into the existing architecture.\n• Write clean, production-ready code\n• Create and maintain comprehensive documentation of data architecture, models, and pipelines.\n• Work collaboratively within a team of data engineers\n\nWhat we are looking for\n• Passion for working with data, solving complex data challenges and optimizing data processes\n• Professional experience deploying production-quality code\n• Deep understanding and hands-on experience with SQL and relational databases are REQUIRED.\n• Strong data modeling skills and familiarity with data warehousing methodologies are REQUIRED.\n• Prior experience with Git and the command line is required\n• Experience using Python and Python libraries is a plus\n• Knowledge of the ELT pattern and best practices for scalable data pipelines\n• Experience conducting code reviews and ensuring best practices in coding standards\n• Experience with dbt and Snowflake is highly desired\n• Experience with AWS and S3 is helpful\n• Strong desire to stay up to date with advancements in data engineering practices\n• Ability to develop and ship features independently\n• Strong desire to work with Data all the time is REQUIRED\n\nEducation/Training\nRequired: Bachelor’s degree in computer science, a related STEM field, or equivalent experience\n\nExperience\n• 1–4 years of experience as a Data Engineer, SQL/Relational Database Developer, or in a similar data-focused role\nWork Environment/Benefits\n• Standard work week - 40 hours; however, employees may be required to work additional time necessary to meet deadlines and complete projects.\n• Competitive salary, health and dental insurance, life and disability, 401K, supplemental insurance, FSAs, flexible PTO/Holidays and much more!\n\nPhysical Requirements\n• Sitting for extended periods of time\n• Dexterity of hands and fingers to operate a computer keyboard, mouse, and other devices and objects\n• Ability to sit/stand at a desk and view a computer screen for extended periods of time\n• Physically able to participate in training sessions, presentations, and meetings\n\nROR Partners is an Equal Opportunity Employer. ROR Partners’ policy is not to discriminate against any applicant or employee based on actual or perceived race, age, sex or gender (including pregnancy), marital status, national origin, ancestry, citizenship status, mental or physical disability, religion, creed, color, sexual orientation, gender identity or expression (including transgender status), veteran status, genetic information, or any other characteristic protected by applicable federal, state or local law. ROR Partners also prohibits harassment of applicants and employees based on any of these protected categories.\n\nROR Partners will provide accommodations to applicants as needed."
+    },
+    {
+        "id": "1820714015",
+        "date_posted": "2025-07-11T22:30:10.791",
+        "date_created": "2025-07-11T23:50:09.124761",
+        "title": "Data Engineer - Business Intelligence",
+        "organization": "SchoolAI",
+        "organization_url": null,
+        "date_validthrough": null,
+        "locations_raw": [
+            {
+                "@type": "Place",
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressCountry": "",
+                    "addressLocality": "Lehi, UT"
+                }
+            }
+        ],
+        "locations_alt_raw": null,
+        "location_type": null,
+        "location_requirements_raw": null,
+        "salary_raw": null,
+        "employment_type": [
+            "SALARIED_FT"
+        ],
+        "url": "https://ats.rippling.com/schoolai/jobs/a8fd42a2-47f5-4054-924c-b04ba8258ee5",
+        "source_type": "ats",
+        "source": "rippling",
+        "source_domain": "ats.rippling.com",
+        "organization_logo": "https://prod-images.rippling.com/69dfcee5b7e387351147a4de5a84e2643308813c.png?Expires=1752364208&Signature=uKZ8oMopZXLeT84MT~Hwfrte3SC5Ezx5xLLO4GsqZxra4MbYiUTBhwXTDNhIubJ15w8wzSDypt-PM1YmRj~TnKjtc0Dq6GggxmwkpUTdJZpPFYh4wOR98Ct8Gt~RFtDoOGeYEEG2u6c8ifky92JME6e2DxNBB7G1vuy4A9L9-b6CSHqwjfw9xAQiNqi2sxJMSjhDOzcygCG-AOixMxGND0NJhmGIqBIxeLRqEyrx-NwswZyyVogxCbVgBfaxDpN2XBIInPUk5wRWErlb0teTP~K9eST2~HRX-GYauulqajyaDqQ43OY2qbvbZZecSqstTG0JnVKrdjKxYRjjXSNAyw__&Key-Pair-Id=K2Y26R2ZPP26PH",
+        "cities_derived": [
+            "Lehi"
+        ],
+        "regions_derived": [
+            "Utah"
+        ],
+        "countries_derived": [
+            "United States"
+        ],
+        "locations_derived": [
+            "Lehi, Utah, United States"
+        ],
+        "timezones_derived": [
+            "America/Denver"
+        ],
+        "lats_derived": [
+            40.4136
+        ],
+        "lngs_derived": [
+            -111.8725
+        ],
+        "remote_derived": false,
+        "domain_derived": null,
+        "description_text": "SchoolAI is seeking a skilled Data Engineer focused on Business Intelligence to design, build, and maintain our data infrastructure and pipelines. We believe in working as cross functional teams to build delightful products. You'll work closely with Product Management, Infrastructure Engineers, Data Scientists, Data Analysts, AI/ML Engineers, and other stakeholders to ensure efficient data delivery and processing across the organization.\n\nAn ideal candidate understands software development best practices and isn’t fooled into thinking that the outputs of what they build outweigh the outcomes of what they build. They’ll work well with others and be excited about the opportunity to work at a Series A stage startup.\n\nAbout the role\nDesign, develop, and maintain scalable ETL data pipelines, using modern data engineering tools and best practices\nBuild and optimize data models and architectures to support analytics and business intelligence needs\nImplement data quality controls and monitoring systems to ensure data accuracy and reliability\nCollaborate with cross-functional teams, including folks in other departments, to understand data requirements and provide technical solutions\nWrite efficient SQL queries and optimize database performance\nDeploy and maintain cloud-based data infrastructure\nCreate and maintain technical documentation for data systems and processes\nTools that you might work with here include: Segment, HubSpot, BigQuery, dbt, Airbyte, PostHog, Statsig, Hightouch, Fivetran and others\nWe'd love to hear from you if you have:\nA deep understanding of and extensive experience with distributed systems\nBuilt and maintained large scale ETL pipelines\n3+ years of experience in data engineering or similar role\nStrong programming skills in Python, SQL, and shell scripting\nExperience with ETL tools and data pipeline orchestration (e.g., Airflow)\nProficiency in working with both relational and NoSQL databases\nExperience with cloud platforms (GCP, AWS, or Azure)\nKnowledge of data warehousing concepts and dimensional modeling\nIf you’d like to apply for this role, fill out the info below and upload your resume. In lieu of a cover letter, click here to try out one of our spaces. Fill in your first and last name and then tell us about the best teacher you’ve ever had."
+    },
+    {
+        "id": "1820658898",
+        "date_posted": "2025-07-11T21:40:20.199",
+        "date_created": "2025-07-11T22:39:36.614435",
+        "title": "Senior AI Data Engineer",
+        "organization": "TWG Global",
+        "organization_url": "https://jobs.workable.com/company/2k72PzEbdmmv8pkLbkAvEu/jobs-at-twg-global",
+        "date_validthrough": null,
+        "locations_raw": [
+            {
+                "@type": "Place",
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": "Santa Monica",
+                    "addressRegion": "California",
+                    "addressCountry": "United States"
+                }
+            }
+        ],
+        "locations_alt_raw": [
+            "Santa Monica, California, United States"
+        ],
+        "location_type": "TELECOMMUTE",
+        "location_requirements_raw": [
+            {
+                "@type": "Country",
+                "name": "United States"
+            }
+        ],
+        "salary_raw": null,
+        "employment_type": [
+            "FULL_TIME"
+        ],
+        "url": "https://jobs.workable.com/view/gMJzYVNzDzXFJ3A4oUCJF9/hybrid-senior-ai-data-engineer-in-santa-monica-at-twg-global",
+        "source_type": "ats",
+        "source": "workable",
+        "source_domain": "jobs.workable.com",
+        "organization_logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/673410/logo",
+        "cities_derived": [
+            "Santa Monica"
+        ],
+        "regions_derived": [
+            "California"
+        ],
+        "countries_derived": [
+            "United States"
+        ],
+        "locations_derived": [
+            "Santa Monica, California, United States"
+        ],
+        "timezones_derived": [
+            "America/Los_Angeles"
+        ],
+        "lats_derived": [
+            34.0235
+        ],
+        "lngs_derived": [
+            -118.481
+        ],
+        "remote_derived": true,
+        "domain_derived": "twgglobal.com",
+        "description_text": "At TWG Group Holdings, LLC (‘TWG Global’), we are at the cutting edge of innovation and business transformation, leveraging data and AI to manage a diverse portfolio that spans Investments, Securities, Insurance, Finance, Corporate Lending, Merchant Banking, as well as Sports, Media, and Entertainment. Data is one of our most valuable assets, and our commitment to AI allows us to transform that data into a powerful competitive advantage. We are pioneering a range of data and AI services that provide real-time intelligence to both our customers and workforce, enabling them to make informed decisions within interactive, cloud-native business applications. \nAs we evolve into an AI-first, model-driven, and cloud-native company, we prioritize responsible data and AI practices that protect our customers and workforce while ensuring compliance within a regulated environment. Our goal is to lead by example, acting with the highest standards of ethics, responsibility, and transparency. This commitment drives our development of cutting-edge AI/ML business applications across our diverse product and service offerings. \nIn this role, you will be at the heart of our data and analytics transformation, collaborating closely with management teams to achieve our strategic objectives and operational excellence. Our decentralized structure empowers each business unit to operate autonomously while benefiting from the strategic guidance and support of our central AI Solutions Group. \nThrough our pioneering partnerships with major data and AI vendors, you will have the opportunity to work on transformative projects that will revolutionize marketing, distribution, customer acquisition, and internal processes. These initiatives are designed to enhance productivity, reduce costs, and create high-demand products and services. The advanced data systems we develop will grant management unparalleled access to real-time performance data, enabling swift, informed decision-making and agile business adjustments. \nMoreover, you will play a crucial role in leveraging our strategic relationships and equity positions in leading tech startups. These collaborations are not just about staying ahead of the competition—they are about creating true competitive advantages across our businesses. You will contribute to projects that are reshaping industries, from harnessing cloud-based supercomputing capabilities to driving key initiatives with major universities that are shaping the future of technology. \nAt TWG Global, your work will directly contribute to our ambitious goal of generating sustained growth and superior returns, with expected annual equity returns exceeding 20%, including growing dividends. Join us as we push the boundaries of technology and innovation, delivering significant value across our portfolio while making a profound impact on the industries we serve. \nWe’re looking for a Senior AI Data Engineer to join our Data Integration & Engineering team. In this role, you’ll design, build, and optimize the data infrastructure that underpins AI capabilities across the organization. You’ll ensure our data products are scalable, reusable, and aligned with the company’s broader strategic goals—enabling faster delivery of AI-driven solutions and better business decisions. \nYou’ll work closely with cross-functional teams to integrate new data sources, drive the development of production-grade pipelines, and uphold high standards for data quality, governance, and compliance. Your work will directly influence flagship initiatives, helping the company stay ahead in a rapidly evolving landscape. \nWhat you'll work on: \nDesigning and implementing scalable, reliable data pipelines and integrations to support AI and analytics use cases.\nDeveloping reusable patterns and frameworks to accelerate delivery across multiple teams.\nPartnering with product, engineering, and business teams to deliver high-impact data solutions aligned with key priorities.\nImproving and maturing data infrastructure, tools, and processes to meet evolving organizational needs.\nEnsuring strong data governance—maintaining quality, security, and compliance across all systems.\nHelp evaluate and adopt tools and platforms that enhance business outcomes like cost efficiency, revenue growth, and operational speed. \n5+ years experience in data engineering, integration, and infrastructure at scale, preferably in AI for financial services environments.\nProven success building robust, production-ready data systems in AI/ML or data-driven environments.\nDeep understanding of data lifecycle management, including pipeline monitoring, versioning, and governance.\nExperience collaborating across functions and influencing stakeholders in both technical and non-technical roles.\nBachelor’s degree in Computer Science, Engineering, Data Science, or a related field, or equivalent.\nPreferred: \nExperience leading or contributing to large-scale AI or ML data infrastructure projects.\nFamiliarity with modern data stack tools (e.g., Airflow, dbt, Spark, Kafka, Snowflake, or similar). \nA record of driving measurable business impact through data solutions. \nMaster’s degree or advanced coursework in Data Science, Data Engineering, or related fields. \nCompensation: \nThe expected annual salary range for this role is $120,000-190,000. A discretionary bonus may be provided as part of the compensation package. \nPosition Location:\nThis position will work out of the TWG office on a hybrid schedule in Santa Monica, CA. Consideration for a different working location will be considered on a case-by-case basis.\nTWG is an equal opportunity employer. All applicants will be considered for employment without attention to age, race, color, religion, sex, sexual orientation, gender identity, national origin, veteran or disability status."
+    },
+    {
+        "id": "1820608497",
+        "date_posted": "2025-07-11T20:39:14",
+        "date_created": "2025-07-11T21:41:12.77417",
+        "title": "Data Engineer I or II",
+        "organization": "Southern Company",
+        "organization_url": "https://emje.fa.us6.oraclecloud.com:443/hcmUI/CandidateExperience/",
+        "date_validthrough": "2025-07-26T03:59:00",
+        "locations_raw": [
+            {
+                "@type": "Place",
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": "Atlanta",
+                    "addressRegion": "GA",
+                    "addressCountry": "United States"
+                }
+            }
+        ],
+        "locations_alt_raw": null,
+        "location_type": null,
+        "location_requirements_raw": null,
+        "salary_raw": null,
+        "employment_type": [
+            "Full time"
+        ],
+        "url": "https://emje.fa.us6.oraclecloud.com/hcmUI/CandidateExperience/en/sites/SouthernCompanyJobs/job/13192",
+        "source_type": "ats",
+        "source": "oraclecloud",
+        "source_domain": "emje.fa.us6.oraclecloud.com",
+        "organization_logo": "https://www.southerncompany.com/content/dam/southerncompany/logos/southern_company_logo_dark_text_horizontal.svg",
+        "cities_derived": [
+            "Atlanta"
+        ],
+        "regions_derived": [
+            "Georgia"
+        ],
+        "countries_derived": [
+            "United States"
+        ],
+        "locations_derived": [
+            "Atlanta, Georgia, United States"
+        ],
+        "timezones_derived": [
+            "America/New_York"
+        ],
+        "lats_derived": [
+            33.7628
+        ],
+        "lngs_derived": [
+            -84.422
+        ],
+        "remote_derived": false,
+        "domain_derived": "southerncompany.com",
+        "description_text": "DATA ENGINEER I or II\nThe Enterprise Decision Support and Data Governance (EDGE) Innovation team is seeking a highly skilled Data Engineer who will also serve as a Data Subject Matter Expert (SME). In this role, you will play a crucial part in developing and maintaining the enterprise curation layer within the EDGE. You will leverage your extensive experience in data engineering to ensure the data within EDGE is accessible, reliable, and high performing for our utilization by our Innovation, data & analytics teams throughout the enterprise.\nThis position follows a hybrid work schedule. Employees are required to be in the office four (4) days per week.\nThis position may be filled as an Engineer I (GSE05) or Engineer II (GSE06). Individuals who demonstrate advanced skills in terms of work experience, education, and certifications may be eligible for the more advanced position.\nSUMMARY \nThe Data Engineer will collaborate with business and technology stakeholders to understand requirements, define data models, and implement Gas data assets. They will manage data governance and maintain a data catalog. The role includes supporting machine learning model creation, training, operation, and automation. Additionally, they will enforce data standards and collaborate with various teams to deploy optimized data solutions, plan capacity, and ensure secure data storage and usage.\nMAJOR JOB RESPONSIBILITIES: \nFunctional Expertise:\nProvide key knowledge, insight, and informational guidance related to the integration of data and design of the holistic data landscape in support of the EDGE organization’s objectives\nTranslate Decision Support Requirements related to KPI’s, Indices, and other analytical insights into Executable strategies, approaches and platform designs or other means of information delivery\nProduce & Manage all Decision Support Solution Design Frameworks and their supporting Documentation \nIdentify and propose new capabilities and improvements to Decision Support capabilities\nGuide, Advise and Support other teams on implementation issues related to application of data related capabilities and approaches\nPerform expert oversight and guidance for delivery of assigned Decision Support Solutions\nSupport Business Information Architects in the communication and interpretation of information and analysis to business leadership\nResponsibilities\nSupport EDGE Project related assignments as required\nCoordinates with the TO to identify approaches and solutions to data implementation problems related to the supporting EDGE solutions platforms\nDevelop and enhance the data management processes within the curation layer of the EDGE platform, ensuring scalable and accurate data handling and retrieval.\nCreate data models and construct efficient data pipelines, ETL processes, and workflows using Databricks, optimizing data ingestion transformation, and storage to support analytical needs.\nCollaborate with data scientist to refine data collections methods while building and tuning Databricks jobs and Apache Spark application for improved performance and scalability.\nImplement best practices for data management practices including partitioning, indexing, and compression to increase query efficiency.\nBusiness Acumen:\nEvaluates and recommends approaches and strategies on deployment and application of the tools and technologies adopted by Southern Company with the TO in the development and delivery of solution strategy, platforms, and applications\nDevelop and strengthen data standards and policies to maintain data integrity and consistency across the EDGE.\nAdhere to and implement data governance protocols to uphold high-security standards and clear data lineage.\nProactively monitor data systems to identify and resolve issues that could impact data accuracy.\nEngagement:\nCollaborates with other team members, TO and business managers to resolve complex business issues and problems\nDevelops and maintains productive working relationships with key EDGE and TO managers and staff\nEngage with data scientists, analysts, and business stakeholders, to precisely understand their data needs and translate these into Databricks-based technical solutions.\nOffer technical guidance and support, enabling the seamless introduction and adoption of advanced data solutions.\nRemain abreast of the latest data engineering trends, particularly in Databricks and other cloud-based technologies.\nDATA ENGINEER I \nEducation, Certifications/Licenses:\nRequired: \nBachelor's degree in related discipline (e.g., Computer Science, Information Management or equivalent) or equivalent related work experience\nPreferred:\nMaster's degree in related discipline (e.g., Computer Science, Information Management or equivalent) or equivalent related work experience\nRelated Work Experience:\nRequired:\n1 - 3 years data-oriented solution architecture development experience utilizing Both On-Premises and Cloud (Azure) modern data architecture platforms and patterns. \n3 years of experience developing context diagrams as well as conceptual, logical, physical architecture, data model and ER diagrams as well as data orchestration diagrams. \n2 years hands-on experience designing and implementing data models for structured and unstructured datasets utilizing tools such as ERWIN, SQL Developer, Python, SSMS, Visual Studio and Visio.\nAbility to deliver results in a cross functional team environment\nPreferred:\nExpert knowledge and hands-on experience working with SQL. \nHands on experience working with relational databases such as Oracle, SQL Server as well as Azure Data Lake, Synapse Data Warehouse. \nExperience in Data Governance processes and tools such as Informatica Data Catalog\nSpecific Skills & Knowledge: \nRequired: \nAdvanced proficiency in MS Office Tools\nExperience in Data Quality processes and tools such as DQS \nHands-on experience developing big data technologies such as Distributed file Systems, HIVE and Spark \nAbility to provide guidance on app/data performance, high availability and disaster recovery\nExperience with designing re-usable solution components and perform data model integrity checks\nExperience working in a medium to large enterprise setting and collaborating multiple cross-functional teams \nExperience working on concurrent engineer assignments on multiple projects. \nSignificant knowledge of business requirements and solutions design methodologies, tools, and approaches\nSignificant knowledge of graphical modeling approaches, tools, and repositories\nSignificant knowledge of Logical and Physical Data Modelling approaches, tools, and methodologies, and supporting software platforms\nDATA ENGINEER II\nEducation, Certifications/Licenses: \nRequired: \nBachelor's degree in related discipline (e.g., Computer Science, Information Management or equivalent) or equivalent related work experience\nPreferred:\nMaster's degree in related discipline (e.g., Computer Science, Information Management or equivalent) or equivalent related work experience\nRelated Work Experience:\nRequired:\n3 - 5 years data-oriented solution architecture development experience utilizing Both On-Premises and Cloud (Azure) modern data architecture platforms and patterns. \n3- 5 years of experience developing context diagrams as well as conceptual, logical, physical architecture, data model and ER diagrams as well as data orchestration diagrams. \n2- 4 years hands-on experience designing and implementing data models for structured and unstructured datasets utilizing tools such as ERWIN, SQL Developer, Python, SSMS, Visual Studio and Visio.\nAbility to deliver results in a cross functional team environment\nPreferred:\nExpert knowledge and hands-on experience working with SQL. \nHands on experience working with relational databases such as Oracle, SQL Server as well as Azure Data Lake, Synapse Data Warehouse. \nExperience in Data Governance processes and tools such as Informatica Data Catalog\nSpecific Skills & Knowledge: \nRequired: \nAdvanced proficiency in MS Office Tools\nExperience in Data Quality processes and tools such as DQS \nHands-on experience developing big data technologies such as Distributed file Systems, HIVE and Spark \nAbility to provide guidance on app/data performance, high availability and disaster recovery\nExperience with designing re-usable solution components and perform data model integrity checks\nExperience working in a medium to large enterprise setting and collaborating multiple cross-functional teams \nExperience working on concurrent engineer assignments on multiple projects. \nSignificant knowledge of business requirements and solutions design methodologies, tools, and approaches\nSignificant knowledge of graphical modeling approaches, tools, and repositories\nSignificant knowledge of Logical and Physical Data Modelling approaches, tools, and methodologies, and supporting software platforms"
+    },
+    {
+        "id": "1820523388",
+        "date_posted": "2025-07-11T19:46:34.776",
+        "date_created": "2025-07-11T20:37:40.297905",
+        "title": "Senior Data Engineer",
+        "organization": "Murmuration",
+        "organization_url": "https://jobs.workable.com/company/axf8w67J9naNzbVAchU1X4/jobs-at-murmuration",
+        "date_validthrough": null,
+        "locations_raw": [
+            {
+                "@type": "Place"
+            }
+        ],
+        "locations_alt_raw": [
+            "United States"
+        ],
+        "location_type": "TELECOMMUTE",
+        "location_requirements_raw": [
+            {
+                "@type": "Country",
+                "name": "United States"
+            }
+        ],
+        "salary_raw": null,
+        "employment_type": [
+            "FULL_TIME"
+        ],
+        "url": "https://jobs.workable.com/view/jB2GiqZzg5uaM4jRDYVYwv/remote-senior-data-engineer-in-united-states-at-murmuration",
+        "source_type": "ats",
+        "source": "workable",
+        "source_domain": "jobs.workable.com",
+        "organization_logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/583481/logo",
+        "cities_derived": null,
+        "regions_derived": null,
+        "countries_derived": [
+            "United States"
+        ],
+        "locations_derived": [
+            "United States"
+        ],
+        "timezones_derived": [
+            "America/New_York"
+        ],
+        "lats_derived": [
+            38.9047
+        ],
+        "lngs_derived": [
+            -77.0163
+        ],
+        "remote_derived": true,
+        "domain_derived": "murmuration.org",
+        "description_text": "Who We Are\nMurmuration is a nonprofit organization that amplifies the power of civic engagement by providing data, digital tools, and research-driven insights to community-focused organizations so that together we can create an America where everyone can lead healthy, free, and dignified lives.\nEvery day, people are trying to shape our future for the better. Fighting for water that’s safe to drink. Schools that serve students equitably. Gun laws that make sense. And rallying people who care like we do. And yet too often, the skillful organizers working to mobilize communities lack access to technology that could supercharge their efforts. Knocking on every door instead of knowing which will open most easily. And going up against outside interests that have half the heart, but twice the tools.\nIn communities across America, Murmuration’s partners are leveraging our data, tools, and insights to help thousands of organizers orchestrate millions of individual people to do big things together. Demand big things together. To create the world they want. Together.\nAbout the Position\nThe Senior Data Engineer is primarily responsible for designing, developing, and maintaining our application’s core data platform and ETL pipelines, ensuring feature delivery aligns with technical standards and project timelines while prioritizing product stability. Acting as a key individual contributor on their team, they take the lead on implementing complex projects, contributing to the design of our architecture and data pipelines, and mentor peers through code reviews, paired programming, and refinement sessions. Senior Data Engineers will directly contribute to our core data pipelines that power the Organizer application, which involves: streaming data, live entity resolution, and batch load processing. The Senior Data Engineer is expected to use their advanced knowledge of scalable systems and databases to drive performance improvement projects. The engineer will also work with other engineers and our Product Team across different teams and functional areas to lead and deliver complex user features. The work of this role will directly impact the ability of our users to make an impact in their communities and Murmuration’s ability to scale to support even more users.\nJob Level: IC4\nWhat You’ll Do\nDevelop software aligned with specifications & designs, ensuring code is well-tested, maintainable, and documented;\nWork autonomously with minimal oversight, delivering production-ready solutions that prioritize long-term maintainability and supportability;\nTake ownership over the delivery of select features, driving them to completion by breaking the implementation into smaller units, maintaining the team’s standard of excellence in delivery and ensuring all requirements are met;\nHave a strong understanding of the various key elements of the data platform and use this knowledge to act as a representative for the Data Platform Team when working with other engineering teams;\nCreate, communicate, and defend design proposals to your team through engineering proposals, demo sessions, chapter meetings, and architecture reviews;\nIdentify areas of improvement from a performance and/or a technical debt perspective within your team, and advocate for prioritization of this work; \nTake an active role in contributing to your team’s Agile processes, including contributing to the writing and refining of tickets, participating in regular retrospectives on the team’s work, and demoing your work to the broader engineering org; and\nSupport junior engineers through facilitating pull-request reviews for your team, paired programming sessions, and technical guidance on design & best practices.\nBachelor's degree or higher in Computer Science, Computer Engineering, or relevant field (Note: Work experience can be substituted for degree requirements);\n5+ years of experience as a Data/Backend/Software Engineer;\nStrong experience in both functional and object-oriented programing (e.g., Python, Scala, Java);\nGood experience with the AWS data stack (e.g., Lambda, ECS, Glue, Athena, EventBridge etc.);\nExperience with NoSQL databases (e.g., MongoDB, DynamoDB, Redis, Cassandra);\nStrong SQL experience/knowledge;\nExperience building large-scale streaming and batch data pipelines (e.g., Kafka Streams, Apache Flink, Spark Streaming, Spark SQL) with a focus on scalability, performance, accuracy, reliability, and traceability;\nStrong experience with a standard code repository (e.g., Git);\nExperience with DevOps, developing CI/CD pipelines, and automated testing;\nGood experience with data modeling and physical database design;\nDemonstrable design and development skills on large-scale data platform implementations;\nExperience supporting a production environment;\nStrong communication skills, including the ability to clearly and adequately define a position and defend it (in writing or verbally);\nAbility to clearly document a design, component, or workflow they have working knowledge of;\nAbility to take a complex implementation proposal and break it into smaller workable implementation components;\nDemonstrable skills both in working independently and in leading projects within a team environment; and\nPractical knowledge of software development lifecycle (SDLC) and agile methodologies.\nNice to Haves\nExperience with Entity Resolution;\nExperience with JavaScript;\nDemonstrable knowledge in the creation, use, and support of a document database like MongoDB;\nDemonstrable knowledge in the creation, use, and support of an OLAP database like Pinot and/or Snowflake;\nAdvanced experience with CI/CD platforms and Infrastructure as Code technologies, such as AWS CDK or Terraform;\nExperience with container technologies, such as Docker or Kubernetes;\nExperience using Big Data technologies (e.g., Spark, Presto, Kafka);\nExperience with orchestration tools such as Airflow or Dagster;\nExperience with graph databases (e.g., Neo4j, Neptune); and/or\nExperience designing and building microservices (e.g., REST, GraphQL).\nTalented Engineers come from all walks of life and career. If you are passionate about civic engagement and technology, please apply, even if you do not check every box!\nLocation and Compensation\nThe Senior Data Engineer role is a full-time, salaried position with a comprehensive benefits package (more detail below). It is based anywhere in the U.S. The starting salary range for this position is $144,000 - $166,000 and is commensurate with experience. This pay range reflects what the organization expects to offer for this position at the time of posting. In alignment with applicable laws, compensation will be determined based on the applicant's skills, qualifications, experience, and the specific requirements of the role. Please note that the organization may adjust this pay range as needed.\nOur Culture of Care\nWe work hard to create a culture of care to ensure that our staff are best equipped to lead happy, healthy, and balanced lives. To that end, we offer a comprehensive benefits package which includes:\nHealth, vision, and dental insurance with 100% of premiums covered for you and qualifying family members;\nRetirement benefits with a 5% employer match;\nA flexible unlimited PTO plan;\nGenerous paid parental leave;\nPre-tax commuter benefits;\nA company laptop;\nA flexible remote work environment;\nA home office setup stipend for all new employees;\nMonthly reimbursement for remote work expenses;\nA yearly professional development fund;\nMental health and wellness benefits through Calm and Better Help; \nYearly in-person staff retreats; and\nA welcoming culture that celebrates diversity, equity, inclusion, and belonging.\nAt Murmuration, we believe a vibrant, representative democracy depends on the inclusion of diverse voices, lived experiences, and perspectives. The best ideas don’t come from a single person or ideology — they emerge at the intersection of different backgrounds, identities, and viewpoints. We are proud of our commitment to building an organization and culture shaped by respect, empathy, and collaboration, where our team’s diversity fuels innovation, civic engagement, and meaningful change. We welcome new colleagues who will help us nurture this collective effort. Join us.\nAn Equal-Opportunity Employer with a Commitment to Diversity\nMurmuration is proud to be an equal opportunity employer, and as an organization committed to diversity and the perspective of all voices, we consider applicants equally of race, gender, color, sexual orientation, religion, marital status, disability, political affiliation and national origin. We reasonably accommodate staff members and/or applicants with disabilities, provided they are otherwise able to perform the essential functions of the job.\nNote: Murmuration is two organizations working together to pursue our mission of amplifying the power of civic engagement: Murmuration Research Institute, a 501(c)(3) that conducts research to identify, design, and create the data, tools, and insights that build healthier and more equitable communities; and Murmuration, Inc., a 501(c)(4) that supports organizations working across the country on the nation’s most challenging issues with access to data, tools, and research that build healthier and more equitable communities."
+    },
+    {
+        "id": "1820414894",
+        "date_posted": "2025-07-11T18:52:55.726",
+        "date_created": "2025-07-11T18:53:05.224753",
+        "title": "Senior Data Engineer",
+        "organization": "Adtalem Global Education",
+        "organization_url": null,
+        "date_validthrough": null,
+        "locations_raw": [
+            {
+                "address": {
+                    "addressLocality": "Lisle",
+                    "addressRegion": "Illinois",
+                    "addressCountry": "United States"
+                }
+            }
+        ],
+        "locations_alt_raw": [
+            "Lisle, IL, USA"
+        ],
+        "location_type": null,
+        "location_requirements_raw": null,
+        "salary_raw": null,
+        "employment_type": [
+            "Full-time"
+        ],
+        "url": "https://jobs.smartrecruiters.com/AdtalemGlobalEducation/744000070111040-senior-data-engineer-",
+        "source_type": "ats",
+        "source": "smartrecruiters",
+        "source_domain": "jobs.smartrecruiters.com",
+        "organization_logo": null,
+        "cities_derived": [
+            "Lisle"
+        ],
+        "regions_derived": [
+            "Illinois"
+        ],
+        "countries_derived": [
+            "United States"
+        ],
+        "locations_derived": [
+            "Lisle, Illinois, United States"
+        ],
+        "timezones_derived": [
+            "America/Chicago"
+        ],
+        "lats_derived": [
+            41.7918
+        ],
+        "lngs_derived": [
+            -88.0888
+        ],
+        "remote_derived": false,
+        "domain_derived": "adtalem.com",
+        "description_text": "Company DescriptionAbout Adtalem Global Education\n\nAdtalem Global Education is a national leader in post-secondary education and leading provider of professional talent to the healthcare industry. Adtalem educates and empowers students with the knowledge and skills to become leaders in their communities and make a lasting impact on public health, well-being and beyond. Through equitable access to education, environments that nurture student success, and a focus on expanding and diversifying the talent pipeline in healthcare, Adtalem is building a brighter future for communities and the world.\n\nAdtalem is the parent organization of American University of the Caribbean School of Medicine, Chamberlain University, Ross University School of Medicine, Ross University School of Veterinary Medicine and Walden University.\n\nWe operate on a hybrid schedule with four in-office days per week (Monday–Thursday). This approach enhances creativity, innovation, communication, and relationship-building, fostering a dynamic and collaborative work environment.\n\nVisit Adtalem.com for more information, and follow on  Twitter and LinkedIn.Job DescriptionAdtalem is a data driven organization. The Data Engineering team builds data solutions that powers strategic and tactical business decisions and supports the Analytics and Artificial Intelligence operations. By implementing the data platform, data pipelines and data governance policies this team provides the basis for decision-making in Adtalem. Adtalem is looking for a Senior Data Engineer who is a technical powerhouse who can scale our data platform to meet ever growing business needs.\n\nResponsibilitiesWork closely with various business, IT, Analyst and Data Science groups to collect business requirementsDesign, develop, deploy and support high performance data pipelines both inbound and outbound.Model data platform by applying the business logic and building objects in the semantic layer of the data platform.Optimize data pipelines for performance, scalability, and reliability.Implement CI/CD pipelines to ensure continuous deployment and delivery of our data products.Ensure quality of critical data elements, prepare data quality remediation plans and collaborate with business and system owners to fix the quality issues at its root.Document the design and support strategy of the data pipelinesCapture, store and socialize data lineage and operational metadataTroubleshoot and resolve data engineering issues as they arise.Develop REST APIs to expose data to other teams within the company.Mentor and guide junior data engineers.Performs other duties as assignedComplies with all policies and standardsQualificationsBachelor's Degree Computer Science, Computer Engineering, Software Engineering, or another related technical field Required.Master's Degree Computer Science, Computer Engineering, Software Engineering, or other related technical field Preferred.2+ years experience in Google cloud with services like BigQuery, Composer, GCS, DataStream, Dataflows Required.6+ years experience in data engineering solutions such as data platforms, ingestion, data management, or publication/analytics Required.Expert knowledge on SQL and Python programming.Experience working with Airflow as workflow management tools and build operators to connect, extract and ingest data as needed.Experience in tuning queries for performance and scalability.Experience in Real Time Data ingestion using GCP PubSub, Kafka, Spark or similar.Excellent organizational, prioritization and analytical abilities.Have proven experience working in incremental execution through successful launches.Excellent problem-solving and critical-thinking skills to recognize and comprehend complex data issues affecting the business environment.Experience working in agile environment.Additional InformationIn support of the pay transparency laws enacted across the country, the expected salary range for this position is between $85,000.00 and $150,00.00 Actual pay will be adjusted based on job-related factors permitted by law, such as experience and training; geographic location; licensure and certifications; market factors; departmental budgets; and responsibility. Our Talent Acquisition Team will be happy to answer any questions you may have, and we look forward to learning more about your salary requirements. The position qualifies for the below benefits.\n\nAdtalem offers a robust suite of benefits including: Health, dental, vision, life and disability insurance401k Retirement Program + 6% employer matchParticipation in Adtalem’s Flexible Time Off (FTO) Policy12 Paid Holidays\n\nFor more information related to our benefits please visit: https://careers.adtalem.com/benefits.\n\nYou are also eligible to participate in an annual incentive program, subject to the rules governing the program, whereby an award, if any, depends on various factors, including, without limitation, individual and organizational performance.  Equal Opportunity – Minority / Female / Disability / V / Gender Identity / Sexual Orientation "
+    },
+    {
+        "id": "1820349946",
+        "date_posted": "2025-07-11T18:13:31.84",
+        "date_created": "2025-07-11T18:17:06.418566",
+        "title": "Senior Staff IT Data Engineer",
+        "organization": "Palo Alto Networks",
+        "organization_url": null,
+        "date_validthrough": null,
+        "locations_raw": [
+            {
+                "address": {
+                    "addressLocality": "Santa Clara",
+                    "addressRegion": "California",
+                    "addressCountry": "United States"
+                }
+            }
+        ],
+        "locations_alt_raw": [
+            "Santa Clara, CA, USA"
+        ],
+        "location_type": null,
+        "location_requirements_raw": null,
+        "salary_raw": null,
+        "employment_type": [
+            "Full-time"
+        ],
+        "url": "https://jobs.smartrecruiters.com/PaloAltoNetworks2/744000070105725-senior-staff-it-data-engineer",
+        "source_type": "ats",
+        "source": "smartrecruiters",
+        "source_domain": "jobs.smartrecruiters.com",
+        "organization_logo": null,
+        "cities_derived": [
+            "Santa Clara"
+        ],
+        "regions_derived": [
+            "California"
+        ],
+        "countries_derived": [
+            "United States"
+        ],
+        "locations_derived": [
+            "Santa Clara, California, United States"
+        ],
+        "timezones_derived": [
+            "America/Los_Angeles"
+        ],
+        "lats_derived": [
+            37.3646
+        ],
+        "lngs_derived": [
+            -121.968
+        ],
+        "remote_derived": false,
+        "domain_derived": "paloaltonetworks.com",
+        "description_text": "Company DescriptionOur MissionAt Palo Alto Networks® everything starts and ends with our mission:Being the cybersecurity partner of choice, protecting our digital way of life.\nOur vision is a world where each day is safer and more secure than the one before. We are a company built on the foundation of challenging and disrupting the way things are done, and we’re looking for innovators who are as committed to shaping the future of cybersecurity as we are.Who We AreWe take our mission of protecting the digital way of life seriously. We are relentless in protecting our customers and we believe that the unique ideas of every member of our team contributes to our collective success. Our values were crowdsourced by employees and are brought to life through each of us everyday - from disruptive innovation and collaboration, to execution. From showing up for each other with integrity to creating an environment where we all feel included.As a member of our team, you will be shaping the future of cybersecurity. We work fast, value ongoing learning, and we respect each employee as a unique individual. Knowing we all have different needs, our development and personal wellbeing programs are designed to give you choice in how you are supported. This includes our FLEXBenefits wellbeing spending account with over 1,000 eligible items selected by employees, our mental and financial health resources, and our personalized learning opportunities - just to name a few!At Palo Alto Networks, we believe in the power of collaboration and value in-person interactions. This is why our employees generally work full time from our office with flexibility offered where needed. This setup fosters casual conversations, problem-solving, and trusted relationships. Our goal is to create an environment where we all win with precision.Job DescriptionYour CareerOur Data & Analytics group is responsible for working with various business owners/stakeholders from Sales, Marketing, People, GCS, Infosec, Operations, and Finance to solve complex business problems which will have a direct impact on the metrics defined to showcase the progress of Palo Alto Networks. We leverage the latest technologies from the Cloud & Big Data ecosystem to improve business outcomes and create through prototyping, Proof-of-Concept projects and application development. We are looking for a Senior Staff IT Data Engineer with extensive experience in Data engineering, SQL, Cloud engineering and business intelligence (BI) tools. The ideal candidate will be responsible for designing, implementing, and maintaining scalable data transformations and analytical solutions that support our business objectives. This role requires a strong understanding of data engineering principles, as well as the ability to collaborate with cross-functional teams to deliver high-quality data solutions.This is an in office role in our HQ (Santa Clara, CA) Your ImpactDesign, develop, and maintain data pipelines to extract, transform, and load (ETL) data from various sources into our data warehouse or data lake environmentAptitude for proactively identifying and implementing GenAI-driven solutions to achieve measurable improvements in the reliability and performance of data pipelines or to optimize key processes like data quality validation and root cause analysis for data issues, is a nice-to-haveCollaborate with stakeholders to gather requirements and translate business needs into technical solutionsOptimize and tune existing data pipelines for performance, reliability, and scalabilityImplement data quality and governance processes to ensure data accuracy, consistency, and compliance with regulatory standardsWork closely with the BI team to design and develop dashboards, reports, and analytical tools that provide actionable insights to stakeholdersMentor junior members of the team and provide guidance on best practices for data engineering and BI developmentQualificationsYour Experience Bachelor's degree in Computer Science, Engineering, or a related field5+ years of experience in data engineering, with a focus on building and maintaining data pipelines and analytical solutionsDemonstrated readiness to leverage GenAI tools to enhance efficiency within the typical stages of the data engineering lifecycle, for example by generating complex SQL queries, creating initial Python/Spark script structures, or auto-generating pipeline documentation, is a nice-to-haveExpertise in SQL programming and database management systems Hands-on experience with ETL tools and technologies (e.g. Apache Spark, Apache Airflow)Familiarity with cloud platforms such as Google Cloud Platform (GCP), and experience with relevant services (e.g. GCP Dataflow, GCP DataProc, Biq Query, Procedures, Cloud Composer etc).Experience with Big data tools like Spark, Kafka, etcExperience with object-oriented/object function scripting languages: Python/Scala, etcExperience with BI tools and visualization platforms (e.g. Tableau) is a plusExperience with SAP HANA, SAP BW, SAP ECC, or other SAP modules is a plusStrong analytical and problem-solving skills, with the ability to analyze complex data sets and derive actionable insightsExcellent communication and interpersonal skills, with the ability to collaborate effectively with cross-functional teamsAdditional InformationThe TeamWorking at a high-tech cybersecurity company within Information Technology is a once-in-a-lifetime opportunity. You’ll join the brightest minds in technology, creating, building, and supporting tools and enabling our global teams on the front line of defense against cyberattacks.\n\nWe’re connected by one mission but driven by the impact of that mission and what it means to protect our way of life in the digital age. Join a dynamic and fast-paced team of people who feel excited by the prospect of a challenge and feel a thrill at resolving technical gaps that inhibit productivity.Compensation DisclosureThe compensation offered for this position will depend on qualifications, experience, and work location. For candidates who receive an offer at the posted level, the starting base salary (for non-sales roles) or base salary + commission target (for sales/commissioned roles) is expected to be between $145000/YR - $235500/YR. The offered compensation may also include restricted stock units and a bonus. A description of our employee benefits may be found here. Our Commitment\n\nWe’re problem solvers that take risks and challenge cybersecurity’s status quo. It’s simple: we can’t accomplish our mission without diverse teams innovating, together.We are committed to providing reasonable accommodations for all qualified individuals with a disability. If you require assistance or accommodation due to a disability or special need, please contact us at  [email protected].Palo Alto Networks is an equal opportunity employer. We celebrate diversity in our workplace, and all qualified applicants will receive consideration for employment without regard to age, ancestry, color, family or medical care leave, gender identity or expression, genetic information, marital status, medical condition, national origin, physical or mental disability, political affiliation, protected veteran status, race, religion, sex (including pregnancy), sexual orientation, or other legally protected characteristics.All your information will be kept confidential according to EEO guidelines."
+    },
+    {
+        "id": "1820345147",
+        "date_posted": "2025-07-11T18:09:43.063",
+        "date_created": "2025-07-11T18:13:08.24237",
+        "title": "Senior Staff IT Data Engineer",
+        "organization": "Palo Alto Networks",
+        "organization_url": null,
+        "date_validthrough": null,
+        "locations_raw": [
+            {
+                "address": {
+                    "addressLocality": "Santa Clara",
+                    "addressRegion": "California",
+                    "addressCountry": "United States"
+                }
+            }
+        ],
+        "locations_alt_raw": [
+            "Santa Clara, CA"
+        ],
+        "location_type": null,
+        "location_requirements_raw": null,
+        "salary_raw": null,
+        "employment_type": [
+            "Full-time"
+        ],
+        "url": "https://jobs.smartrecruiters.com/PaloAltoNetworks2/744000070105151-senior-staff-it-data-engineer",
+        "source_type": "ats",
+        "source": "smartrecruiters",
+        "source_domain": "jobs.smartrecruiters.com",
+        "organization_logo": null,
+        "cities_derived": [
+            "Santa Clara"
+        ],
+        "regions_derived": [
+            "California"
+        ],
+        "countries_derived": [
+            "United States"
+        ],
+        "locations_derived": [
+            "Santa Clara, California, United States"
+        ],
+        "timezones_derived": [
+            "America/Los_Angeles"
+        ],
+        "lats_derived": [
+            37.3646
+        ],
+        "lngs_derived": [
+            -121.968
+        ],
+        "remote_derived": false,
+        "domain_derived": "paloaltonetworks.com",
+        "description_text": "Company DescriptionOur MissionAt Palo Alto Networks® everything starts and ends with our mission:Being the cybersecurity partner of choice, protecting our digital way of life.\nOur vision is a world where each day is safer and more secure than the one before. We are a company built on the foundation of challenging and disrupting the way things are done, and we’re looking for innovators who are as committed to shaping the future of cybersecurity as we are.Who We AreWe take our mission of protecting the digital way of life seriously. We are relentless in protecting our customers and we believe that the unique ideas of every member of our team contributes to our collective success. Our values were crowdsourced by employees and are brought to life through each of us everyday - from disruptive innovation and collaboration, to execution. From showing up for each other with integrity to creating an environment where we all feel included.As a member of our team, you will be shaping the future of cybersecurity. We work fast, value ongoing learning, and we respect each employee as a unique individual. Knowing we all have different needs, our development and personal wellbeing programs are designed to give you choice in how you are supported. This includes our FLEXBenefits wellbeing spending account with over 1,000 eligible items selected by employees, our mental and financial health resources, and our personalized learning opportunities - just to name a few!At Palo Alto Networks, we believe in the power of collaboration and value in-person interactions. This is why our employees generally work full time from our office with flexibility offered where needed. This setup fosters casual conversations, problem-solving, and trusted relationships. Our goal is to create an environment where we all win with precision.Job DescriptionYour CareerOur Data & Analytics group is responsible for working with various business owners/stakeholders from Sales, Marketing, People, GCS, Infosec, Operations, and Finance to solve complex business problems which will have a direct impact on the metrics defined to showcase the progress of Palo Alto Networks. We leverage the latest technologies from the Cloud & Big Data ecosystem to improve business outcomes and create through prototyping, Proof-of-Concept projects and application development. We are looking for a Staff IT Data Engineer with extensive experience in Data engineering, SQL, Cloud engineering and business intelligence (BI) tools. The ideal candidate will be responsible for designing, implementing, and maintaining scalable data transformations and analytical solutions that support our business objectives. This role requires a strong understanding of data engineering principles, as well as the ability to collaborate with cross-functional teams to deliver high-quality data solutions.This is an in office role in our HQ (Santa Clara, CA) Your ImpactDesign, develop, and maintain data pipelines to extract, transform, and load (ETL) data from various sources into our data warehouse or data lake environmentAptitude for proactively identifying and implementing GenAI-driven solutions to achieve measurable improvements in the reliability and performance of data pipelines or to optimize key processes like data quality validation and root cause analysis for data issues, is a nice-to-haveCollaborate with stakeholders to gather requirements and translate business needs into technical solutionsOptimize and tune existing data pipelines for performance, reliability, and scalabilityImplement data quality and governance processes to ensure data accuracy, consistency, and compliance with regulatory standardsWork closely with the BI team to design and develop dashboards, reports, and analytical tools that provide actionable insights to stakeholdersMentor junior members of the team and provide guidance on best practices for data engineering and BI developmentQualificationsYour Experience Bachelor's degree in Computer Science, Engineering, or a related field or equivalent military experience requiredDemonstrated readiness to leverage GenAI tools to enhance efficiency within the typical stages of the data engineering lifecycle, for example by generating complex SQL queries, creating initial Python/Spark script structures, or auto-generating pipeline documentation, is a nice-to-have.5+ years of experience in data engineering, with a focus on building and maintaining data pipelines and analytical solutionsExpertise in SQL programming and database management systems Hands-on experience with ETL tools and technologies (e.g. Apache Spark, Apache Airflow).Experience with cloud platforms such as Google Cloud Platform (GCP), and experience with relevant services (e.g. GCP Dataflow, GCP DataProc, Biq Query, Procedures, Cloud Composer etc).Experience with Big data tools like Spark, Kafka, etcExperience with object-oriented/object function scripting languages: Python/Scala, etcExperience with BI tools and visualization platforms (e.g. Tableau) is a plusExperience with SAP HANA, SAP BW, SAP ECC, or other SAP modules is a plusStrong analytical and problem-solving skills, with the ability to analyze complex data sets and derive actionable insightsExcellent communication and interpersonal skills, with the ability to collaborate effectively with cross-functional teamsAdditional InformationThe TeamWorking at a high-tech cybersecurity company within Information Technology is a once-in-a-lifetime opportunity. You’ll join the brightest minds in technology, creating, building, and supporting tools and enabling our global teams on the front line of defense against cyberattacks.\n\nWe’re connected by one mission but driven by the impact of that mission and what it means to protect our way of life in the digital age. Join a dynamic and fast-paced team of people who feel excited by the prospect of a challenge and feel a thrill at resolving technical gaps that inhibit productivity.Compensation DisclosureThe compensation offered for this position will depend on qualifications, experience, and work location. For candidates who receive an offer at the posted level, the starting base salary (for non-sales roles) or base salary + commission target (for sales/commissioned roles) is expected to be between $122000/YR- $197000/YR. The offered compensation may also include restricted stock units and a bonus. A description of our employee benefits may be found here.  Our Commitment\n\nWe’re problem solvers that take risks and challenge cybersecurity’s status quo. It’s simple: we can’t accomplish our mission without diverse teams innovating, together.We are committed to providing reasonable accommodations for all qualified individuals with a disability. If you require assistance or accommodation due to a disability or special need, please contact us at  [email protected].Palo Alto Networks is an equal opportunity employer. We celebrate diversity in our workplace, and all qualified applicants will receive consideration for employment without regard to age, ancestry, color, family or medical care leave, gender identity or expression, genetic information, marital status, medical condition, national origin, physical or mental disability, political affiliation, protected veteran status, race, religion, sex (including pregnancy), sexual orientation, or other legally protected characteristics.All your information will be kept confidential according to EEO guidelines."
+    }
+]

@@ -100,11 +100,6 @@ def obtener_todas_las_tasas():
 
         if tasa is not None:
             tasas_obtenidas[moneda_destino] = tasa
-            print(f"    Tasa obtenida: {tasa}")
-        else:
-            # Si la API falla para una moneda, lo registramos y continuamos.
-            # No se añade al diccionario para no tener datos incorrectos.
-            print(f"    ADVERTENCIA: Falló la obtención de la tasa para {moneda_destino}.")
 
     # Plan de respaldo: si después de todos los intentos el diccionario está vacío,
     # podemos devolver valores por defecto para no romper la aplicación.
