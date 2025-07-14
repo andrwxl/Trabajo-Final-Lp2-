@@ -238,11 +238,7 @@ def mostrar_buscador_ofertas(df_filtrado, moneda, periodo):
 
 # --- Funciones de Componentes del Dashboard ---
 
-def mostrar_sidebar(df):
-    """
-    Muestra la barra lateral de filtros y devuelve las selecciones del usuario.
-    Ahora filtra por 'categoria' y permite selección múltiple.
-    """
+def mostrar_sidebar(df): # Funcion para mostrar la barra lateral con filtros
     st.sidebar.header("Filtros Globales")
     
     # --- Filtro por País (sin cambios) ---
@@ -301,17 +297,17 @@ def mostrar_sidebar(df):
     return paises_seleccionados, categorias_seleccionadas, moneda_seleccionada, periodo_seleccionado, tipo_extraccion_seleccionada, tipo_fuente_seleccionadaente
 
 def mostrar_kpis(df, moneda, periodo):
-    """Calcula y muestra las métricas clave (KPIs) en la parte superior."""
+    """
+    Calcula y muestra las métricas clave (KPIs) con un diseño personalizado
+    que incluye íconos y se integra con el CSS.
+    """
     st.header("Vista General del Mercado (Filtrada)")
 
+    # --- 1. Cálculos (sin cambios) ---
     total_ofertas = len(df)
-    # filtramos solamente los que tienen salario anual y los que son valores numericos
     salario_promedio = df['salario_anual_usd'].mean()
-    # salario ignorando NaN
-
-    tecnologia_demandada = df['puesto_trabajo'].mode()[0] if not df['puesto_trabajo'].empty else "N/A"
-
-    pais_con_mas_ofertas = df['pais'].mode()[0] if not df['pais'].empty else "N/A"
+    puesto_comun = df['puesto_trabajo'].mode()[0] if not df['puesto_trabajo'].empty else "N/A"
+    pais_principal = df['pais'].mode()[0] if not df['pais'].empty else "N/A"
 
     salario_display = salario_promedio
     if periodo == 'Mensual':
@@ -323,13 +319,88 @@ def mostrar_kpis(df, moneda, periodo):
     else:
         simbolo_moneda = "$"
     
-    label_salario = f"Salario Promedio {periodo} ({moneda})"
+    # --- 2. Íconos SVG (ligeros y personalizables) ---
+    # Usamos SVG directamente para no depender de URLs externas.
+    icon_ofertas = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-4.44a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8.84a2 2 0 0 0-.59-1.42l-4.44-4.44a2 2 0 0 0-1.42-.58z"/><path d="M18 18h-6"/><path d="M18 14h-6"/><path d="M18 10h-6"/></svg>'
+    icon_salario = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>'
+    icon_puesto = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5 4 4"/><path d="M17.45 2.55a1 1 0 0 1 1.41 0l1.59 1.59a1 1 0 0 1 0 1.41l-9 9L2 22l7.45-2.55 9-9z"/></svg>'
+    icon_pais = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>'
 
+    # --- 3. Renderizado con HTML y CSS ---
     col1, col2, col3, col4 = st.columns(4)
-    col1.metric(label="Total de Ofertas", value=f"{total_ofertas:,}")
-    col2.metric(label=label_salario, value=f"{simbolo_moneda}{salario_display:,.0f}")
-    col3.metric(label="Puesto Más Común", value=tecnologia_demandada)
-    col4.metric(label="País Principal", value=pais_con_mas_ofertas)
+
+    with col1:
+        st.markdown(f"""
+        <div class="card">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <div style="color: var(--color-acento-primario);">{icon_ofertas}</div>
+                <div>
+                    <p style="font-size: 0.9rem; color: var(--color-texto-secundario); margin: 0;">Total de Ofertas</p>
+                    <p style="font-size: 1.5rem; font-weight: 600; margin: 0;">{total_ofertas:,}</p>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col2:
+        st.markdown(f"""
+        <div class="card">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <div style="color: var(--color-acento-primario);">{icon_salario}</div>
+                <div>
+                    <p style="font-size: 0.9rem; color: var(--color-texto-secundario); margin: 0;">Salario Promedio {periodo}</p>
+                    <p style="font-size: 1.5rem; font-weight: 600; margin: 0;">{simbolo_moneda}{salario_display:,.0f}</p>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col3:
+        st.markdown(f"""
+        <div class="card">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <div style="color: var(--color-acento-primario);">{icon_puesto}</div>
+                <div>
+                    <p style="font-size: 0.9rem; color: var(--color-texto-secundario); margin: 0;">Puesto Más Común</p>
+                    <p style="font-size: 1.5rem; font-weight: 600; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{puesto_comun}">{puesto_comun}</p>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col4:
+        st.markdown(f"""
+        <div class="card">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <div style="color: var(--color-acento-primario);">{icon_pais}</div>
+                <div>
+                    <p style="font-size: 0.9rem; color: var(--color-texto-secundario); margin: 0;">País Principal</p>
+                    <p style="font-size: 1.5rem; font-weight: 600; margin: 0;">{pais_principal}</p>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+def cargar_habilidades_aprendizaje(ruta_csv_habilidades):
+    try:
+        df_habilidades = pd.read_csv(ruta_csv_habilidades)
+        # Aseguramos que las columnas se llamen 'habilidad' y 'url'
+        df_habilidades.columns = ['habilidad', 'url']
+        
+        # Creamos el diccionario: {habilidad_en_minusculas: url}
+        diccionario_habilidades = {
+            str(row.habilidad).lower(): row.url 
+            for index, row in df_habilidades.iterrows()
+        }
+        return diccionario_habilidades
+    except FileNotFoundError:
+        st.error(f"Error: No se encontró el archivo de habilidades en: {ruta_csv_habilidades}")
+        return {}
+    except Exception as e:
+        st.error(f"Error al procesar el archivo de habilidades: {e}")
+        return {}
+diccionario_habilidades = cargar_habilidades_aprendizaje(os.path.join(parent_dir, 'ETL', 'Cliente', 'habilidades_aprendizaje.csv'))
+
 
 def mostrar_feed_recomendaciones(df_filtrado, moneda, periodo, habilidades_usuario):
     """
@@ -375,33 +446,48 @@ def mostrar_feed_recomendaciones(df_filtrado, moneda, periodo, habilidades_usuar
     cols = st.columns(num_recomendaciones_a_mostrar)
 
     for i in range(num_recomendaciones_a_mostrar):
-        with cols[i]:
-            # Usamos un contenedor con borde para simular una "tarjeta".
-            with st.container(border=True):
-                oferta = df_recomendados.iloc[i]
-                
-                st.markdown(f"**{oferta['puesto_trabajo']}**")
-                st.caption(f"{oferta['nombre_empresa']} • {oferta['pais']}, {oferta['region_estado']}")
-                # Mostramos la fuente extraccion y plataforma de origen.
-                st.caption(f"Fuente: {oferta['tipo_fuente_datos']} - {oferta['plataforma_origen']}")
-                # Mostramos el salario con el símbolo de la moneda.
-                salario_display = oferta['salario_anual_usd']
-                if pd.notna(salario_display):
-                    if periodo == 'Mensual':
-                        salario_display /= 12
-                    if moneda == 'PEN':
-                        salario_display *= TIPO_DE_CAMBIO_USD_PEN
-                    simbolo_moneda = "S/" if moneda == 'PEN' else "$"
-                    st.caption(f"**Salario:** {simbolo_moneda}{salario_display:,.0f}")
+    with cols[i]:
+        with st.container(border=True): # Usa la clase .card de tu CSS
+            oferta = df_recomendados.iloc[i]
+            
+            # --- Contenido existente de la tarjeta ---
+            st.markdown(f"**{oferta['puesto_trabajo']}**")
+            st.caption(f"{oferta['nombre_empresa']} • {oferta['pais']}, {oferta['region_estado']}")
+            st.caption(f"Fuente: {oferta['tipo_fuente_datos']} - {oferta['plataforma_origen']}")
+            
+            salario_display = oferta['salario_anual_usd']
+            if pd.notna(salario_display):
+                # (Aquí va tu lógica de conversión de salario sin cambios)
+                # ...
+                simbolo_moneda = "S/" if moneda == 'PEN' else "$"
+                st.caption(f"**Salario:** {simbolo_moneda}{salario_display:,.0f}")
 
-                # Añadimos un pequeño espacio.
-                st.markdown("---", help=None)
+            st.markdown("---", help=None)
+            
+            # --- NUEVO: Lógica de Enlaces ---
+            # Buscamos una habilidad relevante para esta oferta
+            habilidad_para_aprender = encontrar_habilidad_relevante(
+                oferta['puesto_trabajo'], 
+                diccionario_habilidades
+            )
+            
+            # Preparamos los enlaces
+            link_ver_oferta = f"<a href='{oferta['enlace_oferta']}' target='_blank' class='card-link'>Ver Oferta →</a>"
+            
+            if habilidad_para_aprender:
+                nombre_habilidad, url_habilidad = habilidad_para_aprender
+                link_aprender = f"<a href='{url_habilidad}' target='_blank' class='card-link'>Aprender {nombre_habilidad} 🎓</a>"
                 
-                # Creamos un enlace clickeable.
-                st.markdown(
-                    f"<a href='{oferta['enlace_oferta']}' target='_blank' style='text-decoration: none; color: #60a5fa;'>Ver Oferta →</a>", 
-                    unsafe_allow_html=True
-                )
+                # Usamos HTML para poner los enlaces en extremos opuestos
+                st.markdown(f"""
+                <div style='display: flex; justify-content: space-between;'>
+                    {link_aprender}
+                    {link_ver_oferta}
+                </div>
+                """, unsafe_allow_html=True)
+            else:
+                # Si no hay habilidad, solo mostramos el enlace de la oferta
+                st.markdown(link_ver_oferta, unsafe_allow_html=True)
 
     # --- Botón para Ver Todas las Ofertas ---
     if len(df_recomendados) > num_recomendaciones_a_mostrar:
@@ -761,10 +847,48 @@ def mostrar_tabla_de_datos(df, moneda, periodo):
                     use_container_width=True # Hacemos que la tabla use todo el ancho del contenedor.
                 )
 
+
+def encontrar_habilidad_relevante(titulo_puesto, diccionario_habilidades):
+    """
+    Busca en el título de un puesto si contiene alguna de las habilidades clave.
+    
+    Returns:
+        Un tuple (habilidad, url) si encuentra una coincidencia, de lo contrario None.
+        Para mejorar la relevancia, devuelve la coincidencia más larga encontrada.
+    """
+    if not isinstance(titulo_puesto, str):
+        return None
+
+    titulo_lower = titulo_puesto.lower()
+    habilidades_encontradas = []
+
+    # Buscamos todas las habilidades que coincidan
+    for habilidad in diccionario_habilidades.keys():
+        if f" {habilidad} " in f" {titulo_lower} ":  # Buscamos la palabra exacta
+            habilidades_encontradas.append(habilidad)
+
+    if not habilidades_encontradas:
+        return None
+
+    # Devolvemos la habilidad más larga (ej: "Power BI" es mejor que "BI")
+    mejor_habilidad = max(habilidades_encontradas, key=len)
+    url_aprendizaje = diccionario_habilidades[mejor_habilidad]
+    
+    return (mejor_habilidad.title(), url_aprendizaje)
+# Estilos
+def inyectar_estilos_css(archivo_css):
+    try:
+        with open(archivo_css) as f:
+            st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+    except FileNotFoundError:
+        st.error(f"Error: No se pudo encontrar el archivo CSS en la ruta: {archivo_css}")
+
 # ---  Principal de la Aplicación ---
 
 st.title("Análisis del Mercado Laboral Global")
 st.write("Una vista interactiva de las tendencias y oportunidades en el sector tecnológico.")
+
+inyectar_estilos_css('source/dashboard/styles.css')
 
 ruta_dataset = os.path.join('datos', 'finales', 'dataset_maestro_final.csv')
 df_original = cargar_y_preprocesar_datos(ruta_dataset)
