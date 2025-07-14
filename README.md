@@ -64,7 +64,7 @@ Este proyecto nace para resolver ese problema. Hemos construido un dashboard int
 ### EDUCATION
 
 [Scraper](https://github.com/andrwxl/Trabajo-Final-Lp2-/blob/main/Scraper_Education/Scraper_def.md)
-[](https://github.com/andrwxl/Trabajo-Final-Lp2-/blob/main/Scraper_Education/Scraper_def.md)
+[Clasificador](https://github.com/andrwxl/Trabajo-Final-Lp2-/blob/main/Scraper_Education/clasificador.md)
 
 ## APP
 
