@@ -1,0 +1,147 @@
+/* --- Importar Fuente de Google --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* --- Variables de Color (Tema Claro y Amigable) --- */
+:root {
+    --color-fondo-principal: #FDF8F5; /* Un crema muy suave */
+    --color-fondo-secundario: #F4EFEA; /* Crema para la sidebar */
+    --color-fondo-tarjeta: #FFFFFF;   /* Blanco puro para las tarjetas */
+    --color-borde: #DCD2CC;           /* Un borde suave, color topo claro */
+    --color-texto-principal: #3D3D3D; /* Gris oscuro, no negro puro */
+    --color-texto-secundario: #797979; /* Gris medio para captions */
+    --color-acento-primario: #5DA9E9; /* Celeste amigable */
+    --color-acento-hover: #81C0FF;    /* Celeste un poco más claro para hover */
+    --sombra-tarjeta: 0 4px 25px rgba(0, 0, 0, 0.07);
+    --border-radius-std: 16px; /* Bordes más redondeados */
+}
+
+/* --- Estilos Globales del Body --- */
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--color-texto-principal);
+    background-color: var(--color-fondo-principal);
+}
+
+/* --- Contenedor Principal --- */
+div.main {
+    background-color: var(--color-fondo-principal);
+    padding: 2rem 1.5rem;
+}
+
+/* --- Barra Lateral (Sidebar) --- */
+[data-testid="stSidebar"] {
+    background-color: var(--color-fondo-secundario);
+    border-right: 1px solid var(--color-borde);
+}
+
+/* --- Títulos y Texto --- */
+h1, h2, h3 {
+    font-family: 'Poppins', sans-serif;
+    color: var(--color-texto-principal);
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 1.75rem;
+    border-bottom: 3px solid var(--color-acento-primario);
+    padding-bottom: 10px;
+    margin-bottom: 1.5rem;
+    width: fit-content; /* El borde solo ocupa el ancho del texto */
+}
+
+h3 {
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+/* --- Botones --- */
+[data-testid="stButton"] > button {
+    border: none;
+    border-radius: var(--border-radius-std);
+    background-color: var(--color-acento-primario);
+    color: white;
+    padding: 12px 24px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+[data-testid="stButton"] > button:hover {
+    background-color: var(--color-acento-hover);
+    transform: translateY(-2px); /* Efecto de levantarse */
+    box-shadow: 0 4px 15px rgba(93, 169, 233, 0.3);
+}
+
+/* --- Entradas de Texto y Selectores --- */
+[data-testid="stTextInput"] input, 
+[data-testid="stTextArea"] textarea,
+.stMultiSelect div[data-baseweb="select"] > div {
+    background-color: var(--color-fondo-tarjeta);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--border-radius-std) !important;
+    color: var(--color-texto-principal);
+}
+
+/* --- Diálogos (Pop-ups) --- */
+[data-testid="stDialog"] > div {
+    background-color: var(--color-fondo-secundario);
+    border-radius: var(--border-radius-std);
+    border: 1px solid var(--color-borde);
+}
+
+/* --- Tarjetas (Usaremos esta clase personalizada) --- */
+.card {
+    background-color: var(--color-fondo-tarjeta);
+    border-radius: var(--border-radius-std);
+    padding: 24px;
+    border: 1px solid var(--color-borde);
+    box-shadow: var(--sombra-tarjeta);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%; 
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Enlaces personalizados --- */
+.card-link {
+    text-decoration: none;
+    color: var(--color-acento-primario);
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.card-link:hover {
+    color: var(--color-acento-hover);
+    text-decoration: underline;
+}
+
+/* --- Estilos específicos para KPIs --- */
+[data-testid="stMetric"] {
+    background-color: var(--color-fondo-tarjeta);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--border-radius-std);
+    padding: 1rem;
+    box-shadow: var(--sombra-tarjeta);
+}
+
+/* --- Estilos específicos para KPIs (MÉTRICAS) --- */
+[data-testid="stMetric"] {
+    background-color: var(--color-fondo-tarjeta);
+    border: 1px solid var(--color-borde);
+    border-top: 5px solid var(--color-acento-primario); /* Borde superior de color */
+    border-radius: var(--border-radius-std);
+    padding: 1.5rem;
+    box-shadow: var(--sombra-tarjeta);
+    transition: all 0.3s ease;
+}
+[data-testid="stMetric"]:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
