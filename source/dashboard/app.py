@@ -6,6 +6,7 @@ import plotly.express as px
 from gemini_funciones.asesor_perfil import mostrar_asesor_perfil
 from gemini_funciones.generador_rutas import mostrar_generador_rutas
 import time
+import re
 
 
 import sys
@@ -127,29 +128,34 @@ def cargar_y_preprocesar_datos(ruta_archivo):
         return None
 
 
-def mostrar_buscador_ofertas(df_filtrado, moneda, periodo):
-    # Muestra una sección de búsqueda interactiva con paginación para explorar ofertas de trabajo.
+def mostrar_buscador_ofertas(df_filtrado, moneda, periodo, tipo_cambio, diccionario_habilidades):
+    """
+    Muestra una sección de búsqueda interactiva con paginación que ahora incluye
+    enlaces para aprender habilidades relevantes para cada oferta.
+
+    Args:
+        df_filtrado (pd.DataFrame): El DataFrame con las ofertas ya filtradas.
+        moneda (str): La moneda seleccionada ('PEN' o 'USD').
+        periodo (str): El periodo salarial seleccionado ('Mensual' o 'Anual').
+        tipo_cambio (float): La tasa de cambio de USD a PEN.
+        diccionario_habilidades (dict): El diccionario con las habilidades y sus URLs.
+    """
     st.header("🔍 Buscador Interactivo de Ofertas")
 
-    # --- 1. Campo de búsqueda y estado de sesión ---
-    # Usamos session_state para que el texto de búsqueda no se borre en cada rerun
+    # --- 1. Campo de búsqueda y estado de sesión (sin cambios) ---
     if 'search_query' not in st.session_state:
         st.session_state.search_query = ""
-
-    # El texto ingresado por el usuario actualiza el estado de la sesión gracias a la key
     search_query = st.text_input(
         "Busca por puesto, empresa o tecnología:",
         value=st.session_state.search_query,
         placeholder="Ej: Data Analyst, Google, Python...",
-        key="search_query_input" # Asignar una clave es crucial para el estado
+        key="search_query_input"
     )
 
-    # --- 2. Lógica de filtrado en tiempo real ---
+    # --- 2. Lógica de filtrado en tiempo real (sin cambios) ---
     df_resultados = df_filtrado.copy()
     if search_query:
-        # Convertimos todo a minúsculas para una búsqueda no sensible a mayúsculas
         query = search_query.lower()
-        # Filtramos en las columnas más relevantes. `na=False` evita errores con valores nulos.
         df_resultados = df_filtrado[
             df_filtrado['puesto_trabajo'].str.lower().str.contains(query, na=False) |
             df_filtrado['nombre_empresa'].str.lower().str.contains(query, na=False) |
@@ -160,80 +166,81 @@ def mostrar_buscador_ofertas(df_filtrado, moneda, periodo):
         st.info(f"No se encontraron ofertas para la búsqueda: '{search_query}'")
         return
 
-    # --- 3. Lógica de Paginación ---
+    # --- 3. Lógica de Paginación (sin cambios) ---
     items_por_pagina = 8
     total_items = len(df_resultados)
-    total_paginas = -(-total_items // items_por_pagina)  # División de techo
-
-    # Inicializamos la página actual en el estado de la sesión si no existe
-    if 'pagina_actual_busqueda' not in st.session_state:
+    total_paginas = -(-total_items // items_por_pagina)
+    if 'pagina_actual_busqueda' not in st.session_state or st.session_state.pagina_actual_busqueda > total_paginas:
         st.session_state.pagina_actual_busqueda = 1
-    
-    # Si una nueva búsqueda resulta en menos páginas de las que estábamos viendo, reseteamos a la pág 1
-    if st.session_state.pagina_actual_busqueda > total_paginas:
-        st.session_state.pagina_actual_busqueda = 1
-        
     pagina_actual = st.session_state.pagina_actual_busqueda
-
-    # Calculamos los índices de inicio y fin para la página actual
     start_idx = (pagina_actual - 1) * items_por_pagina
     end_idx = start_idx + items_por_pagina
     df_pagina = df_resultados.iloc[start_idx:end_idx]
-
     st.caption(f"Mostrando {len(df_pagina)} de {total_items} ofertas encontradas.")
 
-    # --- 4. Visualización en Tarjetas (Grid de 4x2) ---
+    # --- 4. Visualización en Tarjetas (CON LA NUEVA LÓGICA) ---
     for i in range(0, len(df_pagina), 4):
         cols = st.columns(4)
-        # Obtenemos un subconjunto de hasta 4 ofertas para esta fila
         fila_ofertas = df_pagina.iloc[i:i+4]
         
         for col_idx, (row_idx, oferta) in enumerate(fila_ofertas.iterrows()):
             with cols[col_idx]:
                 with st.container(border=True):
-                    # --- Contenido de la tarjeta ---
+                    # Contenido de la tarjeta (título, empresa, salario, etc.)
                     st.markdown(f"**{oferta.get('puesto_trabajo', 'N/A')}**")
                     st.caption(f"{oferta.get('nombre_empresa', 'N/A')} • {oferta.get('pais', 'N/A')}, {oferta.get('region_estado', 'N/A')}")
                     st.caption(f"Fuente: {oferta.get('tipo_fuente_datos', 'N/A')} - {oferta.get('plataforma_origen', 'N/A')}")
 
-                    # Cálculo y formato del salario
                     salario_display = oferta.get('salario_anual_usd')
                     if pd.notna(salario_display):
-                        if periodo == 'Mensual':
-                            salario_display /= 12
-                        if moneda == 'PEN':
-                            salario_display *= TIPO_DE_CAMBIO_USD_PEN
-                        
+                        if periodo == 'Mensual': salario_display /= 12
+                        if moneda == 'PEN': salario_display *= tipo_cambio
                         simbolo_moneda = "S/" if moneda == 'PEN' else "$"
                         st.markdown(f"**Salario:** {simbolo_moneda}{salario_display:,.0f}")
                     else:
                         st.markdown("**Salario:** No especificado")
 
                     st.markdown("---", help=None)
-                    st.markdown(
-                        f"<a href='{oferta.get('enlace_oferta', '#')}' target='_blank' style='text-decoration: none; color: #60a5fa;'>Ver Oferta →</a>", 
-                        unsafe_allow_html=True
+
+                    # --- INICIO: Lógica de Enlaces de Aprendizaje ---
+                    lista_habilidades = encontrar_habilidades_relevantes(
+                        oferta['puesto_trabajo'], 
+                        diccionario_habilidades
                     )
+                    
+                    html_enlaces_aprender = ""
+                    if lista_habilidades:
+                        enlaces = [
+                            f"<a href='{url}' target='_blank' class='card-link'>Aprender {nombre} 🎓</a>"
+                            for nombre, url in lista_habilidades
+                        ]
+                        html_enlaces_aprender = " • ".join(enlaces)
+
+                    link_ver_oferta = f"<a href='{oferta.get('enlace_oferta', '#')}' target='_blank' class='card-link'>Ver Oferta →</a>"
+
+                    st.markdown(f"""
+                    <div style='display: flex; justify-content: space-between; align-items: center;'>
+                        <div style='flex-grow: 1; font-size: 0.9em;'>{html_enlaces_aprender}</div>
+                        <div style='white-space: nowrap; margin-left: 10px;'>{link_ver_oferta}</div>
+                    </div>
+                    """, unsafe_allow_html=True)
+                    # --- FIN: Lógica de Enlaces de Aprendizaje ---
     
     st.markdown("---")
 
-    # --- 5. Controles de Paginación ---
+    # --- 5. Controles de Paginación (sin cambios) ---
     if total_paginas > 1:
         col_pag1, col_pag2, col_pag3 = st.columns([1, 2, 1])
-
         with col_pag1:
             if st.button("← Anterior", disabled=(pagina_actual == 1), key="btn_anterior_busqueda", use_container_width=True):
                 st.session_state.pagina_actual_busqueda -= 1
                 st.rerun()
-        
         with col_pag2:
             st.write(f"Página **{pagina_actual}** de **{total_paginas}**")
-
         with col_pag3:
             if st.button("Siguiente →", disabled=(pagina_actual >= total_paginas), key="btn_siguiente_busqueda", use_container_width=True):
                 st.session_state.pagina_actual_busqueda += 1
                 st.rerun()
-
 
 
 # --- Funciones de Componentes del Dashboard ---
@@ -382,16 +389,29 @@ def mostrar_kpis(df, moneda, periodo):
         """, unsafe_allow_html=True)
 
 def cargar_habilidades_aprendizaje(ruta_csv_habilidades):
+    """
+    Carga las habilidades y sus URLs desde un archivo CSV.
+    Maneja correctamente múltiples habilidades por fila, separadas por comas.
+    """
     try:
         df_habilidades = pd.read_csv(ruta_csv_habilidades)
-        # Aseguramos que las columnas se llamen 'habilidad' y 'url'
+        # Asignamos nombres de columna para evitar errores
         df_habilidades.columns = ['habilidad', 'url']
         
-        # Creamos el diccionario: {habilidad_en_minusculas: url}
-        diccionario_habilidades = {
-            str(row.habilidad).lower(): row.url 
-            for index, row in df_habilidades.iterrows()
-        }
+        diccionario_habilidades = {}
+        
+        for index, row in df_habilidades.iterrows():
+            # Dividimos las habilidades que vienen separadas por coma
+            habilidades_individuales = str(row.habilidad).split(',')
+            for habilidad_ind in habilidades_individuales:
+                # Limpiamos cada habilidad (quitamos espacios y a minúsculas)
+                habilidad_limpia = habilidad_ind.strip().lower()
+                if habilidad_limpia: # Nos aseguramos de que no esté vacía
+                    # Si la habilidad ya existe, no la sobreescribimos
+                    # (la primera URL encontrada para una habilidad tiene prioridad)
+                    if habilidad_limpia not in diccionario_habilidades:
+                        diccionario_habilidades[habilidad_limpia] = row.url
+                        
         return diccionario_habilidades
     except FileNotFoundError:
         st.error(f"Error: No se encontró el archivo de habilidades en: {ruta_csv_habilidades}")
@@ -399,8 +419,10 @@ def cargar_habilidades_aprendizaje(ruta_csv_habilidades):
     except Exception as e:
         st.error(f"Error al procesar el archivo de habilidades: {e}")
         return {}
-diccionario_habilidades = cargar_habilidades_aprendizaje(os.path.join(parent_dir, 'ETL', 'Cliente', 'habilidades_aprendizaje.csv'))
 
+
+diccionario_habilidades = cargar_habilidades_aprendizaje(os.path.join('datos', 'conocimiento_filtrado_habilidades.csv'))
+print(diccionario_habilidades)
 
 def mostrar_feed_recomendaciones(df_filtrado, moneda, periodo, habilidades_usuario):
     """
@@ -444,50 +466,62 @@ def mostrar_feed_recomendaciones(df_filtrado, moneda, periodo, habilidades_usuar
     
     # Creamos columnas para cada tarjeta.
     cols = st.columns(num_recomendaciones_a_mostrar)
-
     for i in range(num_recomendaciones_a_mostrar):
-    with cols[i]:
-        with st.container(border=True): # Usa la clase .card de tu CSS
-            oferta = df_recomendados.iloc[i]
-            
-            # --- Contenido existente de la tarjeta ---
-            st.markdown(f"**{oferta['puesto_trabajo']}**")
-            st.caption(f"{oferta['nombre_empresa']} • {oferta['pais']}, {oferta['region_estado']}")
-            st.caption(f"Fuente: {oferta['tipo_fuente_datos']} - {oferta['plataforma_origen']}")
-            
-            salario_display = oferta['salario_anual_usd']
-            if pd.notna(salario_display):
-                # (Aquí va tu lógica de conversión de salario sin cambios)
-                # ...
-                simbolo_moneda = "S/" if moneda == 'PEN' else "$"
-                st.caption(f"**Salario:** {simbolo_moneda}{salario_display:,.0f}")
+        with cols[i]:
+            # Usamos un contenedor con borde para simular una "tarjeta".
+            with st.container(border=True):
+                oferta = df_recomendados.iloc[i]
+                
+                st.markdown(f"**{oferta['puesto_trabajo']}**")
+                st.caption(f"{oferta['nombre_empresa']} • {oferta['pais']}, {oferta['region_estado']}")
+                # Mostramos la fuente extraccion y plataforma de origen.
+                st.caption(f"Fuente: {oferta['tipo_fuente_datos']} - {oferta['plataforma_origen']}")
+                # Mostramos el salario con el símbolo de la moneda.
+                salario_display = oferta['salario_anual_usd']
+                if pd.notna(salario_display):
+                    if periodo == 'Mensual':
+                        salario_display /= 12
+                    if moneda == 'PEN':
+                        salario_display *= TIPO_DE_CAMBIO_USD_PEN
+                    simbolo_moneda = "S/" if moneda == 'PEN' else "$"
+                    st.caption(f"**Salario:** {simbolo_moneda}{salario_display:,.0f}")
 
-            st.markdown("---", help=None)
-            
-            # --- NUEVO: Lógica de Enlaces ---
-            # Buscamos una habilidad relevante para esta oferta
-            habilidad_para_aprender = encontrar_habilidad_relevante(
+                # Añadimos un pequeño espacio.
+                st.markdown("---", help=None)
+
+                # Preparamos los enlaces
+                link_ver_oferta = f"<a href='{oferta['enlace_oferta']}' target='_blank' class='card-link'>Ver Oferta →</a>"
+                
+                habilidades_para_aprender = encontrar_habilidades_relevantes(
                 oferta['puesto_trabajo'], 
                 diccionario_habilidades
-            )
+                )
+
+                html_enlaces_aprender = ""
+                if habilidades_para_aprender:
+                    enlaces = []
+                    for nombre_habilidad, url_habilidad in habilidades_para_aprender:
+                        enlaces.append(
+                            f"<a href='{url_habilidad}' target='_blank' class='card-link'>Aprender {nombre_habilidad} 🎓</a>"
+                        )
+                    # Unimos los enlaces con un separador para que se vean bien
+                    html_enlaces_aprender = " • ".join(enlaces)
+
+                    # Preparamos el enlace de la oferta
+                    link_ver_oferta = f"<a href='{oferta['enlace_oferta']}' target='_blank' class='card-link'>Ver Oferta →</a>"
+
+                    # Renderizamos los enlaces en la tarjeta
+                    st.markdown(f"""
+                        <div style='display: flex; justify-content: space-between; align-items: center;'>
+                        <div style='flex-grow: 1;'>{html_enlaces_aprender}</div>
+                        </div>
+                        """, unsafe_allow_html=True)
+                    st.markdown(link_ver_oferta, unsafe_allow_html=True)
+                else:
+                    # Si no hay habilidad, solo mostramos el enlace de la oferta
+                    st.markdown(link_ver_oferta, unsafe_allow_html=True)
             
-            # Preparamos los enlaces
-            link_ver_oferta = f"<a href='{oferta['enlace_oferta']}' target='_blank' class='card-link'>Ver Oferta →</a>"
-            
-            if habilidad_para_aprender:
-                nombre_habilidad, url_habilidad = habilidad_para_aprender
-                link_aprender = f"<a href='{url_habilidad}' target='_blank' class='card-link'>Aprender {nombre_habilidad} 🎓</a>"
-                
-                # Usamos HTML para poner los enlaces en extremos opuestos
-                st.markdown(f"""
-                <div style='display: flex; justify-content: space-between;'>
-                    {link_aprender}
-                    {link_ver_oferta}
-                </div>
-                """, unsafe_allow_html=True)
-            else:
-                # Si no hay habilidad, solo mostramos el enlace de la oferta
-                st.markdown(link_ver_oferta, unsafe_allow_html=True)
+
 
     # --- Botón para Ver Todas las Ofertas ---
     if len(df_recomendados) > num_recomendaciones_a_mostrar:
@@ -847,34 +881,26 @@ def mostrar_tabla_de_datos(df, moneda, periodo):
                     use_container_width=True # Hacemos que la tabla use todo el ancho del contenedor.
                 )
 
-
-def encontrar_habilidad_relevante(titulo_puesto, diccionario_habilidades):
-    """
-    Busca en el título de un puesto si contiene alguna de las habilidades clave.
-    
-    Returns:
-        Un tuple (habilidad, url) si encuentra una coincidencia, de lo contrario None.
-        Para mejorar la relevancia, devuelve la coincidencia más larga encontrada.
-    """
+def encontrar_habilidades_relevantes(titulo_puesto, diccionario_habilidades):
     if not isinstance(titulo_puesto, str):
-        return None
+        return []
 
     titulo_lower = titulo_puesto.lower()
     habilidades_encontradas = []
 
-    # Buscamos todas las habilidades que coincidan
-    for habilidad in diccionario_habilidades.keys():
-        if f" {habilidad} " in f" {titulo_lower} ":  # Buscamos la palabra exacta
-            habilidades_encontradas.append(habilidad)
+    # Iteramos sobre todas las habilidades de nuestro diccionario
+    for habilidad, url in diccionario_habilidades.items():
+        # Usamos una expresión regular más flexible que busca la habilidad
+        # incluso si está junto a paréntesis, comas, etc.
+        # re.escape maneja habilidades con caracteres especiales como 'c++'.
+        patron = r'\b' + re.escape(habilidad) + r'\b'
+        if re.search(patron, titulo_lower):
+            # Añadimos la habilidad y su URL a nuestra lista de resultados
+            habilidades_encontradas.append((habilidad.title(), url))
 
-    if not habilidades_encontradas:
-        return None
+    return habilidades_encontradas
 
-    # Devolvemos la habilidad más larga (ej: "Power BI" es mejor que "BI")
-    mejor_habilidad = max(habilidades_encontradas, key=len)
-    url_aprendizaje = diccionario_habilidades[mejor_habilidad]
-    
-    return (mejor_habilidad.title(), url_aprendizaje)
+
 # Estilos
 def inyectar_estilos_css(archivo_css):
     try:
@@ -923,7 +949,7 @@ if df_original is not None:
                 mostrar_feed_recomendaciones(df_filtrado, moneda, periodo, habilidades_del_usuario)
                 st.markdown("---")
             # mostrar_buscador_ofertas
-            mostrar_buscador_ofertas(df_filtrado, moneda, periodo)
+            mostrar_buscador_ofertas(df_filtrado, moneda, periodo, TIPO_DE_CAMBIO_USD_PEN, diccionario_habilidades)
             st.markdown("---")
             mostrar_analisis_geografico(df_filtrado, paises)
             st.markdown("---")
