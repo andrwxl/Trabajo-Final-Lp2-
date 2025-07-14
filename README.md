@@ -63,9 +63,9 @@ Este proyecto nace para resolver ese problema. Hemos construido un dashboard int
 
 ### EDUCATION
 
-[](https://github.com/andrwxl/Trabajo-Final-Lp2-/blob/main/Scraper_Education/Scraper_def.md)
+[Scraper](https://github.com/andrwxl/Trabajo-Final-Lp2-/blob/main/Scraper_Education/Scraper_def.md)
 [](https://github.com/andrwxl/Trabajo-Final-Lp2-/blob/main/Scraper_Education/Scraper_def.md)
 
 ## APP
 
-[APP.py]([https://github.com/andrwxl/Trabajo-Final-Lp2-/blob/main/Estructura-Detallada.md](https://github.com/andrwxl/Trabajo-Final-Lp2-/blob/main/source/dashboard/APP_documentation.md))
+[APP.py](https://github.com/andrwxl/Trabajo-Final-Lp2-/blob/main/source/dashboard/APP_documentation.md)
