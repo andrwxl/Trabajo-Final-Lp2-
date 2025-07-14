@@ -5,6 +5,8 @@ import numpy as np
 import plotly.express as px
 from gemini_funciones.asesor_perfil import mostrar_asesor_perfil
 from gemini_funciones.generador_rutas import mostrar_generador_rutas
+import time
+
 
 import sys
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -20,61 +22,69 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-
 # Llamamos a la función para obtener la tasa (ya sea de la caché o de la API)
 TIPO_DE_CAMBIO_USD_PEN = tasa_cambios.obtener_tasa_especifica("USD", "PEN")
 
 # --- Funciones de Carga y Procesamiento ---
 
 
+# --- LISTA DE HABILIDADES PREDEFINIDAS ---
+# Puedes expandir esta lista con todas las habilidades que consideres relevantes.
+LISTA_HABILIDADES_PREDEFINIDAS = sorted([
+    "Python", "SQL", "Power BI", "Tableau", "AWS", "Azure", "GCP", "React",
+    "JavaScript", "Excel", "Machine Learning", "Deep Learning", "Pandas",
+    "NumPy", "Scikit-learn", "TensorFlow", "PyTorch", "Airflow", "Docker",
+    "Kubernetes", "Spark", "Data Warehouse", "ETL", "Big Data", "NoSQL",
+    "MongoDB", "PostgreSQL", "Git", "Linux", "R", "Java", "C++", "HTML", "CSS"
+])
 
 @st.dialog("¡Bienvenido! Cuéntanos sobre ti")
 def dialogo_de_registro():
     """
-    Esta función crea el contenido de la ventana de diálogo (modal).
+    Muestra un diálogo de bienvenida rediseñado para que el usuario seleccione
+    sus habilidades de una lista predefinida de forma interactiva.
     """
     st.write(
-        "Ingresa tus habilidades clave (separadas por comas) para que podamos "
-        "encontrar tu trabajo ideal y darte recomendaciones personalizadas."
+        "**Selecciona tus habilidades clave de la lista.** "
+        "Esto nos ayudará a encontrar tu trabajo ideal y darte recomendaciones personalizadas."
     )
 
     # Creamos un formulario dentro del diálogo.
     with st.form(key="registro_dialog_form"):
-        habilidades_input = st.text_area(
+        # --- NUEVO: Selector de habilidades múltiples ---
+        # st.multiselect es perfecto para simular la selección de "cajitas" o etiquetas.
+        habilidades_seleccionadas = st.multiselect(
             "Tus habilidades:",
-            placeholder="Ej: Python, SQL, Power BI, AWS, React",
-            height=100
+            options=LISTA_HABILIDADES_PREDEFINIDAS,
+            placeholder="Elige una o más habilidades"
         )
         
         # Botón de envío del formulario.
-        submitted = st.form_submit_button("Registrar y Empezar")
+        submitted = st.form_submit_button("Registrar y Empezar", use_container_width=True)
 
         if submitted:
-            if habilidades_input:
-                # Procesamos el input para crear una lista limpia de habilidades.
-                habilidades_lista = [skill.strip().lower() for skill in habilidades_input.split(',')]
-                habilidades_lista = list(filter(None, habilidades_lista)) # Elimina strings vacíos
+            # Verificamos que el usuario haya seleccionado al menos una habilidad.
+            if habilidades_seleccionadas:
+                # --- NUEVO: Animación de carga ---
+                # Usamos st.spinner para mostrar un mensaje mientras se procesa.
+                with st.spinner('¡Personalizando tu experiencia! Un momento...'):
+                    # Guardamos la lista en el estado de la sesión (en minúsculas por consistencia).
+                    st.session_state.habilidades_usuario = [skill.lower() for skill in habilidades_seleccionadas]
+                    
+                    # Simulamos un pequeño retraso para que la animación sea visible.
+                    time.sleep(2)
                 
-                if habilidades_lista:
-                    # Guardamos la lista en el estado de la sesión.
-                    st.session_state.habilidades_usuario = habilidades_lista
-                    # El diálogo se cierra automáticamente al terminar la función.
-                    # Forzamos un re-run para que el dashboard principal se cargue.
-                    st.rerun()
-                else:
-                    st.error("Por favor, ingresa al menos una habilidad válida.")
+                # Forzamos un re-run para que el dashboard principal se cargue.
+                # El diálogo se cierra automáticamente al finalizar la función después del rerun.
+                st.rerun()
             else:
-                st.warning("El campo de habilidades no puede estar vacío.")
+                # Si no seleccionó ninguna, mostramos una advertencia.
+                st.warning("Por favor, selecciona al menos una habilidad para continuar.")
 
 def mostrar_pantalla_registro():
     """
-    Actúa como un "portero". Si el usuario no ha ingresado sus habilidades,
-    abre la ventana de diálogo. De lo contrario, devuelve las habilidades.
-
-    Esta función debe ser la primera llamada en el flujo principal de la app.
-
-    Returns:
-        list[str] or None: Una lista con las habilidades del usuario o None si no se han registrado.
+    Esta función no necesita cambios. Sigue funcionando perfectamente
+    con el nuevo diálogo de registro.
     """
     # Si las habilidades no están en el estado de la sesión, llamamos a la función de diálogo.
     if "habilidades_usuario" not in st.session_state:
@@ -82,10 +92,12 @@ def mostrar_pantalla_registro():
 
     # Si el usuario cierra el diálogo sin registrarse, st.stop() detiene la ejecución.
     if "habilidades_usuario" not in st.session_state:
+        st.info("Por favor, completa el registro de habilidades para ver el contenido del dashboard.")
         st.stop()
 
     # Si llegamos aquí, significa que el usuario ya se registró. Devolvemos las habilidades.
     return st.session_state.habilidades_usuario
+
 
 @st.cache_data
 def cargar_y_preprocesar_datos(ruta_archivo):
@@ -113,6 +125,116 @@ def cargar_y_preprocesar_datos(ruta_archivo):
     except Exception as e:
         st.error(f"Error al cargar o procesar el archivo CSV: {e}")
         return None
+
+
+def mostrar_buscador_ofertas(df_filtrado, moneda, periodo):
+    # Muestra una sección de búsqueda interactiva con paginación para explorar ofertas de trabajo.
+    st.header("🔍 Buscador Interactivo de Ofertas")
+
+    # --- 1. Campo de búsqueda y estado de sesión ---
+    # Usamos session_state para que el texto de búsqueda no se borre en cada rerun
+    if 'search_query' not in st.session_state:
+        st.session_state.search_query = ""
+
+    # El texto ingresado por el usuario actualiza el estado de la sesión gracias a la key
+    search_query = st.text_input(
+        "Busca por puesto, empresa o tecnología:",
+        value=st.session_state.search_query,
+        placeholder="Ej: Data Analyst, Google, Python...",
+        key="search_query_input" # Asignar una clave es crucial para el estado
+    )
+
+    # --- 2. Lógica de filtrado en tiempo real ---
+    df_resultados = df_filtrado.copy()
+    if search_query:
+        # Convertimos todo a minúsculas para una búsqueda no sensible a mayúsculas
+        query = search_query.lower()
+        # Filtramos en las columnas más relevantes. `na=False` evita errores con valores nulos.
+        df_resultados = df_filtrado[
+            df_filtrado['puesto_trabajo'].str.lower().str.contains(query, na=False) |
+            df_filtrado['nombre_empresa'].str.lower().str.contains(query, na=False) |
+            df_filtrado['categoria'].str.lower().str.contains(query, na=False)
+        ]
+
+    if df_resultados.empty:
+        st.info(f"No se encontraron ofertas para la búsqueda: '{search_query}'")
+        return
+
+    # --- 3. Lógica de Paginación ---
+    items_por_pagina = 8
+    total_items = len(df_resultados)
+    total_paginas = -(-total_items // items_por_pagina)  # División de techo
+
+    # Inicializamos la página actual en el estado de la sesión si no existe
+    if 'pagina_actual_busqueda' not in st.session_state:
+        st.session_state.pagina_actual_busqueda = 1
+    
+    # Si una nueva búsqueda resulta en menos páginas de las que estábamos viendo, reseteamos a la pág 1
+    if st.session_state.pagina_actual_busqueda > total_paginas:
+        st.session_state.pagina_actual_busqueda = 1
+        
+    pagina_actual = st.session_state.pagina_actual_busqueda
+
+    # Calculamos los índices de inicio y fin para la página actual
+    start_idx = (pagina_actual - 1) * items_por_pagina
+    end_idx = start_idx + items_por_pagina
+    df_pagina = df_resultados.iloc[start_idx:end_idx]
+
+    st.caption(f"Mostrando {len(df_pagina)} de {total_items} ofertas encontradas.")
+
+    # --- 4. Visualización en Tarjetas (Grid de 4x2) ---
+    for i in range(0, len(df_pagina), 4):
+        cols = st.columns(4)
+        # Obtenemos un subconjunto de hasta 4 ofertas para esta fila
+        fila_ofertas = df_pagina.iloc[i:i+4]
+        
+        for col_idx, (row_idx, oferta) in enumerate(fila_ofertas.iterrows()):
+            with cols[col_idx]:
+                with st.container(border=True):
+                    # --- Contenido de la tarjeta ---
+                    st.markdown(f"**{oferta.get('puesto_trabajo', 'N/A')}**")
+                    st.caption(f"{oferta.get('nombre_empresa', 'N/A')} • {oferta.get('pais', 'N/A')}, {oferta.get('region_estado', 'N/A')}")
+                    st.caption(f"Fuente: {oferta.get('tipo_fuente_datos', 'N/A')} - {oferta.get('plataforma_origen', 'N/A')}")
+
+                    # Cálculo y formato del salario
+                    salario_display = oferta.get('salario_anual_usd')
+                    if pd.notna(salario_display):
+                        if periodo == 'Mensual':
+                            salario_display /= 12
+                        if moneda == 'PEN':
+                            salario_display *= TIPO_DE_CAMBIO_USD_PEN
+                        
+                        simbolo_moneda = "S/" if moneda == 'PEN' else "$"
+                        st.markdown(f"**Salario:** {simbolo_moneda}{salario_display:,.0f}")
+                    else:
+                        st.markdown("**Salario:** No especificado")
+
+                    st.markdown("---", help=None)
+                    st.markdown(
+                        f"<a href='{oferta.get('enlace_oferta', '#')}' target='_blank' style='text-decoration: none; color: #60a5fa;'>Ver Oferta →</a>", 
+                        unsafe_allow_html=True
+                    )
+    
+    st.markdown("---")
+
+    # --- 5. Controles de Paginación ---
+    if total_paginas > 1:
+        col_pag1, col_pag2, col_pag3 = st.columns([1, 2, 1])
+
+        with col_pag1:
+            if st.button("← Anterior", disabled=(pagina_actual == 1), key="btn_anterior_busqueda", use_container_width=True):
+                st.session_state.pagina_actual_busqueda -= 1
+                st.rerun()
+        
+        with col_pag2:
+            st.write(f"Página **{pagina_actual}** de **{total_paginas}**")
+
+        with col_pag3:
+            if st.button("Siguiente →", disabled=(pagina_actual >= total_paginas), key="btn_siguiente_busqueda", use_container_width=True):
+                st.session_state.pagina_actual_busqueda += 1
+                st.rerun()
+
+
 
 # --- Funciones de Componentes del Dashboard ---
 
@@ -147,7 +269,7 @@ def mostrar_sidebar(df):
     st.sidebar.markdown(f"**Tasa de Cambio Actual:** 1 USD = {TIPO_DE_CAMBIO_USD_PEN:.2f} PEN")
     st.sidebar.markdown("Fuente: [API ExchangeRate](https://api.exchangerate-api.com/v4/latest/USD)")
     #
-    periodo_seleccionado = st.sidebar.radio("Ver Periodo Salarial:", ('Anual', 'Mensual'), index=0, horizontal=True)
+    periodo_seleccionado = st.sidebar.radio("Ver Periodo Salarial:", ('Mensual', 'Anual'), index=0, horizontal=True)
     # Filtro por tipo de fuente de datos
     st.sidebar.subheader("Plataforma de Fuente de Datos")
     tipo_fuente_disponible = sorted(df['plataforma_origen'].dropna().unique())
@@ -184,9 +306,7 @@ def mostrar_kpis(df, moneda, periodo):
 
     total_ofertas = len(df)
     # filtramos solamente los que tienen salario anual y los que son valores numericos
-    print(df["salario_anual_usd"])
     salario_promedio = df['salario_anual_usd'].mean()
-    print(salario_promedio)
     # salario ignorando NaN
 
     tecnologia_demandada = df['puesto_trabajo'].mode()[0] if not df['puesto_trabajo'].empty else "N/A"
@@ -215,10 +335,6 @@ def mostrar_feed_recomendaciones(df_filtrado, moneda, periodo, habilidades_usuar
     """
     Analiza el DataFrame filtrado basado en las habilidades del usuario,
     y muestra un feed con las ofertas de trabajo más relevantes.
-    
-    Args:
-        df_filtrado (pd.DataFrame): El DataFrame con los datos ya filtrados por el sidebar.
-        habilidades_usuario (list[str]): La lista de habilidades ingresadas por el usuario.
     """
     st.header("Principales empleos que te recomendamos")
     st.write("En función de las habilidades que registraste, estas son algunas de las ofertas más relevantes para ti en la selección actual.")
@@ -335,11 +451,8 @@ def mostrar_pagina_completa_recomendaciones(moneda, periodo):
             # Obtenemos un subconjunto de 4 ofertas para esta fila.
             fila_ofertas = df_pagina.iloc[i:i+4]
             
-            # --- INICIO DE LA CORRECCIÓN ---
-            # Usamos enumerate para tener un índice local (0, 1, 2, 3) para las columnas.
             for col_idx, (row_idx, oferta) in enumerate(fila_ofertas.iterrows()):
                 with cols[col_idx]:
-            # --- FIN DE LA CORRECCIÓN ---
                     with st.container(border=True):
                         st.markdown(f"**{oferta['puesto_trabajo']}**")
                         st.caption(f"{oferta['nombre_empresa']} • {oferta['pais']}, {oferta['region_estado']}")
@@ -381,17 +494,11 @@ def mostrar_pagina_completa_recomendaciones(moneda, periodo):
     else:
         st.warning("No hay datos de recomendaciones para mostrar. Vuelve al dashboard y prueba con otros filtros.")
 
-
-
-
 def logica_boton_ver_todo(df_recomendados):
     """
     Muestra el botón "Ver todas las ofertas" y maneja el cambio de estado.
-    
-    Args:
-        df_recomendados (pd.DataFrame): El DataFrame con todas las recomendaciones.
     """
-    st.markdown("") # Espacio
+    st.markdown("")
     if st.button("Ver todas las ofertas para mí", use_container_width=True, key="ver_todas_ofertas"):
         # 1. Guardamos el DataFrame completo en el estado de la sesión.
         st.session_state.ofertas_recomendadas_completas = df_recomendados
@@ -417,7 +524,6 @@ def mostrar_analisis_geografico(df, paises_seleccionados):
             mapa_nombres_paises = {
                 'Perú': 'Peru',
                 'US': 'United States',
-                # 'España': 'Spain',
                 'México': 'Mexico',
             }
         
@@ -469,9 +575,6 @@ def mostrar_demanda_por_categoria(df):
     """
     Calcula y muestra un gráfico de barras con las categorías de puestos más demandadas,
     utilizando una escala de color para representar la magnitud.
-    
-    Args:
-        df (pd.DataFrame): El DataFrame filtrado con los datos de las ofertas.
     """
     st.subheader("Demanda por Categoría de Puesto")
 
@@ -488,12 +591,8 @@ def mostrar_demanda_por_categoria(df):
             labels={'x': 'Número de Ofertas', 'y': 'Categoría'},
             text=demanda_categorias.values,
             title="Top 15 Categorías con Mayor Demanda",
-            # --- INICIO DE LA MODIFICACIÓN ---
-            # 1. Coloreamos las barras según su valor numérico (la cantidad de ofertas).
-            color=demanda_categorias.values,
-            # 2. Definimos la escala de color a usar (ej: de un verde claro a uno oscuro).
+            color=demanda_categorias.values, # Coloreamos según la magnitud de la demanda
             color_continuous_scale='Tealgrn'
-            # --- FIN DE LA MODIFICACIÓN ---
         )
         
         # Configuramos el gráfico para que sea más legible.
@@ -539,7 +638,6 @@ def mostrar_demanda_vs_salario(df, moneda_seleccionada, periodo_seleccionado, ti
         simbolo_moneda = "S/" if moneda_seleccionada == 'PEN' else "$"
         label_eje_y = f"Salario Promedio {periodo_seleccionado} ({moneda_seleccionada})"
 
-        # 2. Creamos el gráfico de dispersión
         fig = px.scatter(
             df_display,
             x="numero_de_ofertas",
@@ -574,9 +672,6 @@ def mostrar_demanda_vs_salario(df, moneda_seleccionada, periodo_seleccionado, ti
     else:
         st.info("No hay suficientes datos para generar el gráfico de dispersión. Intenta con otros filtros.")
 
-
-
-# --- Función para la Sección de Descarga ---
 def mostrar_seccion_descarga(df_filtrado):
     st.header("📥 Descargar Datos")
     st.write("Haz clic en el botón para descargar los datos actualmente filtrados en formato .csv.")
@@ -593,19 +688,8 @@ def mostrar_seccion_descarga(df_filtrado):
         file_name='datos_filtrados_mercado_laboral.csv',
         mime='text/csv',
     )
-# --- Función para Gráfico de Salario por Categoría ---
 
 def mostrar_salario_por_categoria(df, moneda_seleccionada, periodo_seleccionado, tipo_cambio):
-    """
-    Calcula y muestra un gráfico de cajas (boxplot) con la distribución de salarios
-    para las categorías más demandadas.
-    
-    Args:
-        df (pd.DataFrame): El DataFrame filtrado.
-        moneda_seleccionada (str): La moneda elegida por el usuario ('PEN' o 'USD').
-        periodo_seleccionado (str): El periodo elegido ('Anual' o 'Mensual').
-        tipo_cambio (float): La tasa de conversión de USD a PEN.
-    """
     st.subheader(f"Distribución de Salarios por Categoría ({moneda_seleccionada} - {periodo_seleccionado})")
 
     # Para que el gráfico sea legible, nos enfocamos en las 10 categorías con más ofertas.
@@ -677,13 +761,10 @@ def mostrar_tabla_de_datos(df, moneda, periodo):
                     use_container_width=True # Hacemos que la tabla use todo el ancho del contenedor.
                 )
 
-
-# --- Flujo Principal de la Aplicación ---
-
+# ---  Principal de la Aplicación ---
 
 st.title("Análisis del Mercado Laboral Global")
 st.write("Una vista interactiva de las tendencias y oportunidades en el sector tecnológico.")
-
 
 ruta_dataset = os.path.join('datos', 'finales', 'dataset_maestro_final.csv')
 df_original = cargar_y_preprocesar_datos(ruta_dataset)
@@ -717,8 +798,12 @@ if df_original is not None:
             if habilidades_del_usuario:
                 mostrar_feed_recomendaciones(df_filtrado, moneda, periodo, habilidades_del_usuario)
                 st.markdown("---")
+            # mostrar_buscador_ofertas
+            mostrar_buscador_ofertas(df_filtrado, moneda, periodo)
+            st.markdown("---")
             mostrar_analisis_geografico(df_filtrado, paises)
             st.markdown("---")
+            # Mostramos el análisis por categoría de puesto.
             st.header("Análisis por Categoría de Puesto")
             # Creamos dos columnas para poner los gráficos uno al lado del otro.
             col_demanda, col_salario = st.columns(2)
@@ -733,13 +818,13 @@ if df_original is not None:
             mostrar_asesor_perfil(df_filtrado, moneda, periodo, TIPO_DE_CAMBIO_USD_PEN, paises)
             st.markdown("---")
             mostrar_generador_rutas()
-            st.markdown("---")
-            df_empleos_sugeridos = mostrar_seccion_descarga(df_filtrado)
-            st.dataframe(df_empleos_sugeridos)
             # Si el usuario no ha registrado sus habilidades, mostramos la pantalla de registro.
 
             st.markdown("---")
             mostrar_tabla_de_datos(df_filtrado, moneda, periodo)
+            # Mostrar todas nuestras fuentes csv
+            st.markdown("---")
+            df_empleos_sugeridos = mostrar_seccion_descarga(df_filtrado)
         # --- NUEVO: Manejo de la vista de "Ver todas las ofertas para mí" ---
         elif st.session_state.view == 'all_recommendations':
             # Si el usuario ha hecho clic en "Ver todas las ofertas para mí", mostramos la página completa.

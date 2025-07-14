@@ -44,18 +44,11 @@ def eliminar_filas_nulas_en_columna(df: pd.DataFrame, nombre_columna: str) -> pd
 def estandarizar_salarios(df):
     """
     Estandariza salarios a PEN/Mensual y devuelve una única columna 'salario'.
-    - Si el df tiene 'salario_minimo' y 'salario_maximo', los promedia.
-    - Si el df tiene 'salario', simplemente lo estandariza.
-
-    Args:
-        df (pd.DataFrame): DataFrame con datos de salarios.
-        dict_tasas (dict): Diccionario con tasas de cambio de cada moneda a USD.
-
-    Returns:
-        pd.DataFrame: Nuevo DataFrame con una única columna 'salario' estandarizada.
     """
     dict_tasas = obtener_todas_las_tasas()
     df_estandarizado = df.copy()
+    # 1. Aseguramos que los salarios sean numéricos enteros
+    df_estandarizado['salario'] = pd.to_numeric(df_estandarizado['salario'], errors='coerce')
 
     # 2. ESTANDARIZACIÓN DE PERIODO (ANUAL -> MENSUAL)
     filas_anual = df_estandarizado['periodo_salario'] == 'Anual'
@@ -107,9 +100,7 @@ def unificar_datasets(carpeta_entrada, schema_maestro):
         
         # Compara las columnas del archivo con el esquema maestro.
         for columna in schema_maestro:
-            # Si una columna del esquema maestro NO está en el archivo actual...
             if columna not in df.columns:
-                # ...la crea y la rellena con el valor nulo estándar de numpy.
                 print(f"  -> Añadiendo columna faltante: '{columna}'")
                 df[columna] = np.nan
         
@@ -121,22 +112,15 @@ def unificar_datasets(carpeta_entrada, schema_maestro):
         df = df[schema_maestro]
         
         lista_de_dataframes.append(df)
-
-        print(f"  -> Antes de la limpieza, hay {df['salario'].isnull().sum()} valores nulos en la columna 'salario' en '{os.path.basename(archivo)}'.")
         
         
     # Concatena (une verticalmente) todos los DataFrames de la lista.
-    print("\nUnificando todos los datasets...")
     df_final = pd.concat(lista_de_dataframes, ignore_index=True) 
     
     # Estandariza todos los valores "NA" (string) a un valor nulo estándar (NaN).
-    print("Estandarizando todos los valores nulos...")
     df_final.replace("NA", np.nan, inplace=True)
 
     # Estandariza los salarios a la moneda PEN y al periodo Mensual.
-    #contamos valores nulos en la columna 'salario' antes de la limpieza.
-    print("Estandarizando salarios a PEN/Mensual...")
-    print(f"  -> Antes de la limpieza, hay {df_final['salario'].isnull().sum()} valores nulos en la columna 'salario'.")
     df_final = estandarizar_salarios(df_final)
 
     # Elimina filas que tengan valores nulos en la columna 'salario'.
