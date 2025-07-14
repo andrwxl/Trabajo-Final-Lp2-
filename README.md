@@ -1,4 +1,5 @@
 # 🌍 Atlas de Oportunidades Laborales: Un Framework de Datos para Decodificar la Demanda de Habilidades Tecnológicas 📊
+Puedes acceder a nuestra aplicacion aqui [app web](https://mhpw2cug5iazq4t8ctnmzf.streamlit.app)
 ### 🎯 **¿Qué se busca con este proyecto?**
 
 El objetivo principal es **analizar las tendencias y demandas laborales** a nivel global, con el fin de identificar las tecnologías más solicitadas, su distribución geográfica y las remuneraciones asociadas. Se desarrollará un **código en Python** que automatice la **extracción, transformación y carga (ETL)** de ofertas laborales desde diversas fuentes. Los datos consolidados se almacenarán en un archivo **.csv** y servirán como base para un **dashboard interactivo** que permitirá explorar la información de manera visual.
