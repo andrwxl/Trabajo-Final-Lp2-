@@ -130,6 +130,9 @@ def classify_keyword_first_v6(input_filename="matriz_de_conocimiento.csv", outpu
     
     # Eliminamos las filas donde la habilidad no fue claramente identificada
     df_filtered = df_filtered[df_filtered['habilidad_general'] != 'General/Otro']
+    # Usaremos solo las filas de la fuente de "Coursera (Data Science)"
+    df_filtered = df_filtered[df_filtered['url'].str.contains("coursera.org")]
+    # Eliminamos las filas donde la habilidad fue descubierta por IA
     df_filtered = df_filtered[df_filtered['habilidad_general'] != 'Descubierto por IA']
     # Guardamos el nuevo archivo CSV filtrado
     filtered_output_filename = "conocimiento_filtrado_habilidades.csv"

@@ -1,6 +1,4 @@
-# scraper_definitivo_v10.py
-#
-# VERSIÓN 10.0: La versión final y más robusta.
+# scraper_definitivo_v3.py
 # Todas las funciones de scraping (Cloudscraper y Selenium) ahora guardan
 # el progreso directamente en el archivo CSV en tiempo real.
 # El script es completamente resumible y a prueba de cualquier interrupción.
@@ -133,7 +131,6 @@ def scrape_site_with_cloudscraper(site_config, existing_urls, output_filename):
     print(f"\n   - Finalizado el scraping para '{name}'. Se añadieron {items_found_this_session} ítems nuevos.")
 
 # Versión final de las funciones de Selenium
-
 
 def scrape_site_with_selenium(site_config, existing_urls, output_filename, start_time, limits):
     """
@@ -362,7 +359,6 @@ def main():
         elapsed_final = time.time() - start_time
         print(f"\n⏱️ Tiempo total de ejecución: {elapsed_final / 60:.2f} minutos.")
         print("\n🏁 PROCESO DE SCRAPING COMPLETADO (o interrumpido de forma segura) 🏁")
-
 
 if __name__ == "__main__":
     main()
