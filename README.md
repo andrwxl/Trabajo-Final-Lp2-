@@ -57,3 +57,15 @@ Este proyecto nace para resolver ese problema. Hemos construido un dashboard int
   * 🤖 Asistentes con IA (Integración con Google Gemini): La aplicación integra módulos de IA para ofrecerte un Asesor de Perfil y un Generador de Rutas de Aprendizaje, llevando la planificación de tu carrera al siguiente nivel.
 
 
+## DOCUMENTACIÓN
+
+### OFERTAS LABORALES
+
+### EDUCATION
+
+[](https://github.com/andrwxl/Trabajo-Final-Lp2-/blob/main/Scraper_Education/Scraper_def.md)
+[](https://github.com/andrwxl/Trabajo-Final-Lp2-/blob/main/Scraper_Education/Scraper_def.md)
+
+## APP
+
+[APP.py]([https://github.com/andrwxl/Trabajo-Final-Lp2-/blob/main/Estructura-Detallada.md](https://github.com/andrwxl/Trabajo-Final-Lp2-/blob/main/source/dashboard/APP_documentation.md))
