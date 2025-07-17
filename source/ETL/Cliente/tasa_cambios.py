@@ -3,10 +3,8 @@ import requests
 # -----------------------------------------------------------------------------
 # 2. CONFIGURACIÓN INICIAL
 # -----------------------------------------------------------------------------
-# API Key "hardcodeada" (escrita directamente en el código).
-# Esto facilita que todo el equipo pueda ejecutar el script sin configurar un .env
-# ¡ADVERTENCIA! No subir este archivo a un repositorio PÚBLICO de GitHub.
-API_KEY = "093cdfe918a4eca90bec6179"
+
+API_KEY = "da7f1b7bdc85c3fb30daa9ad"
 
 # URL base correcta de la API para obtener datos.
 BASE_URL = "https://v6.exchangerate-api.com/v6"

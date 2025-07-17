@@ -30,7 +30,6 @@ TIPO_DE_CAMBIO_USD_PEN = tasa_cambios.obtener_tasa_especifica("USD", "PEN")
 
 
 # --- LISTA DE HABILIDADES PREDEFINIDAS ---
-# Puedes expandir esta lista con todas las habilidades que consideres relevantes.
 LISTA_HABILIDADES_PREDEFINIDAS = sorted([
     "Python", "SQL", "Power BI", "Tableau", "AWS", "Azure", "GCP", "React",
     "JavaScript", "Excel", "Machine Learning", "Deep Learning", "Pandas",
@@ -38,6 +37,7 @@ LISTA_HABILIDADES_PREDEFINIDAS = sorted([
     "Kubernetes", "Spark", "Data Warehouse", "ETL", "Big Data", "NoSQL",
     "MongoDB", "PostgreSQL", "Git", "Linux", "R", "Java", "C++", "HTML", "CSS"
 ])
+
 
 @st.dialog("¡Bienvenido! Cuéntanos sobre ti")
 def dialogo_de_registro():
@@ -442,7 +442,8 @@ def mostrar_feed_recomendaciones(df_filtrado, moneda, periodo, habilidades_usuar
         if not isinstance(titulo_puesto, str):
             return 0
         # Contamos cuántas de las habilidades del usuario aparecen en el título del puesto.
-        score = sum(1 for skill in skills_usuario if skill.lower() in titulo_puesto.lower())
+
+        score = sum(1 for skill in skills_usuario if skill.lower() in titulo_puesto.lower()) 
         return score
 
     # Creamos una copia para no modificar el DataFrame original.

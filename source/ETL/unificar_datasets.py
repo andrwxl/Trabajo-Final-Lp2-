@@ -5,8 +5,7 @@ import numpy as np
 from Cliente.tasa_cambios import obtener_todas_las_tasas
 # --- CONFIGURACIÓN PRINCIPAL ---
 
-# 1. Define aquí la lista completa de todas las columnas que debe tener tu archivo final.
-#    Este es el "esquema maestro" de tu proyecto.
+# 1. Definimos las columnas maestras que queremos en nuestro dataset final.
 COLUMNAS_MAESTRAS = [
     'puesto_trabajo',
     'nombre_empresa',
@@ -33,21 +32,19 @@ def eliminar_filas_nulas_en_columna(df: pd.DataFrame, nombre_columna: str) -> pd
         return df # Devuelve el DataFrame original si la columna no se encuentra
 
     df_limpio = df.dropna(subset=[nombre_columna])
-    
-    filas_eliminadas = len(df) - len(df_limpio)
-    print(f"--- Limpieza en la columna '{nombre_columna}' ---")
-    print(f"🗑️ Se eliminaron {filas_eliminadas} fila(s) con valores nulos.")
-    print(f"✨ El DataFrame resultante tiene {len(df_limpio)} fila(s).")
 
     return df_limpio
 
+# Funcion para estandarizar periodo y moneda, y redondeamos salarios.
 def estandarizar_salarios(df):
     """
     Estandariza salarios a PEN/Mensual y devuelve una única columna 'salario'.
     """
+    # Primero, obtenemos las tasas de cambio actuales.
     dict_tasas = obtener_todas_las_tasas()
     df_estandarizado = df.copy()
-    # 1. Aseguramos que los salarios sean numéricos enteros
+
+    # 1. Aseguramos que los salarios sean numéricos enteros  
     df_estandarizado['salario'] = pd.to_numeric(df_estandarizado['salario'], errors='coerce')
 
     # 2. ESTANDARIZACIÓN DE PERIODO (ANUAL -> MENSUAL)
@@ -60,7 +57,6 @@ def estandarizar_salarios(df):
     if 'USD' not in dict_tasas:
         dict_tasas['USD'] = 1.0
     
-
     for moneda, tasa_a_usd in dict_tasas.items():
         if moneda == 'USD':
             continue
@@ -75,6 +71,7 @@ def estandarizar_salarios(df):
     return df_estandarizado
 
 
+# 
 def unificar_datasets(carpeta_entrada, schema_maestro):
     """
     Lee todos los archivos CSV de una carpeta, los estandariza a un esquema
@@ -86,24 +83,21 @@ def unificar_datasets(carpeta_entrada, schema_maestro):
     if not archivos_csv:
         print(f"No se encontraron archivos .csv en la carpeta '{carpeta_entrada}'.")
         return None
-
-    print(f"Se encontraron {len(archivos_csv)} archivos para unificar.")
     
     lista_de_dataframes = []
 
     # Itera sobre cada archivo encontrado.
-    for archivo in archivos_csv:
-        print(f"Procesando archivo: {os.path.basename(archivo)}")
-        
+    for archivo in archivos_csv:        
         # Carga el archivo CSV en un DataFrame.
         df = pd.read_csv(archivo)
         
         # Compara las columnas del archivo con el esquema maestro.
         for columna in schema_maestro:
             if columna not in df.columns:
-                print(f"  -> Añadiendo columna faltante: '{columna}'")
+                # Si la columna no existe, la añadimos con valores NaN.
                 df[columna] = np.nan
         
+        # Las columnas salarios los normalizamos.
         if 'salario_minimo' in df.columns and 'salario_maximo' in df.columns:
             df['salario'] = (df['salario_minimo'] + df['salario_maximo']) / 2
             df.drop(columns=['salario_minimo', 'salario_maximo'], inplace=True)
@@ -142,8 +136,6 @@ if __name__ == "__main__":
         dataset_maestro.to_csv(RUTA_SALIDA_FINAL, index=False)
         
         print(f"\n¡Proceso completado!")
-        print(f"Se ha creado el dataset maestro con {len(dataset_maestro)} filas.")
-        print(f"Archivo guardado en: '{RUTA_SALIDA_FINAL}'")
         
         print("\n--- Vista Previa del Dataset Maestro Final ---")
         print(dataset_maestro.head())

@@ -45,6 +45,7 @@ def peticion_pagina(url):
     """
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'}
     try:
+        # Realiza la petición a la URL con los headers especificados.
         respuesta = requests.get(url, headers=headers, timeout=15)
         respuesta.raise_for_status()  # Lanza un error para códigos de estado HTTP 4xx/5xx.
         return respuesta
@@ -57,12 +58,12 @@ def extraer_datos_pagina(url, pais_codigo, categoria):
     Extrae la información de todas las ofertas de una única página.
     Recibe el código del país para construir las URLs de las ofertas correctamente.
     """
-    respuesta = peticion_pagina(url)
+    respuesta = peticion_pagina(url) # Esto nos devuelve la pagina en formato HTML.
     if not respuesta:
         return []
 
-    sopa = BeautifulSoup(respuesta.text, 'html.parser')
-    contenedores_ofertas = sopa.find_all('article', class_='box_offer')
+    sopa = BeautifulSoup(respuesta.text, 'html.parser') # Transformamos el HTML en un objeto BeautifulSoup para facilitar la búsqueda de elementos.
+    contenedores_ofertas = sopa.find_all('article', class_='box_offer') # Busca todos los contenedores de ofertas de trabajo.
     
     if not contenedores_ofertas:
         return []
@@ -70,20 +71,26 @@ def extraer_datos_pagina(url, pais_codigo, categoria):
     lista_ofertas = []
     # Itera sobre cada oferta para extraer sus datos
     for oferta in contenedores_ofertas:
+        # Extrae el título, empresa, ubicación, salario y modalidad de trabajo.
+
         titulo_tag = oferta.find('a', class_='js-o-link fc_base')
         titulo = titulo_tag.get_text(strip=True) if titulo_tag else "NA"
+
         # Construcción dinámica de la URL de la oferta
+
         url_oferta = f"https://{pais_codigo}.computrabajo.com{titulo_tag['href']}" if titulo_tag and titulo_tag.has_attr('href') else "NA"
-        
         empresa_tag = oferta.find('a', class_='fc_base t_ellipsis')
         empresa = empresa_tag.get_text(strip=True) if empresa_tag else "NA"
 
-        # La ubicación puede estar en diferentes spans, buscamos de forma más flexible
+        # Extrae el código del país y la ubicación
+
         ubicacion_p = oferta.find('p', class_='fs16 fc_base mt5')
         ubicacion = ubicacion_p.find('span').get_text(strip=True) if ubicacion_p and ubicacion_p.find('span') else "NA"
 
         div_1 = oferta.find('div', class_='fs13 mt15')
         salario, modalidad = "NA", "NA"
+
+        # Extrae el salario y modalidad de trabajo si están disponibles
         if div_1:
             spans_info = div_1.find_all('span', class_='dIB mr10')
             for span in spans_info:
@@ -92,6 +99,7 @@ def extraer_datos_pagina(url, pais_codigo, categoria):
                 elif span.find('span', class_='i_home_office'):
                     modalidad = span.get_text(strip=True)
 
+        # Creamos un diccionario con los datos extraídos
         oferta_dict = {
             'puesto_trabajo': titulo,
             'nombre_empresa': empresa,
@@ -121,7 +129,6 @@ if __name__ == "__main__":
             
             # Construye la URL base para la búsqueda actual
             url_base_busqueda = f"https://{pais}.computrabajo.com/trabajo-de-{palabra}"
-            print(f"\n--- Iniciando scraping para '{palabra}' en '{MAPEO_PAISES.get(pais, pais)}' ---")
             
             numero_pagina = 1
             while True:
@@ -146,13 +153,16 @@ if __name__ == "__main__":
                 #time.sleep(1) # Pausa cortés para no sobrecargar el servidor
 
     if datos_finales:
+        # Convertimos la lista de diccionarios a un DataFrame de pandas para facilitar el manejo de datos.
         df = pd.DataFrame(datos_finales)
-        # Se recomienda guardar en un formato que soporte bien UTF-8, como CSV con la codificación especificada.
+
+        # Definimos la ubicacion y nombre del archivo CSV donde se guardarán los datos.
+
         nombre_archivo = "datos/crudos/computrabajo_multipaís.csv"
         try:
-            # Asegúrate de que el directorio 'datos/crudos/' exista o guarda en el directorio actual.
+            # Guarda el DataFrame en un archivo CSV.
             df.to_csv(nombre_archivo, index=False, encoding='utf-8-sig')
-            print(f"\n✅ ¡Éxito! {len(df)} ofertas extraídas y guardadas en '{nombre_archivo}'.")
+            print(f"\n ¡Éxito! {len(df)} ofertas extraídas y guardadas en '{nombre_archivo}'.")
         except Exception as e:
             print(f"Error al guardar el archivo CSV: {e}")
     else:
