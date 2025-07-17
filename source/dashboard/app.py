@@ -25,8 +25,6 @@ st.set_page_config(
 
 # Llamamos a la función para obtener la tasa (ya sea de la caché o de la API)
 TIPO_DE_CAMBIO_USD_PEN = tasa_cambios.obtener_tasa_especifica("USD", "PEN")
-if not TIPO_DE_CAMBIO_USD_PEN:
-    TIPO_DE_CAMBIO_USD_PEN = 3.50
 
 # --- Funciones de Carga y Procesamiento ---
 

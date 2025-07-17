@@ -1,7 +1,7 @@
 import requests
 
 # -----------------------------------------------------------------------------
-# 2. CONFIGURACIÓN INICIAL
+# 1. CONFIGURACIÓN INICIAL
 # -----------------------------------------------------------------------------
 
 API_KEY = "da7f1b7bdc85c3fb30daa9ad"
@@ -10,8 +10,16 @@ API_KEY = "da7f1b7bdc85c3fb30daa9ad"
 BASE_URL = "https://v6.exchangerate-api.com/v6"
 
 # -----------------------------------------------------------------------------
-# 3. LÓGICA DE PETICIÓN A LA API
+# 2. LÓGICA DE PETICIÓN A LA API
 # -----------------------------------------------------------------------------
+VALORES_POR_DEFECTO = {
+    "PEN": 3.50,
+    "EUR": 0.95,
+    "COP": 4000.00,
+    "MXN": 20.00,
+    "CLP": 800.00,
+    "ARS": 150.00
+}
 def run(moneda_base="USD"):
     """
     Realiza una petición GET a ExchangeRate-API para obtener las últimas tasas de cambio.
@@ -26,7 +34,7 @@ def run(moneda_base="USD"):
             return response.json()
         else:
             print(f"-> Error en la petición. Código de estado: {response.status_code}")
-            print(f"-> Mensaje de la API: {response.text}")
+
             return None
 
     except requests.exceptions.RequestException as e:
@@ -35,7 +43,7 @@ def run(moneda_base="USD"):
         return None
 
 # -----------------------------------------------------------------------------
-# 2. LÓGICA DE EXTRACCIÓN GENÉRICA
+# 3. LÓGICA DE EXTRACCIÓN GENÉRICA
 # -----------------------------------------------------------------------------
 def obtener_tasa_especifica(moneda_origen, moneda_destino):
     """
@@ -57,7 +65,9 @@ def obtener_tasa_especifica(moneda_origen, moneda_destino):
     # Verificación inicial.
     if not datos_completos or datos_completos.get("result") != "success":
         print(f"Error: No se pudo obtener una respuesta válida de la API para la base {moneda_origen}.")
-        return None
+
+        # Plan de respaldo: si falla la API, devolvemos un valor por defecto.
+        return VALORES_POR_DEFECTO[moneda_destino] if moneda_destino in VALORES_POR_DEFECTO else None
 
     # 2. Parseo de JSON para la moneda de destino.    
     tasas = datos_completos.get('conversion_rates', {})
@@ -103,9 +113,8 @@ def obtener_todas_las_tasas():
     # podemos devolver valores por defecto para no romper la aplicación.
     if not tasas_obtenidas:
         print("ADVERTENCIA: Falló la obtención de TODAS las tasas. Usando valores por defecto.")
-        return {
-            "PEN": 3.70,
-            "EUR": 0.95 
-        } # Puedes añadir más valores por defecto aquí
+        return VALORES_POR_DEFECTO
 
     return tasas_obtenidas
+
+print(obtener_tasa_especifica("USD", "PEN"))
